@@ -1,0 +1,12 @@
+# Node-RED data folder — track flows but ignore runtime/sensitive files
+data/node_modules/
+data/.config.*
+data/package-lock.json
+
+# Credentials (NEVER commit these)
+data/flows_cred.json
+data/*_cred.json
+
+# OS
+.DS_Store
+Thumbs.db
