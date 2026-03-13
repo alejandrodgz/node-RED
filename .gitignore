@@ -2,6 +2,7 @@
 data/node_modules/
 data/.config.*
 data/package-lock.json
+data/.npm/
 
 # Credentials (NEVER commit these)
 data/flows_cred.json

@@ -6,11 +6,20 @@
 
 ## Start
 
+Primera vez (o después de cambiar `Dockerfile`/`package.json`):
+```bash
+docker compose up --build -d
+```
+
+Usos siguientes:
 ```bash
 docker compose up -d
 ```
 
-Node-RED will be available at http://localhost:1880
+| URL | Descripción |
+|---|---|
+| http://localhost:1880 | Editor de Node-RED |
+| http://localhost:1880/ui | Dashboard (UI pública) |
 
 ## Stop
 
@@ -18,9 +27,16 @@ Node-RED will be available at http://localhost:1880
 docker compose down
 ```
 
+## Agregar módulos
+
+Edita el `Dockerfile` y agrega el módulo al comando `npm install`, luego reconstruye:
+```bash
+docker compose up --build -d
+```
+
 ## Flows
 
-Flows are saved to `./data/flows.json` and tracked by git.  
-After making changes in the Node-RED UI, commit and push `data/flows.json`.
+Flows se guardan en `./data/flows.json` y se trackean con git.  
+Después de hacer cambios en la UI, commitear y pushear `data/flows.json`.
 
-> **Never commit** `flows_cred.json` — it contains sensitive credentials.
+> **Nunca commitear** `flows_cred.json` — contiene credenciales sensibles.
