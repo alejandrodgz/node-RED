@@ -1,65 +1,1005 @@
 [
     {
-        "id": "adffdf95d3a8406d",
+        "id": "tab-agrocadenas",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "AgroCadenas",
         "disabled": false,
-        "info": "",
+        "info": "Gestión de cadenas agroalimentarias y sus etapas",
         "env": []
     },
     {
-        "id": "58ffae9d.a7005",
-        "type": "debug",
-        "z": "adffdf95d3a8406d",
-        "name": "",
-        "active": true,
-        "complete": false,
-        "x": 630,
+        "id": "tab-usuarios",
+        "type": "tab",
+        "label": "Usuarios",
+        "disabled": false,
+        "info": "Gestión de usuarios del sistema",
+        "env": []
+    },
+    {
+        "id": "tab-acceso",
+        "type": "tab",
+        "label": "Control de Acceso",
+        "disabled": false,
+        "info": "Roles y permisos",
+        "env": []
+    },
+    {
+        "id": "tab-maestro",
+        "type": "tab",
+        "label": "Tablas Maestro",
+        "disabled": false,
+        "info": "Catálogos del sistema",
+        "env": []
+    },
+    {
+        "id": "ui-tab-agrocadenas",
+        "type": "ui_tab",
+        "name": "AgroCadenas",
+        "icon": "spa",
+        "order": 1
+    },
+    {
+        "id": "ui-tab-usuarios",
+        "type": "ui_tab",
+        "name": "Usuarios",
+        "icon": "people",
+        "order": 2
+    },
+    {
+        "id": "ui-tab-acceso",
+        "type": "ui_tab",
+        "name": "Acceso",
+        "icon": "lock",
+        "order": 3
+    },
+    {
+        "id": "ui-tab-maestro",
+        "type": "ui_tab",
+        "name": "Maestro",
+        "icon": "list",
+        "order": 4
+    },
+    {
+        "id": "ui-group-agrocadenas",
+        "type": "ui_group",
+        "name": "AgroCadenas",
+        "tab": "ui-tab-agrocadenas",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui-group-etapas",
+        "type": "ui_group",
+        "name": "Etapas de la AgroCadena",
+        "tab": "ui-tab-agrocadenas",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui-group-usuarios",
+        "type": "ui_group",
+        "name": "Registro de Usuarios",
+        "tab": "ui-tab-usuarios",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui-group-lista-usuarios",
+        "type": "ui_group",
+        "name": "Usuarios Registrados",
+        "tab": "ui-tab-usuarios",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui-group-roles",
+        "type": "ui_group",
+        "name": "Roles y Permisos",
+        "tab": "ui-tab-acceso",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui-group-maestro",
+        "type": "ui_group",
+        "name": "Catálogos",
+        "tab": "ui-tab-maestro",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "431c0cc136df649b",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "init-storage",
+        "type": "inject",
+        "z": "tab-agrocadenas",
+        "name": "Inicializar almacenamiento",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.5,
+        "topic": "",
+        "x": 180,
+        "y": 60,
+        "wires": [
+            [
+                "fn-init-storage"
+            ]
+        ]
+    },
+    {
+        "id": "fn-init-storage",
+        "type": "function",
+        "z": "tab-agrocadenas",
+        "name": "Init global storage",
+        "func": "if (!global.get('agrocadenas')) global.set('agrocadenas', []);\nif (!global.get('usuarios')) global.set('usuarios', []);\nif (!global.get('roles')) global.set('roles', [{id:'1',nombre:'Admin',fecha_creacion:new Date().toISOString()},{id:'2',nombre:'Invitado',fecha_creacion:new Date().toISOString()}]);\nif (!global.get('permisos')) global.set('permisos', [{id:'1',nombre:'Ver',fecha_creacion:new Date().toISOString()},{id:'2',nombre:'Editar',fecha_creacion:new Date().toISOString()},{id:'3',nombre:'Eliminar',fecha_creacion:new Date().toISOString()}]);\nif (!global.get('tiposUsuario')) global.set('tiposUsuario', ['Administrador','Operador','Invitado']);\nif (!global.get('tiposParticipante')) global.set('tiposParticipante', ['Productor','Distribuidor','Comercializador','Consumidor']);\nif (!global.get('tiposProyeccion')) global.set('tiposProyeccion', ['Anual','Semestral','Trimestral']);\nif (!global.get('tiposReporte')) global.set('tiposReporte', ['Operativo','Financiero','Estadístico']);\nnode.status({fill:'green',shape:'dot',text:'Storage inicializado'});\nreturn null;",
+        "outputs": 1,
+        "x": 440,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "form-agrocadena",
+        "type": "ui_form",
+        "z": "tab-agrocadenas",
+        "name": "Nueva AgroCadena",
+        "label": "Registrar AgroCadena",
+        "group": "ui-group-agrocadenas",
+        "order": 1,
+        "width": "12",
+        "height": "4",
+        "options": [
+            {
+                "label": "Nombre",
+                "value": "nombre",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Descripción",
+                "value": "descripcion",
+                "type": "text",
+                "required": false
+            },
+            {
+                "label": "Estado",
+                "value": "estado",
+                "type": "text",
+                "required": false
+            }
+        ],
+        "formValue": [],
+        "payload": "",
+        "submit": "Registrar",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 160,
+        "wires": [
+            [
+                "fn-guardar-agrocadena"
+            ]
+        ]
+    },
+    {
+        "id": "fn-guardar-agrocadena",
+        "type": "function",
+        "z": "tab-agrocadenas",
+        "name": "Guardar AgroCadena",
+        "func": "var lista = global.get('agrocadenas') || [];\nvar nueva = {id: Date.now().toString(), nombre: msg.payload.nombre, descripcion: msg.payload.descripcion || '', estado: msg.payload.estado || 'Activo', etapas: [], fecha_creacion: new Date().toISOString()};\nlista.push(nueva);\nglobal.set('agrocadenas', lista);\nmsg.payload = '✅ AgroCadena \"' + nueva.nombre + '\" registrada con ID ' + nueva.id;\nreturn msg;",
+        "outputs": 1,
+        "x": 440,
+        "y": 160,
+        "wires": [
+            [
+                "notif-agrocadena",
+                "fn-refrescar-tabla-agrocadenas"
+            ]
+        ]
+    },
+    {
+        "id": "notif-agrocadena",
+        "type": "ui_toast",
+        "z": "tab-agrocadenas",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "Notificación",
+        "x": 700,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "fn-refrescar-tabla-agrocadenas",
+        "type": "function",
+        "z": "tab-agrocadenas",
+        "name": "Preparar tabla",
+        "func": "var lista = global.get('agrocadenas') || [];\nmsg.payload = lista.map(function(a){return {ID:a.id, Nombre:a.nombre, Descripción:a.descripcion, Estado:a.estado, Etapas:a.etapas.length, Creado:a.fecha_creacion};});\nreturn msg;",
+        "outputs": 1,
+        "x": 700,
+        "y": 200,
+        "wires": [
+            [
+                "tabla-agrocadenas"
+            ]
+        ]
+    },
+    {
+        "id": "tabla-agrocadenas",
+        "type": "ui_table",
+        "z": "tab-agrocadenas",
+        "group": "ui-group-agrocadenas",
+        "name": "Lista AgroCadenas",
+        "order": 2,
+        "width": "12",
+        "height": "6",
+        "columns": [
+            {
+                "field": "ID",
+                "title": "ID",
+                "width": "15%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Nombre",
+                "title": "Nombre",
+                "width": "20%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Descripción",
+                "title": "Descripción",
+                "width": "25%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Estado",
+                "title": "Estado",
+                "width": "15%",
+                "align": "center",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Etapas",
+                "title": "Etapas",
+                "width": "10%",
+                "align": "center",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Creado",
+                "title": "Fecha Creación",
+                "width": "15%",
+                "align": "left",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 1,
+        "x": 960,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "form-etapa",
+        "type": "ui_form",
+        "z": "tab-agrocadenas",
+        "name": "Nueva Etapa",
+        "label": "Agregar Etapa a AgroCadena",
+        "group": "ui-group-etapas",
+        "order": 1,
+        "width": "12",
+        "height": "4",
+        "options": [
+            {
+                "label": "ID AgroCadena",
+                "value": "agrocadena_id",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Nombre de la Etapa",
+                "value": "nombre",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Descripción",
+                "value": "descripcion",
+                "type": "text",
+                "required": false
+            }
+        ],
+        "formValue": [],
+        "payload": "",
+        "submit": "Agregar Etapa",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 320,
+        "wires": [
+            [
+                "fn-guardar-etapa"
+            ]
+        ]
+    },
+    {
+        "id": "fn-guardar-etapa",
+        "type": "function",
+        "z": "tab-agrocadenas",
+        "name": "Guardar Etapa",
+        "func": "var lista = global.get('agrocadenas') || [];\nvar cadena = lista.find(function(a){return a.id === msg.payload.agrocadena_id;});\nif (!cadena) { msg.payload = '❌ No se encontró AgroCadena con ID ' + msg.payload.agrocadena_id; return msg; }\nvar etapa = {id: Date.now().toString(), nombre: msg.payload.nombre, descripcion: msg.payload.descripcion || ''};\ncadena.etapas.push(etapa);\nglobal.set('agrocadenas', lista);\nmsg.payload = '✅ Etapa \"' + etapa.nombre + '\" agregada a \"' + cadena.nombre + '\"';\nreturn msg;",
+        "outputs": 1,
+        "x": 440,
+        "y": 320,
+        "wires": [
+            [
+                "notif-agrocadena"
+            ]
+        ]
+    },
+    {
+        "id": "btn-refrescar-agrocadenas",
+        "type": "ui_button",
+        "z": "tab-agrocadenas",
+        "name": "Refrescar Lista",
+        "group": "ui-group-agrocadenas",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "🔄 Refrescar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 240,
+        "wires": [
+            [
+                "fn-refrescar-tabla-agrocadenas"
+            ]
+        ]
+    },
+    {
+        "id": "form-usuario",
+        "type": "ui_form",
+        "z": "tab-usuarios",
+        "name": "Nuevo Usuario",
+        "label": "Registrar Usuario",
+        "group": "ui-group-usuarios",
+        "order": 1,
+        "width": "12",
+        "height": "5",
+        "options": [
+            {
+                "label": "Usuario (login)",
+                "value": "usuario",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Nombre",
+                "value": "nombre",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Apellido",
+                "value": "apellido",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Tipo de Usuario",
+                "value": "tipo_usuario",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Contraseña",
+                "value": "clave",
+                "type": "password",
+                "required": true
+            }
+        ],
+        "formValue": [],
+        "payload": "",
+        "submit": "Registrar",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 160,
+        "wires": [
+            [
+                "fn-guardar-usuario"
+            ]
+        ]
+    },
+    {
+        "id": "fn-guardar-usuario",
+        "type": "function",
+        "z": "tab-usuarios",
+        "name": "Guardar Usuario",
+        "func": "var lista = global.get('usuarios') || [];\nvar existe = lista.find(function(u){return u.usuario === msg.payload.usuario;});\nif (existe) { msg.payload = '❌ El usuario \"' + msg.payload.usuario + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), usuario: msg.payload.usuario, nombre: msg.payload.nombre, apellido: msg.payload.apellido, tipo_usuario: msg.payload.tipo_usuario, clave: msg.payload.clave, hora_registro: new Date().toLocaleTimeString(), fecha_registro: new Date().toLocaleDateString(), estado: 'Activo'};\nlista.push(nuevo);\nglobal.set('usuarios', lista);\nmsg.payload = '✅ Usuario \"' + nuevo.usuario + '\" registrado correctamente';\nreturn msg;",
+        "outputs": 1,
+        "x": 440,
+        "y": 160,
+        "wires": [
+            [
+                "notif-usuario",
+                "fn-refrescar-tabla-usuarios"
+            ]
+        ]
+    },
+    {
+        "id": "notif-usuario",
+        "type": "ui_toast",
+        "z": "tab-usuarios",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "Notificación",
+        "x": 700,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "fn-refrescar-tabla-usuarios",
+        "type": "function",
+        "z": "tab-usuarios",
+        "name": "Preparar tabla",
+        "func": "var lista = global.get('usuarios') || [];\nmsg.payload = lista.map(function(u){return {ID:u.id, Usuario:u.usuario, Nombre:u.nombre+' '+u.apellido, Tipo:u.tipo_usuario, Estado:u.estado, Registro:u.fecha_registro};});\nreturn msg;",
+        "outputs": 1,
+        "x": 700,
+        "y": 200,
+        "wires": [
+            [
+                "tabla-usuarios"
+            ]
+        ]
+    },
+    {
+        "id": "tabla-usuarios",
+        "type": "ui_table",
+        "z": "tab-usuarios",
+        "group": "ui-group-lista-usuarios",
+        "name": "Lista Usuarios",
+        "order": 1,
+        "width": "12",
+        "height": "6",
+        "columns": [
+            {
+                "field": "ID",
+                "title": "ID",
+                "width": "15%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Usuario",
+                "title": "Login",
+                "width": "15%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Nombre",
+                "title": "Nombre Completo",
+                "width": "25%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Tipo",
+                "title": "Tipo",
+                "width": "15%",
+                "align": "center",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Estado",
+                "title": "Estado",
+                "width": "15%",
+                "align": "center",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Registro",
+                "title": "Fecha Registro",
+                "width": "15%",
+                "align": "left",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 1,
+        "x": 960,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "btn-refrescar-usuarios",
+        "type": "ui_button",
+        "z": "tab-usuarios",
+        "name": "Refrescar",
+        "group": "ui-group-lista-usuarios",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "🔄 Refrescar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 260,
+        "wires": [
+            [
+                "fn-refrescar-tabla-usuarios"
+            ]
+        ]
+    },
+    {
+        "id": "form-rol",
+        "type": "ui_form",
+        "z": "tab-acceso",
+        "name": "Nuevo Rol",
+        "label": "Crear Rol",
+        "group": "ui-group-roles",
+        "order": 1,
+        "width": "6",
+        "height": "3",
+        "options": [
+            {
+                "label": "Nombre del Rol",
+                "value": "nombre",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": [],
+        "payload": "",
+        "submit": "Crear Rol",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 160,
+        "wires": [
+            [
+                "fn-guardar-rol"
+            ]
+        ]
+    },
+    {
+        "id": "fn-guardar-rol",
+        "type": "function",
+        "z": "tab-acceso",
+        "name": "Guardar Rol",
+        "func": "var lista = global.get('roles') || [];\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre, fecha_creacion: new Date().toISOString()};\nlista.push(nuevo);\nglobal.set('roles', lista);\nmsg.payload = '✅ Rol \"' + nuevo.nombre + '\" creado';\nreturn msg;",
+        "outputs": 1,
+        "x": 420,
+        "y": 160,
+        "wires": [
+            [
+                "notif-acceso",
+                "fn-refrescar-roles"
+            ]
+        ]
+    },
+    {
+        "id": "notif-acceso",
+        "type": "ui_toast",
+        "z": "tab-acceso",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "Notificación",
+        "x": 660,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "fn-refrescar-roles",
+        "type": "function",
+        "z": "tab-acceso",
+        "name": "Preparar tabla roles",
+        "func": "var roles = global.get('roles') || [];\nvar permisos = global.get('permisos') || [];\nmsg.payload = roles.map(function(r){return {ID:r.id, Nombre:r.nombre, Creado:r.fecha_creacion};});\nreturn msg;",
+        "outputs": 1,
+        "x": 660,
+        "y": 200,
+        "wires": [
+            [
+                "tabla-roles"
+            ]
+        ]
+    },
+    {
+        "id": "tabla-roles",
+        "type": "ui_table",
+        "z": "tab-acceso",
+        "group": "ui-group-roles",
+        "name": "Roles",
+        "order": 2,
+        "width": "6",
+        "height": "5",
+        "columns": [
+            {
+                "field": "ID",
+                "title": "ID",
+                "width": "20%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Nombre",
+                "title": "Nombre",
+                "width": "40%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Creado",
+                "title": "Fecha Creación",
+                "width": "40%",
+                "align": "left",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 1,
+        "x": 900,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "btn-refrescar-roles",
+        "type": "ui_button",
+        "z": "tab-acceso",
+        "name": "Refrescar Roles",
+        "group": "ui-group-roles",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "🔄 Refrescar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 240,
+        "wires": [
+            [
+                "fn-refrescar-roles"
+            ]
+        ]
+    },
+    {
+        "id": "txt-tipos-usuario",
+        "type": "ui_text",
+        "z": "tab-maestro",
+        "group": "ui-group-maestro",
+        "order": 1,
+        "width": "12",
+        "height": "1",
+        "name": "Tipos de Usuario",
+        "label": "Tipos de Usuario:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 700,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "txt-tipos-participante",
+        "type": "ui_text",
+        "z": "tab-maestro",
+        "group": "ui-group-maestro",
+        "order": 3,
+        "width": "12",
+        "height": "1",
+        "name": "Tipos de Participante",
+        "label": "Tipos de Participante:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 700,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "txt-tipos-proyeccion",
+        "type": "ui_text",
+        "z": "tab-maestro",
+        "group": "ui-group-maestro",
+        "order": 5,
+        "width": "12",
+        "height": "1",
+        "name": "Tipos de Proyección",
+        "label": "Tipos de Proyección:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 700,
         "y": 240,
         "wires": []
     },
     {
-        "id": "17626462.e89d9c",
-        "type": "inject",
-        "z": "adffdf95d3a8406d",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": "",
-        "topic": "",
+        "id": "txt-tipos-reporte",
+        "type": "ui_text",
+        "z": "tab-maestro",
+        "group": "ui-group-maestro",
+        "order": 7,
+        "width": "12",
+        "height": "1",
+        "name": "Tipos de Reporte",
+        "label": "Tipos de Reporte:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 700,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "btn-cargar-maestro",
+        "type": "ui_button",
+        "z": "tab-maestro",
+        "name": "Cargar Catálogos",
+        "group": "ui-group-maestro",
+        "order": 9,
+        "width": "4",
+        "height": "1",
+        "passthru": false,
+        "label": "🔄 Cargar Catálogos",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
         "payload": "",
-        "payloadType": "date",
-        "x": 100,
-        "y": 240,
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 200,
         "wires": [
             [
-                "2921667d.d6de9a"
+                "fn-cargar-maestro"
             ]
         ]
     },
     {
-        "id": "2921667d.d6de9a",
+        "id": "fn-cargar-maestro",
         "type": "function",
-        "z": "adffdf95d3a8406d",
-        "name": "Format timestamp",
-        "func": "// Create a Date object from the payload\nvar date = new Date(msg.payload);\n// Change the payload to be a formatted Date string\nmsg.payload = date.toString();\n// Return the message so it can be sent on\nreturn msg;",
-        "outputs": 1,
-        "x": 350,
-        "y": 240,
+        "z": "tab-maestro",
+        "name": "Cargar catálogos",
+        "func": "var msgs = [];\nmsgs[0] = {payload: (global.get('tiposUsuario')||[]).join(', ')};\nmsgs[1] = {payload: (global.get('tiposParticipante')||[]).join(', ')};\nmsgs[2] = {payload: (global.get('tiposProyeccion')||[]).join(', ')};\nmsgs[3] = {payload: (global.get('tiposReporte')||[]).join(', ')};\nreturn msgs;",
+        "outputs": 4,
+        "x": 430,
+        "y": 200,
         "wires": [
             [
-                "58ffae9d.a7005"
+                "txt-tipos-usuario"
+            ],
+            [
+                "txt-tipos-participante"
+            ],
+            [
+                "txt-tipos-proyeccion"
+            ],
+            [
+                "txt-tipos-reporte"
             ]
         ]
+    },
+    {
+        "id": "form-add-catalogo",
+        "type": "ui_form",
+        "z": "tab-maestro",
+        "name": "Agregar a Catálogo",
+        "label": "Agregar Valor a Catálogo",
+        "group": "ui-group-maestro",
+        "order": 10,
+        "width": "12",
+        "height": "4",
+        "options": [
+            {
+                "label": "Catálogo (tiposUsuario / tiposParticipante / tiposProyeccion / tiposReporte)",
+                "value": "catalogo",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Valor a agregar",
+                "value": "valor",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": [],
+        "payload": "",
+        "submit": "Agregar",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 320,
+        "wires": [
+            [
+                "fn-add-catalogo"
+            ]
+        ]
+    },
+    {
+        "id": "fn-add-catalogo",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Agregar a catálogo",
+        "func": "var cat = msg.payload.catalogo;\nvar val = msg.payload.valor;\nvar validos = ['tiposUsuario','tiposParticipante','tiposProyeccion','tiposReporte'];\nif (validos.indexOf(cat) === -1) { msg.payload = '❌ Catálogo no válido. Use: ' + validos.join(', '); return msg; }\nvar lista = global.get(cat) || [];\nif (lista.indexOf(val) >= 0) { msg.payload = '❌ \"' + val + '\" ya existe en ' + cat; return msg; }\nlista.push(val);\nglobal.set(cat, lista);\nmsg.payload = '✅ \"' + val + '\" agregado a ' + cat;\nreturn msg;",
+        "outputs": 1,
+        "x": 460,
+        "y": 320,
+        "wires": [
+            [
+                "notif-maestro"
+            ]
+        ]
+    },
+    {
+        "id": "notif-maestro",
+        "type": "ui_toast",
+        "z": "tab-maestro",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "Notificación",
+        "x": 710,
+        "y": 360,
+        "wires": []
     }
 ]
