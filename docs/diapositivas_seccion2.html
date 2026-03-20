@@ -226,7 +226,7 @@
 </head>
 <body>
 
-<div class="slide-counter" id="counter">1 / 5</div>
+<div class="slide-counter" id="counter">1 / 6</div>
 
 <!-- SLIDE 1 — Título -->
 <div class="slide active" id="slide-1">
@@ -242,8 +242,21 @@
   <p class="author">Daniel Garcia · Juan Esteban Quintero · Simon Ortiz</p>
 </div>
 
-<!-- SLIDE 2 — 2.1 Instalación -->
+<!-- SLIDE 2 — Introducción Sección 2 -->
 <div class="slide" id="slide-2">
+  <div class="slide-number">Sección 2 — Proceso de Desarrollo</div>
+  <h2>¿Cómo se desarrolla en Node-RED?</h2>
+  <p style="font-size:16px; color:#ccc; line-height:1.7; margin-bottom:20px;">
+    El proceso de desarrollo en Node-RED se estructura en torno a la construcción de <strong style="color:#e74c3c;">flujos visuales</strong> mediante un editor web. A diferencia de los entornos de desarrollo tradicionales, no requiere compilación ni despliegue manual: los cambios se aplican en <strong style="color:#e74c3c;">tiempo real</strong> al presionar el botón <strong style="color:#e74c3c;">Deploy</strong>.
+  </p>
+  <div style="text-align:center; margin-top:8px;">
+    <img src="display node red.png" alt="Editor de Node-RED" style="max-width:100%; max-height:260px; border-radius:10px; border:2px solid #e74c3c44; object-fit:contain;">
+    <p style="font-size:12px; color:#666; margin-top:8px;">Vista general del editor de flows de Node-RED</p>
+  </div>
+</div>
+
+<!-- SLIDE 3 — 2.1 Instalación -->
+<div class="slide" id="slide-3">
   <div class="slide-number">2.1 — Instalación</div>
   <h2>¿Cómo se instala Node-RED?</h2>
   <ul>
@@ -270,8 +283,8 @@
   </div>
 </div>
 
-<!-- SLIDE 3 — 2.2 Montaje de Modelos -->
-<div class="slide" id="slide-3">
+<!-- SLIDE 4 — 2.2 Montaje de Modelos -->
+<div class="slide" id="slide-4">
   <div class="slide-number">2.2 — Montaje de Modelos</div>
   <h2>El editor visual de flows</h2>
   <div class="columns">
@@ -301,8 +314,8 @@
   </div>
 </div>
 
-<!-- SLIDE 4 — 2.3 Orígenes de Datos -->
-<div class="slide" id="slide-4">
+<!-- SLIDE 5 — 2.3 Orígenes de Datos -->
+<div class="slide" id="slide-5">
   <div class="slide-number">2.3 — Orígenes de Datos</div>
   <h2>¿Con qué fuentes de datos se conecta?</h2>
   <table>
@@ -319,8 +332,8 @@
   </div>
 </div>
 
-<!-- SLIDE 5 — 2.4 Categorías de Nodos -->
-<div class="slide" id="slide-5">
+<!-- SLIDE 6 — 2.4 Categorías de Nodos -->
+<div class="slide" id="slide-6">
   <div class="slide-number">2.4 — Categorías de Controles y Funciones</div>
   <h2>¿Qué nodos existen?</h2>
   <div class="category-grid">
@@ -358,7 +371,7 @@
 
 <script>
   let actual = 1;
-  const total = 5;
+  const total = 6;
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') cambiar(1);
