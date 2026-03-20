@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sección 2 — Proceso de Desarrollo en Node-RED</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #1a1a2e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    color: #fff;
+  }
+
+  .controls {
+    position: fixed;
+    bottom: 24px;
+    display: flex;
+    gap: 16px;
+    z-index: 100;
+  }
+
+  .controls button {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 28px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .controls button:hover { background: #c0392b; }
+
+  .slide-counter {
+    position: fixed;
+    top: 16px;
+    right: 24px;
+    font-size: 14px;
+    color: #aaa;
+  }
+
+  .slide {
+    display: none;
+    width: 900px;
+    min-height: 520px;
+    background: #16213e;
+    border-radius: 16px;
+    padding: 52px 60px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    border-left: 6px solid #e74c3c;
+    animation: fadeIn 0.3s ease;
+  }
+  .slide.active { display: flex; flex-direction: column; justify-content: center; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .slide-number {
+    font-size: 12px;
+    color: #e74c3c;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 38px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+
+  .subtitle {
+    font-size: 18px;
+    color: #e74c3c;
+    margin-bottom: 0;
+  }
+
+  .tag-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    background: #e74c3c22;
+    border: 1px solid #e74c3c55;
+    color: #e74c3c;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+  }
+
+  .author {
+    margin-top: 36px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  /* Listas */
+  ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  ul li {
+    background: #0f3460;
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-size: 15px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  ul li .icon { font-size: 20px; flex-shrink: 0; }
+  ul li strong { color: #e74c3c; }
+
+  /* Tablas */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  th {
+    background: #e74c3c;
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid #0f3460;
+    color: #ccc;
+  }
+  tr:nth-child(even) td { background: #0f346022; }
+  tr:last-child td { border-bottom: none; }
+
+  code {
+    background: #0f3460;
+    color: #e74c3c;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'Courier New', monospace;
+  }
+
+  .code-block {
+    background: #0a0a1a;
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #a8d8a8;
+    margin-top: 12px;
+    line-height: 1.7;
+    border-left: 3px solid #e74c3c;
+  }
+  .code-block .comment { color: #666; }
+  .code-block .key { color: #5dade2; }
+  .code-block .val { color: #f0b27a; }
+
+  .highlight-box {
+    background: #e74c3c18;
+    border: 1px solid #e74c3c44;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 16px;
+    font-size: 14px;
+    color: #eee;
+  }
+  .highlight-box strong { color: #e74c3c; }
+
+  .columns { display: flex; gap: 24px; margin-top: 4px; }
+  .col { flex: 1; }
+
+  .step-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .step {
+    background: #0f3460;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: #ccc;
+  }
+  .arrow { color: #e74c3c; font-size: 18px; }
+  .step-final {
+    background: #e74c3c;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .cat-card {
+    background: #0f3460;
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .cat-card .cat-title { color: #e74c3c; font-weight: 700; font-size: 13px; margin-bottom: 6px; }
+  .cat-card .cat-nodes { color: #aaa; font-size: 12px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<div class="slide-counter" id="counter">1 / 5</div>
+
+<!-- SLIDE 1 — Título -->
+<div class="slide active" id="slide-1">
+  <div class="slide-number">Herramientas para la Industrialización del Software · 2025</div>
+  <h1>Proceso de Desarrollo<br>en Node-RED</h1>
+  <p class="subtitle">Sección 2 del Informe Técnico</p>
+  <div class="tag-row">
+    <span class="tag">2.1 Instalación</span>
+    <span class="tag">2.2 Montaje de Modelos</span>
+    <span class="tag">2.3 Orígenes de Datos</span>
+    <span class="tag">2.4 Categorías de Nodos</span>
+  </div>
+  <p class="author">Daniel Garcia · Juan Esteban Quintero · Simon Ortiz</p>
+</div>
+
+<!-- SLIDE 2 — 2.1 Instalación -->
+<div class="slide" id="slide-2">
+  <div class="slide-number">2.1 — Instalación</div>
+  <h2>¿Cómo se instala Node-RED?</h2>
+  <ul>
+    <li>
+      <span class="icon">💻</span>
+      <div><strong>npm (local)</strong> — requiere Node.js instalado. Ideal para desarrollo individual.<br>
+      <code>npm install -g --unsafe-perm node-red</code></div>
+    </li>
+    <li>
+      <span class="icon">🍓</span>
+      <div><strong>Raspberry Pi</strong> — script oficial que configura Node.js y Node-RED automáticamente.</div>
+    </li>
+    <li>
+      <span class="icon">🐳</span>
+      <div><strong>Docker ★ Método del equipo</strong> — imagen reproducible, mismo entorno en cualquier SO.</div>
+    </li>
+  </ul>
+  <div class="code-block">
+    <span class="comment"># Levantar el entorno completo en un solo comando</span><br>
+    <span class="key">docker compose up</span> <span class="val">--build -d</span>
+  </div>
+  <div class="highlight-box">
+    <strong>Ventaja clave:</strong> cualquier integrante clona el repo y levanta el entorno idéntico — sin instalar Node.js manualmente.
+  </div>
+</div>
+
+<!-- SLIDE 3 — 2.2 Montaje de Modelos -->
+<div class="slide" id="slide-3">
+  <div class="slide-number">2.2 — Montaje de Modelos</div>
+  <h2>El editor visual de flows</h2>
+  <div class="columns">
+    <div class="col">
+      <table>
+        <tr><th>Área</th><th>Función</th></tr>
+        <tr><td>🗂 Paleta (izq.)</td><td>Catálogo de nodos por categoría</td></tr>
+        <tr><td>🖥 Canvas (centro)</td><td>Espacio de construcción de flows</td></tr>
+        <tr><td>ℹ Panel (der.)</td><td>Debug, info, documentación</td></tr>
+      </table>
+    </div>
+  </div>
+  <p style="margin-top:20px; color:#aaa; font-size:14px; font-weight:600;">CICLO DE TRABAJO</p>
+  <div class="step-row">
+    <div class="step">Arrastrar nodo</div>
+    <div class="arrow">→</div>
+    <div class="step">Configurar</div>
+    <div class="arrow">→</div>
+    <div class="step">Conectar</div>
+    <div class="arrow">→</div>
+    <div class="step-final">⚡ Deploy</div>
+    <div class="arrow">→</div>
+    <div class="step">Activo al instante</div>
+  </div>
+  <div class="highlight-box" style="margin-top:20px;">
+    Los flows se guardan en <code>flows.json</code> — versionable con <strong>git</strong> y compartible entre el equipo.
+  </div>
+</div>
+
+<!-- SLIDE 4 — 2.3 Orígenes de Datos -->
+<div class="slide" id="slide-4">
+  <div class="slide-number">2.3 — Orígenes de Datos</div>
+  <h2>¿Con qué fuentes de datos se conecta?</h2>
+  <table>
+    <tr><th>Tipo</th><th>Ejemplos</th><th>Nodo</th></tr>
+    <tr><td>BD Relacionales</td><td>MySQL, PostgreSQL, SQLite</td><td><code>node-red-node-mysql</code></td></tr>
+    <tr><td>BD NoSQL</td><td>MongoDB, Redis, CouchDB</td><td><code>node-red-node-mongodb</code></td></tr>
+    <tr><td>APIs REST</td><td>Cualquier servicio HTTP</td><td><code>http request</code> (nativo)</td></tr>
+    <tr><td>Protocolos IoT</td><td>MQTT, Modbus, CoAP</td><td><code>mqtt in/out</code> (nativo)</td></tr>
+    <tr><td>Archivos</td><td>CSV, JSON, XML</td><td><code>file in/out</code> (nativo)</td></tr>
+    <tr><td>⭐ En memoria</td><td colspan="2">Contexto global — <code>global.set/get</code> — usado en Evergreen</td></tr>
+  </table>
+  <div class="highlight-box">
+    La conexión se configura <strong>una vez</strong> en el nodo y es reutilizable por todos los flows del proyecto.
+  </div>
+</div>
+
+<!-- SLIDE 5 — 2.4 Categorías de Nodos -->
+<div class="slide" id="slide-5">
+  <div class="slide-number">2.4 — Categorías de Controles y Funciones</div>
+  <h2>¿Qué nodos existen?</h2>
+  <div class="category-grid">
+    <div class="cat-card">
+      <div class="cat-title">⚙ Common</div>
+      <div class="cat-nodes">inject · debug · catch · complete · comment</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-title">𝑓 Function</div>
+      <div class="cat-nodes">function · switch · change · template · json · delay</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-title">🌐 Network</div>
+      <div class="cat-nodes">http in · http response · http request · mqtt · websocket</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-title">💾 Storage</div>
+      <div class="cat-nodes">file · file in · watch</div>
+    </div>
+    <div class="cat-card" style="grid-column: span 2;">
+      <div class="cat-title">📊 Dashboard (node-red-dashboard)</div>
+      <div class="cat-nodes">ui_button · ui_form · ui_table · ui_chart · ui_toast · ui_text · ui_tab · ui_group</div>
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:14px;">
+    El <strong>DSL visual</strong> de Node-RED permite construir aplicaciones completas combinando estas categorías — sin escribir código en la mayoría de los casos.
+  </div>
+</div>
+
+<!-- Controles -->
+<div class="controls">
+  <button onclick="cambiar(-1)">← Anterior</button>
+  <button onclick="cambiar(1)">Siguiente →</button>
+</div>
+
+<script>
+  let actual = 1;
+  const total = 5;
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') cambiar(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') cambiar(-1);
+  });
+
+  function cambiar(dir) {
+    document.getElementById('slide-' + actual).classList.remove('active');
+    actual = Math.max(1, Math.min(total, actual + dir));
+    document.getElementById('slide-' + actual).classList.add('active');
+    document.getElementById('counter').textContent = actual + ' / ' + total;
+  }
+</script>
+</body>
+</html>

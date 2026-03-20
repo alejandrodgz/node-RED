@@ -4,6 +4,7 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
-        "node-red-dashboard": "3.x"
+        "node-red-dashboard": "2.30.0",
+        "node-red-node-ui-table": "*"
     }
 }
