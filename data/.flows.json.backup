@@ -32,6 +32,14 @@
         "env": []
     },
     {
+        "id": "tab-modulos",
+        "type": "tab",
+        "label": "Módulos",
+        "disabled": false,
+        "info": "Gestión de módulos, páginas y opciones del sistema",
+        "env": []
+    },
+    {
         "id": "ui-tab-agrocadenas",
         "type": "ui_tab",
         "name": "AgroCadenas",
@@ -100,9 +108,29 @@
         "collapse": false
     },
     {
+        "id": "ui-group-asignar-rol",
+        "type": "ui_group",
+        "name": "Asignar Rol a Usuario",
+        "tab": "ui-tab-usuarios",
+        "order": 3,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui-group-estado-usuario",
+        "type": "ui_group",
+        "name": "Cambiar Estado de Usuario",
+        "tab": "ui-tab-usuarios",
+        "order": 4,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
         "id": "ui-group-roles",
         "type": "ui_group",
-        "name": "Roles y Permisos",
+        "name": "Roles",
         "tab": "ui-tab-acceso",
         "order": 1,
         "disp": true,
@@ -110,11 +138,58 @@
         "collapse": false
     },
     {
-        "id": "ui-group-maestro",
+        "id": "ui-group-permisos",
         "type": "ui_group",
-        "name": "Catálogos",
-        "tab": "ui-tab-maestro",
+        "name": "Permisos",
+        "tab": "ui-tab-acceso",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui-group-asignar-permiso",
+        "type": "ui_group",
+        "name": "Asignar Permiso a Rol",
+        "tab": "ui-tab-acceso",
+        "order": 3,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui-tab-modulos",
+        "type": "ui_tab",
+        "name": "Módulos",
+        "icon": "view_module",
+        "order": 5
+    },
+    {
+        "id": "ui-group-modulos",
+        "type": "ui_group",
+        "name": "Módulos del Sistema",
+        "tab": "ui-tab-modulos",
         "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui-group-paginas",
+        "type": "ui_group",
+        "name": "Páginas",
+        "tab": "ui-tab-modulos",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui-group-opciones",
+        "type": "ui_group",
+        "name": "Opciones de Páginas",
+        "tab": "ui-tab-modulos",
+        "order": 3,
         "disp": true,
         "width": "12",
         "collapse": false
@@ -239,7 +314,7 @@
         "type": "function",
         "z": "tab-agrocadenas",
         "name": "Init global storage",
-        "func": "if (!global.get('agrocadenas')) global.set('agrocadenas', []);\nif (!global.get('usuarios')) global.set('usuarios', []);\nif (!global.get('roles')) global.set('roles', [{id:'1',nombre:'Admin',fecha_creacion:new Date().toISOString()},{id:'2',nombre:'Invitado',fecha_creacion:new Date().toISOString()}]);\nif (!global.get('permisos')) global.set('permisos', [{id:'1',nombre:'Ver',fecha_creacion:new Date().toISOString()},{id:'2',nombre:'Editar',fecha_creacion:new Date().toISOString()},{id:'3',nombre:'Eliminar',fecha_creacion:new Date().toISOString()}]);\nif (!global.get('tiposUsuario')) global.set('tiposUsuario', ['Administrador','Operador','Invitado']);\nif (!global.get('tiposParticipante')) global.set('tiposParticipante', ['Productor','Distribuidor','Comercializador','Consumidor']);\nif (!global.get('tiposProyeccion')) global.set('tiposProyeccion', ['Anual','Semestral','Trimestral']);\nif (!global.get('tiposReporte')) global.set('tiposReporte', ['Operativo','Financiero','Estadístico']);\nnode.status({fill:'green',shape:'dot',text:'Storage inicializado'});\nreturn null;",
+        "func": "if (!global.get('agrocadenas')) global.set('agrocadenas', []);\nif (!global.get('usuarios')) global.set('usuarios', []);\nif (!global.get('roles')) global.set('roles', [{id:'1',nombre:'Admin',fecha_creacion:new Date().toISOString(),permisos:[]},{id:'2',nombre:'Invitado',fecha_creacion:new Date().toISOString(),permisos:[]}]);\nif (!global.get('permisos')) global.set('permisos', [{id:'1',nombre:'Ver',fecha_creacion:new Date().toISOString()},{id:'2',nombre:'Editar',fecha_creacion:new Date().toISOString()},{id:'3',nombre:'Eliminar',fecha_creacion:new Date().toISOString()}]);\nif (!global.get('tiposUsuario')) global.set('tiposUsuario', [{id:'1',nombre:'Administrador'},{id:'2',nombre:'Operador'},{id:'3',nombre:'Invitado'}]);\nif (!global.get('tiposParticipante')) global.set('tiposParticipante', [{id:'1',nombre:'Productor',direccion:'',telefono:'',tipo_documento:'NIT',identificacion:'100001',tipo_participante:'Primario',estado:'Activo'},{id:'2',nombre:'Distribuidor',direccion:'',telefono:'',tipo_documento:'NIT',identificacion:'100002',tipo_participante:'Secundario',estado:'Activo'},{id:'3',nombre:'Comercializador',direccion:'',telefono:'',tipo_documento:'NIT',identificacion:'100003',tipo_participante:'Secundario',estado:'Activo'},{id:'4',nombre:'Consumidor',direccion:'',telefono:'',tipo_documento:'CC',identificacion:'100004',tipo_participante:'Final',estado:'Activo'}]);\nif (!global.get('tiposProyeccion')) global.set('tiposProyeccion', [{id:'1',nombre:'Anual'},{id:'2',nombre:'Semestral'},{id:'3',nombre:'Trimestral'}]);\nif (!global.get('tiposReporte')) global.set('tiposReporte', [{id:'1',nombre:'Operativo'},{id:'2',nombre:'Financiero'},{id:'3',nombre:'Estadístico'}]);\nif (!global.get('modulos')) global.set('modulos', []);\nif (!global.get('paginas')) global.set('paginas', []);\nnode.status({fill:'green',shape:'dot',text:'Storage inicializado'});\nreturn null;",
         "outputs": 1,
         "x": 440,
         "y": 60,
@@ -277,7 +352,7 @@
                 "required": false
             }
         ],
-        "formValue": [],
+        "formValue": {},
         "payload": "",
         "submit": "Registrar",
         "cancel": "Limpiar",
@@ -295,7 +370,7 @@
         "type": "function",
         "z": "tab-agrocadenas",
         "name": "Guardar AgroCadena",
-        "func": "var lista = global.get('agrocadenas') || [];\nvar nueva = {id: Date.now().toString(), nombre: msg.payload.nombre, descripcion: msg.payload.descripcion || '', estado: msg.payload.estado || 'Activo', etapas: [], fecha_creacion: new Date().toISOString()};\nlista.push(nueva);\nglobal.set('agrocadenas', lista);\nmsg.payload = '✅ AgroCadena \"' + nueva.nombre + '\" registrada con ID ' + nueva.id;\nreturn msg;",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('agrocadenas') || [];\nvar nueva = {id: Date.now().toString(), nombre: msg.payload.nombre, descripcion: msg.payload.descripcion || '', estado: msg.payload.estado || 'Activo', etapas: [], fecha_creacion: new Date().toISOString()};\nlista.push(nueva);\nglobal.set('agrocadenas', lista);\nmsg.payload = '✅ AgroCadena \"' + nueva.nombre + '\" registrada con ID ' + nueva.id;\nreturn msg;",
         "outputs": 1,
         "x": 440,
         "y": 160,
@@ -429,7 +504,7 @@
                 "required": false
             }
         ],
-        "formValue": [],
+        "formValue": {},
         "payload": "",
         "submit": "Agregar Etapa",
         "cancel": "Limpiar",
@@ -447,7 +522,7 @@
         "type": "function",
         "z": "tab-agrocadenas",
         "name": "Guardar Etapa",
-        "func": "var lista = global.get('agrocadenas') || [];\nvar cadena = lista.find(function(a){return a.id === msg.payload.agrocadena_id;});\nif (!cadena) { msg.payload = '❌ No se encontró AgroCadena con ID ' + msg.payload.agrocadena_id; return msg; }\nvar etapa = {id: Date.now().toString(), nombre: msg.payload.nombre, descripcion: msg.payload.descripcion || ''};\ncadena.etapas.push(etapa);\nglobal.set('agrocadenas', lista);\nmsg.payload = '✅ Etapa \"' + etapa.nombre + '\" agregada a \"' + cadena.nombre + '\"';\nreturn msg;",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre || !msg.payload.agrocadena_id) { return null; }\nvar lista = global.get('agrocadenas') || [];\nvar cadena = lista.find(function(a){return a.id === msg.payload.agrocadena_id;});\nif (!cadena) { msg.payload = '❌ No se encontró AgroCadena con ID ' + msg.payload.agrocadena_id; return msg; }\nvar etapa = {id: Date.now().toString(), nombre: msg.payload.nombre, descripcion: msg.payload.descripcion || ''};\ncadena.etapas.push(etapa);\nglobal.set('agrocadenas', lista);\nmsg.payload = '✅ Etapa \"' + etapa.nombre + '\" agregada a \"' + cadena.nombre + '\"';\nreturn msg;",
         "outputs": 1,
         "x": 440,
         "y": 320,
@@ -525,7 +600,7 @@
                 "required": true
             }
         ],
-        "formValue": [],
+        "formValue": {},
         "payload": "",
         "submit": "Registrar",
         "cancel": "Limpiar",
@@ -534,7 +609,8 @@
         "y": 160,
         "wires": [
             [
-                "fn-guardar-usuario"
+                "fn-guardar-usuario",
+                "88b98a3f7e77a561"
             ]
         ]
     },
@@ -543,7 +619,7 @@
         "type": "function",
         "z": "tab-usuarios",
         "name": "Guardar Usuario",
-        "func": "var lista = global.get('usuarios') || [];\nvar existe = lista.find(function(u){return u.usuario === msg.payload.usuario;});\nif (existe) { msg.payload = '❌ El usuario \"' + msg.payload.usuario + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), usuario: msg.payload.usuario, nombre: msg.payload.nombre, apellido: msg.payload.apellido, tipo_usuario: msg.payload.tipo_usuario, clave: msg.payload.clave, hora_registro: new Date().toLocaleTimeString(), fecha_registro: new Date().toLocaleDateString(), estado: 'Activo'};\nlista.push(nuevo);\nglobal.set('usuarios', lista);\nmsg.payload = '✅ Usuario \"' + nuevo.usuario + '\" registrado correctamente';\nreturn msg;",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.usuario) { return null; }\nvar lista = global.get('usuarios') || [];\nvar existe = lista.find(function(u){return u.usuario === msg.payload.usuario;});\nif (existe) { msg.payload = '❌ El usuario \"' + msg.payload.usuario + '\" ya existe'; return msg; }\nvar tiposUsuario = global.get('tiposUsuario') || [];\nvar tipoValido = tiposUsuario.find(function(t){ var nombre = typeof t === 'object' ? t.nombre : t; return nombre.toLowerCase() === msg.payload.tipo_usuario.toLowerCase(); });\nif (!tipoValido) { msg.payload = '❌ Tipo de usuario \"' + msg.payload.tipo_usuario + '\" no válido. Use: ' + tiposUsuario.map(function(t){return typeof t === 'object' ? t.nombre : t;}).join(', '); return msg; }\nvar nuevo = {id: Date.now().toString(), usuario: msg.payload.usuario, nombre: msg.payload.nombre, apellido: msg.payload.apellido, tipo_usuario: msg.payload.tipo_usuario, clave: msg.payload.clave, hora_registro: new Date().toLocaleTimeString(), fecha_registro: new Date().toLocaleDateString(), estado: 'Activo'};\nlista.push(nuevo);\nglobal.set('usuarios', lista);\nmsg.payload = '✅ Usuario \"' + nuevo.usuario + '\" registrado correctamente';\nreturn msg;",
         "outputs": 1,
         "x": 440,
         "y": 160,
@@ -577,7 +653,7 @@
         "type": "function",
         "z": "tab-usuarios",
         "name": "Preparar tabla",
-        "func": "var lista = global.get('usuarios') || [];\nmsg.payload = lista.map(function(u){return {ID:u.id, Usuario:u.usuario, Nombre:u.nombre+' '+u.apellido, Tipo:u.tipo_usuario, Estado:u.estado, Registro:u.fecha_registro};});\nreturn msg;",
+        "func": "var lista = global.get('usuarios') || [];\nvar roles = global.get('roles') || [];\nmsg.payload = lista.map(function(u){var rol = roles.find(function(r){return r.id === u.rol_id;});return {ID:u.id, Usuario:u.usuario, Nombre:u.nombre+' '+u.apellido, Tipo:u.tipo_usuario, Rol:rol?rol.nombre:'-', Estado:u.estado, Registro:u.fecha_registro};});\nreturn msg;",
         "outputs": 1,
         "x": 700,
         "y": 200,
@@ -626,9 +702,16 @@
                 "formatter": "plaintext"
             },
             {
+                "field": "Rol",
+                "title": "Rol",
+                "width": "15%",
+                "align": "center",
+                "formatter": "plaintext"
+            },
+            {
                 "field": "Estado",
                 "title": "Estado",
-                "width": "15%",
+                "width": "10%",
                 "align": "center",
                 "formatter": "plaintext"
             },
@@ -674,6 +757,249 @@
         ]
     },
     {
+        "id": "form-asignar-rol",
+        "type": "ui_form",
+        "z": "tab-usuarios",
+        "name": "Asignar Rol",
+        "label": "Asignar Rol a Usuario",
+        "group": "ui-group-asignar-rol",
+        "order": 1,
+        "width": "12",
+        "height": "3",
+        "options": [
+            {
+                "label": "ID del Usuario",
+                "value": "usuario_id",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "ID del Rol",
+                "value": "rol_id",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "Asignar",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 340,
+        "wires": [
+            [
+                "fn-asignar-rol"
+            ]
+        ]
+    },
+    {
+        "id": "fn-asignar-rol",
+        "type": "function",
+        "z": "tab-usuarios",
+        "name": "Asignar rol a usuario",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.usuario_id || !msg.payload.rol_id) { return null; }\nvar usuarios = global.get('usuarios') || [];\nvar roles = global.get('roles') || [];\nvar usuario = usuarios.find(function(u){return u.id === msg.payload.usuario_id;});\nif (!usuario) { msg.payload = '❌ No se encontró usuario con ID ' + msg.payload.usuario_id; return msg; }\nvar rol = roles.find(function(r){return r.id === msg.payload.rol_id;});\nif (!rol) { msg.payload = '❌ No se encontró rol con ID ' + msg.payload.rol_id; return msg; }\nusuario.rol_id = rol.id;\nglobal.set('usuarios', usuarios);\nmsg.payload = '✅ Rol \"' + rol.nombre + '\" asignado a \"' + usuario.usuario + '\"';\nreturn msg;",
+        "outputs": 1,
+        "x": 460,
+        "y": 340,
+        "wires": [
+            [
+                "notif-usuario",
+                "fn-refrescar-tabla-usuarios"
+            ]
+        ]
+    },
+    {
+        "id": "form-estado-usuario",
+        "type": "ui_form",
+        "z": "tab-usuarios",
+        "name": "Cambiar Estado",
+        "label": "Cambiar Estado de Usuario",
+        "group": "ui-group-estado-usuario",
+        "order": 1,
+        "width": "12",
+        "height": "3",
+        "options": [
+            {
+                "label": "ID del Usuario",
+                "value": "usuario_id",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Nuevo Estado (Activo / Inactivo)",
+                "value": "estado",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "Actualizar Estado",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 420,
+        "wires": [
+            [
+                "fn-cambiar-estado-usuario"
+            ]
+        ]
+    },
+    {
+        "id": "fn-cambiar-estado-usuario",
+        "type": "function",
+        "z": "tab-usuarios",
+        "name": "Cambiar estado usuario",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.usuario_id || !msg.payload.estado) { return null; }\nvar usuarios = global.get('usuarios') || [];\nvar usuario = usuarios.find(function(u){return u.id === msg.payload.usuario_id;});\nif (!usuario) { msg.payload = '❌ No se encontró usuario con ID ' + msg.payload.usuario_id; return msg; }\nvar estadosValidos = ['Activo','Inactivo'];\nif (estadosValidos.indexOf(msg.payload.estado) === -1) { msg.payload = '❌ Estado no válido. Use: Activo o Inactivo'; return msg; }\nvar estadoAnterior = usuario.estado;\nusuario.estado = msg.payload.estado;\nglobal.set('usuarios', usuarios);\nmsg.payload = '✅ Estado de \"' + usuario.usuario + '\" cambiado de ' + estadoAnterior + ' a ' + usuario.estado;\nreturn msg;",
+        "outputs": 1,
+        "x": 460,
+        "y": 420,
+        "wires": [
+            [
+                "notif-usuario",
+                "fn-refrescar-tabla-usuarios"
+            ]
+        ]
+    },
+    {
+        "id": "inject-ref-tipos",
+        "type": "inject",
+        "z": "tab-usuarios",
+        "name": "Cargar referencia tipos",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 1,
+        "topic": "",
+        "x": 180,
+        "y": 500,
+        "wires": [
+            [
+                "fn-ref-tipos-usuario"
+            ]
+        ]
+    },
+    {
+        "id": "fn-ref-tipos-usuario",
+        "type": "function",
+        "z": "tab-usuarios",
+        "name": "Preparar referencia tipos",
+        "func": "var tipos = global.get('tiposUsuario') || [];\nvar nombres = tipos.map(function(t){ return typeof t === 'object' ? t.nombre : t; });\nmsg.payload = nombres.length ? nombres.join('   ·   ') : '(sin datos — cargue catálogos en Tab Maestro)';\nreturn msg;",
+        "outputs": 1,
+        "x": 450,
+        "y": 500,
+        "wires": [
+            [
+                "txt-ref-tipos-usuario"
+            ]
+        ]
+    },
+    {
+        "id": "txt-ref-tipos-usuario",
+        "type": "ui_text",
+        "z": "tab-usuarios",
+        "group": "ui-group-usuarios",
+        "order": 2,
+        "width": "12",
+        "height": "1",
+        "name": "Tipos de Usuario disponibles",
+        "label": "📋 Tipos válidos",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 720,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "btn-ref-tipos-usuario",
+        "type": "ui_button",
+        "z": "tab-usuarios",
+        "name": "Refrescar tipos",
+        "group": "ui-group-usuarios",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "🔄 Ver tipos",
+        "tooltip": "Refresca la lista de tipos de usuario válidos",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 560,
+        "wires": [
+            [
+                "fn-ref-tipos-usuario"
+            ]
+        ]
+    },
+    {
+        "id": "88b98a3f7e77a561",
+        "type": "debug",
+        "z": "tab-usuarios",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 410,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "fc543003aa8de8a5",
+        "type": "ui_form",
+        "z": "tab-usuarios",
+        "name": "",
+        "label": "Usuarios Dan",
+        "group": "ui-group-usuarios",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "nombre",
+                "value": "nombre",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "carro",
+                "value": "carro",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "nombre": "",
+            "carro": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "88b98a3f7e77a561"
+            ]
+        ]
+    },
+    {
         "id": "form-rol",
         "type": "ui_form",
         "z": "tab-acceso",
@@ -691,7 +1017,7 @@
                 "required": true
             }
         ],
-        "formValue": [],
+        "formValue": {},
         "payload": "",
         "submit": "Crear Rol",
         "cancel": "Limpiar",
@@ -709,7 +1035,7 @@
         "type": "function",
         "z": "tab-acceso",
         "name": "Guardar Rol",
-        "func": "var lista = global.get('roles') || [];\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre, fecha_creacion: new Date().toISOString()};\nlista.push(nuevo);\nglobal.set('roles', lista);\nmsg.payload = '✅ Rol \"' + nuevo.nombre + '\" creado';\nreturn msg;",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('roles') || [];\nvar existe = lista.find(function(r){return r.nombre.toLowerCase() === msg.payload.nombre.toLowerCase();});\nif (existe) { msg.payload = '❌ El rol \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre, fecha_creacion: new Date().toISOString(), permisos:[]};\nlista.push(nuevo);\nglobal.set('roles', lista);\nmsg.payload = '✅ Rol \"' + nuevo.nombre + '\" creado';\nreturn msg;",
         "outputs": 1,
         "x": 420,
         "y": 160,
@@ -743,7 +1069,7 @@
         "type": "function",
         "z": "tab-acceso",
         "name": "Preparar tabla roles",
-        "func": "var roles = global.get('roles') || [];\nvar permisos = global.get('permisos') || [];\nmsg.payload = roles.map(function(r){return {ID:r.id, Nombre:r.nombre, Creado:r.fecha_creacion};});\nreturn msg;",
+        "func": "var roles = global.get('roles') || [];\nvar permisos = global.get('permisos') || [];\nmsg.payload = roles.map(function(r){var permisosNombres = (r.permisos||[]).map(function(pid){var p=permisos.find(function(x){return x.id===pid;});return p?p.nombre:pid;}).join(', ');return {ID:r.id, Nombre:r.nombre, Permisos:permisosNombres||'-', Creado:r.fecha_creacion};});\nreturn msg;",
         "outputs": 1,
         "x": 660,
         "y": 200,
@@ -766,21 +1092,28 @@
             {
                 "field": "ID",
                 "title": "ID",
-                "width": "20%",
+                "width": "15%",
                 "align": "left",
                 "formatter": "plaintext"
             },
             {
                 "field": "Nombre",
                 "title": "Nombre",
-                "width": "40%",
+                "width": "25%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Permisos",
+                "title": "Permisos Asignados",
+                "width": "35%",
                 "align": "left",
                 "formatter": "plaintext"
             },
             {
                 "field": "Creado",
                 "title": "Fecha Creación",
-                "width": "40%",
+                "width": "25%",
                 "align": "left",
                 "formatter": "plaintext"
             }
@@ -819,80 +1152,289 @@
         ]
     },
     {
-        "id": "txt-tipos-usuario",
-        "type": "ui_text",
-        "z": "tab-maestro",
-        "group": "ui-group-maestro",
+        "id": "form-permiso",
+        "type": "ui_form",
+        "z": "tab-acceso",
+        "name": "Nuevo Permiso",
+        "label": "Crear Permiso",
+        "group": "ui-group-permisos",
         "order": 1,
-        "width": "12",
-        "height": "1",
-        "name": "Tipos de Usuario",
-        "label": "Tipos de Usuario:",
-        "format": "{{msg.payload}}",
-        "layout": "row-left",
-        "x": 700,
-        "y": 120,
-        "wires": []
+        "width": "6",
+        "height": "3",
+        "options": [
+            {
+                "label": "Nombre del Permiso",
+                "value": "nombre",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "Crear Permiso",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 320,
+        "wires": [
+            [
+                "fn-guardar-permiso"
+            ]
+        ]
     },
     {
-        "id": "txt-tipos-participante",
-        "type": "ui_text",
-        "z": "tab-maestro",
-        "group": "ui-group-maestro",
-        "order": 3,
-        "width": "12",
-        "height": "1",
-        "name": "Tipos de Participante",
-        "label": "Tipos de Participante:",
-        "format": "{{msg.payload}}",
-        "layout": "row-left",
-        "x": 700,
-        "y": 180,
-        "wires": []
+        "id": "fn-guardar-permiso",
+        "type": "function",
+        "z": "tab-acceso",
+        "name": "Guardar Permiso",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('permisos') || [];\nvar existe = lista.find(function(p){return p.nombre.toLowerCase() === msg.payload.nombre.toLowerCase();});\nif (existe) { msg.payload = '❌ El permiso \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre, fecha_creacion: new Date().toISOString()};\nlista.push(nuevo);\nglobal.set('permisos', lista);\nmsg.payload = '✅ Permiso \"' + nuevo.nombre + '\" creado con ID ' + nuevo.id;\nreturn msg;",
+        "outputs": 1,
+        "x": 440,
+        "y": 320,
+        "wires": [
+            [
+                "notif-acceso",
+                "fn-refrescar-permisos"
+            ]
+        ]
     },
     {
-        "id": "txt-tipos-proyeccion",
-        "type": "ui_text",
-        "z": "tab-maestro",
-        "group": "ui-group-maestro",
-        "order": 5,
-        "width": "12",
-        "height": "1",
-        "name": "Tipos de Proyección",
-        "label": "Tipos de Proyección:",
-        "format": "{{msg.payload}}",
-        "layout": "row-left",
-        "x": 700,
-        "y": 240,
-        "wires": []
+        "id": "fn-refrescar-permisos",
+        "type": "function",
+        "z": "tab-acceso",
+        "name": "Preparar tabla permisos",
+        "func": "var permisos = global.get('permisos') || [];\nmsg.payload = permisos.map(function(p){return {ID:p.id, Nombre:p.nombre, Creado:p.fecha_creacion};});\nreturn msg;",
+        "outputs": 1,
+        "x": 680,
+        "y": 360,
+        "wires": [
+            [
+                "tabla-permisos"
+            ]
+        ]
     },
     {
-        "id": "txt-tipos-reporte",
-        "type": "ui_text",
-        "z": "tab-maestro",
-        "group": "ui-group-maestro",
-        "order": 7,
-        "width": "12",
-        "height": "1",
-        "name": "Tipos de Reporte",
-        "label": "Tipos de Reporte:",
-        "format": "{{msg.payload}}",
-        "layout": "row-left",
-        "x": 700,
-        "y": 300,
-        "wires": []
+        "id": "tabla-permisos",
+        "type": "ui_table",
+        "z": "tab-acceso",
+        "group": "ui-group-permisos",
+        "name": "Permisos",
+        "order": 2,
+        "width": "6",
+        "height": "5",
+        "columns": [
+            {
+                "field": "ID",
+                "title": "ID",
+                "width": "20%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Nombre",
+                "title": "Nombre",
+                "width": "40%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Creado",
+                "title": "Fecha Creación",
+                "width": "40%",
+                "align": "left",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 1,
+        "x": 920,
+        "y": 360,
+        "wires": [
+            []
+        ]
     },
     {
-        "id": "btn-cargar-maestro",
+        "id": "btn-refrescar-permisos",
         "type": "ui_button",
-        "z": "tab-maestro",
-        "name": "Cargar Catálogos",
-        "group": "ui-group-maestro",
-        "order": 9,
-        "width": "4",
+        "z": "tab-acceso",
+        "name": "Refrescar Permisos",
+        "group": "ui-group-permisos",
+        "order": 3,
+        "width": "3",
         "height": "1",
         "passthru": false,
-        "label": "🔄 Cargar Catálogos",
+        "label": "🔄 Refrescar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 400,
+        "wires": [
+            [
+                "fn-refrescar-permisos"
+            ]
+        ]
+    },
+    {
+        "id": "form-asignar-permiso",
+        "type": "ui_form",
+        "z": "tab-acceso",
+        "name": "Asignar Permiso a Rol",
+        "label": "Asignar Permiso a Rol",
+        "group": "ui-group-asignar-permiso",
+        "order": 1,
+        "width": "12",
+        "height": "3",
+        "options": [
+            {
+                "label": "ID del Rol",
+                "value": "rol_id",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "ID del Permiso",
+                "value": "permiso_id",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "Asignar",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 480,
+        "wires": [
+            [
+                "fn-asignar-permiso-rol"
+            ]
+        ]
+    },
+    {
+        "id": "fn-asignar-permiso-rol",
+        "type": "function",
+        "z": "tab-acceso",
+        "name": "Asignar permiso a rol",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.rol_id || !msg.payload.permiso_id) { return null; }\nvar roles = global.get('roles') || [];\nvar permisos = global.get('permisos') || [];\nvar rol = roles.find(function(r){return r.id === msg.payload.rol_id;});\nif (!rol) { msg.payload = '❌ No se encontró rol con ID ' + msg.payload.rol_id; return msg; }\nvar permiso = permisos.find(function(p){return p.id === msg.payload.permiso_id;});\nif (!permiso) { msg.payload = '❌ No se encontró permiso con ID ' + msg.payload.permiso_id; return msg; }\nif (!rol.permisos) rol.permisos = [];\nvar yaAsignado = rol.permisos.find(function(p){return p === msg.payload.permiso_id;});\nif (yaAsignado) { msg.payload = '❌ El permiso \"' + permiso.nombre + '\" ya está asignado al rol \"' + rol.nombre + '\"'; return msg; }\nrol.permisos.push(permiso.id);\nglobal.set('roles', roles);\nmsg.payload = '✅ Permiso \"' + permiso.nombre + '\" asignado al rol \"' + rol.nombre + '\"';\nreturn msg;",
+        "outputs": 1,
+        "x": 460,
+        "y": 480,
+        "wires": [
+            [
+                "notif-acceso"
+            ]
+        ]
+    },
+    {
+        "id": "form-modulo",
+        "type": "ui_form",
+        "z": "tab-modulos",
+        "name": "Nuevo Módulo",
+        "label": "Registrar Módulo",
+        "group": "ui-group-modulos",
+        "order": 1,
+        "width": "6",
+        "height": "3",
+        "options": [
+            {
+                "label": "Nombre del Módulo",
+                "value": "nombre",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "Registrar",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 120,
+        "wires": [
+            [
+                "fn-guardar-modulo"
+            ]
+        ]
+    },
+    {
+        "id": "fn-guardar-modulo",
+        "type": "function",
+        "z": "tab-modulos",
+        "name": "Guardar Módulo",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('modulos') || [];\nvar existe = lista.find(function(m){return m.nombre.toLowerCase() === msg.payload.nombre.toLowerCase();});\nif (existe) { msg.payload = '❌ El módulo \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre};\nlista.push(nuevo);\nglobal.set('modulos', lista);\nmsg.payload = '✅ Módulo \"' + nuevo.nombre + '\" creado con ID ' + nuevo.id;\nreturn msg;",
+        "outputs": 1,
+        "x": 420,
+        "y": 120,
+        "wires": [
+            [
+                "notif-modulos",
+                "fn-refrescar-modulos"
+            ]
+        ]
+    },
+    {
+        "id": "fn-refrescar-modulos",
+        "type": "function",
+        "z": "tab-modulos",
+        "name": "Preparar tabla módulos",
+        "func": "var lista = global.get('modulos') || [];\nmsg.payload = lista.map(function(m){return {ID:m.id, Nombre:m.nombre};});\nreturn msg;",
+        "outputs": 1,
+        "x": 660,
+        "y": 160,
+        "wires": [
+            [
+                "tabla-modulos"
+            ]
+        ]
+    },
+    {
+        "id": "tabla-modulos",
+        "type": "ui_table",
+        "z": "tab-modulos",
+        "group": "ui-group-modulos",
+        "name": "Lista Módulos",
+        "order": 2,
+        "width": "6",
+        "height": "5",
+        "columns": [
+            {
+                "field": "ID",
+                "title": "ID",
+                "width": "30%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Nombre",
+                "title": "Nombre",
+                "width": "70%",
+                "align": "left",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 1,
+        "x": 900,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "btn-refrescar-modulos",
+        "type": "ui_button",
+        "z": "tab-modulos",
+        "name": "Refrescar Módulos",
+        "group": "ui-group-modulos",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "🔄 Refrescar",
         "tooltip": "",
         "color": "",
         "bgcolor": "",
@@ -904,83 +1446,230 @@
         "y": 200,
         "wires": [
             [
-                "fn-cargar-maestro"
+                "fn-refrescar-modulos"
             ]
         ]
     },
     {
-        "id": "fn-cargar-maestro",
-        "type": "function",
-        "z": "tab-maestro",
-        "name": "Cargar catálogos",
-        "func": "var msgs = [];\nmsgs[0] = {payload: (global.get('tiposUsuario')||[]).join(', ')};\nmsgs[1] = {payload: (global.get('tiposParticipante')||[]).join(', ')};\nmsgs[2] = {payload: (global.get('tiposProyeccion')||[]).join(', ')};\nmsgs[3] = {payload: (global.get('tiposReporte')||[]).join(', ')};\nreturn msgs;",
-        "outputs": 4,
-        "x": 430,
-        "y": 200,
-        "wires": [
-            [
-                "txt-tipos-usuario"
-            ],
-            [
-                "txt-tipos-participante"
-            ],
-            [
-                "txt-tipos-proyeccion"
-            ],
-            [
-                "txt-tipos-reporte"
-            ]
-        ]
+        "id": "notif-modulos",
+        "type": "ui_toast",
+        "z": "tab-modulos",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "Notificación",
+        "x": 660,
+        "y": 120,
+        "wires": []
     },
     {
-        "id": "form-add-catalogo",
+        "id": "form-pagina",
         "type": "ui_form",
-        "z": "tab-maestro",
-        "name": "Agregar a Catálogo",
-        "label": "Agregar Valor a Catálogo",
-        "group": "ui-group-maestro",
-        "order": 10,
-        "width": "12",
+        "z": "tab-modulos",
+        "name": "Nueva Página",
+        "label": "Registrar Página",
+        "group": "ui-group-paginas",
+        "order": 1,
+        "width": "6",
         "height": "4",
         "options": [
             {
-                "label": "Catálogo (tiposUsuario / tiposParticipante / tiposProyeccion / tiposReporte)",
-                "value": "catalogo",
+                "label": "Nombre de la Página",
+                "value": "nombre",
                 "type": "text",
                 "required": true
             },
             {
-                "label": "Valor a agregar",
-                "value": "valor",
+                "label": "Ruta (ej: /usuarios)",
+                "value": "ruta",
                 "type": "text",
                 "required": true
             }
         ],
-        "formValue": [],
+        "formValue": {},
         "payload": "",
-        "submit": "Agregar",
+        "submit": "Registrar Página",
         "cancel": "Limpiar",
         "topic": "",
         "x": 180,
-        "y": 320,
+        "y": 300,
         "wires": [
             [
-                "fn-add-catalogo"
+                "fn-guardar-pagina"
             ]
         ]
     },
     {
-        "id": "fn-add-catalogo",
+        "id": "fn-guardar-pagina",
         "type": "function",
-        "z": "tab-maestro",
-        "name": "Agregar a catálogo",
-        "func": "var cat = msg.payload.catalogo;\nvar val = msg.payload.valor;\nvar validos = ['tiposUsuario','tiposParticipante','tiposProyeccion','tiposReporte'];\nif (validos.indexOf(cat) === -1) { msg.payload = '❌ Catálogo no válido. Use: ' + validos.join(', '); return msg; }\nvar lista = global.get(cat) || [];\nif (lista.indexOf(val) >= 0) { msg.payload = '❌ \"' + val + '\" ya existe en ' + cat; return msg; }\nlista.push(val);\nglobal.set(cat, lista);\nmsg.payload = '✅ \"' + val + '\" agregado a ' + cat;\nreturn msg;",
+        "z": "tab-modulos",
+        "name": "Guardar Página",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre || !msg.payload.ruta) { return null; }\nvar lista = global.get('paginas') || [];\nvar existe = lista.find(function(p){return p.ruta.toLowerCase() === msg.payload.ruta.toLowerCase();});\nif (existe) { msg.payload = '❌ Ya existe una página con ruta \"' + msg.payload.ruta + '\"'; return msg; }\nvar nueva = {id: Date.now().toString(), nombre: msg.payload.nombre, ruta: msg.payload.ruta, opciones: []};\nlista.push(nueva);\nglobal.set('paginas', lista);\nmsg.payload = '✅ Página \"' + nueva.nombre + '\" creada con ID ' + nueva.id;\nreturn msg;",
         "outputs": 1,
-        "x": 460,
-        "y": 320,
+        "x": 430,
+        "y": 300,
         "wires": [
             [
-                "notif-maestro"
+                "notif-modulos",
+                "fn-refrescar-paginas"
+            ]
+        ]
+    },
+    {
+        "id": "fn-refrescar-paginas",
+        "type": "function",
+        "z": "tab-modulos",
+        "name": "Preparar tabla páginas",
+        "func": "var lista = global.get('paginas') || [];\nmsg.payload = lista.map(function(p){return {ID:p.id, Nombre:p.nombre, Ruta:p.ruta, Opciones:p.opciones.length};});\nreturn msg;",
+        "outputs": 1,
+        "x": 680,
+        "y": 340,
+        "wires": [
+            [
+                "tabla-paginas"
+            ]
+        ]
+    },
+    {
+        "id": "tabla-paginas",
+        "type": "ui_table",
+        "z": "tab-modulos",
+        "group": "ui-group-paginas",
+        "name": "Lista Páginas",
+        "order": 2,
+        "width": "6",
+        "height": "5",
+        "columns": [
+            {
+                "field": "ID",
+                "title": "ID",
+                "width": "20%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Nombre",
+                "title": "Nombre",
+                "width": "30%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Ruta",
+                "title": "Ruta",
+                "width": "30%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Opciones",
+                "title": "Opciones",
+                "width": "20%",
+                "align": "center",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 1,
+        "x": 920,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "btn-refrescar-paginas",
+        "type": "ui_button",
+        "z": "tab-modulos",
+        "name": "Refrescar Páginas",
+        "group": "ui-group-paginas",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "🔄 Refrescar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 380,
+        "wires": [
+            [
+                "fn-refrescar-paginas"
+            ]
+        ]
+    },
+    {
+        "id": "form-opcion",
+        "type": "ui_form",
+        "z": "tab-modulos",
+        "name": "Nueva Opción",
+        "label": "Agregar Opción a Página",
+        "group": "ui-group-opciones",
+        "order": 1,
+        "width": "12",
+        "height": "4",
+        "options": [
+            {
+                "label": "ID de la Página",
+                "value": "pagina_id",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Nombre de la Opción",
+                "value": "nombre",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "URL",
+                "value": "url",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "ID del Módulo (opcional)",
+                "value": "modulo_id",
+                "type": "text",
+                "required": false
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "Agregar Opción",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 480,
+        "wires": [
+            [
+                "fn-guardar-opcion"
+            ]
+        ]
+    },
+    {
+        "id": "fn-guardar-opcion",
+        "type": "function",
+        "z": "tab-modulos",
+        "name": "Guardar Opción",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.pagina_id || !msg.payload.nombre) { return null; }\nvar paginas = global.get('paginas') || [];\nvar pagina = paginas.find(function(p){return p.id === msg.payload.pagina_id;});\nif (!pagina) { msg.payload = '❌ No se encontró página con ID ' + msg.payload.pagina_id; return msg; }\nvar nueva = {id: Date.now().toString(), nombre: msg.payload.nombre, url: msg.payload.url, modulo_id: msg.payload.modulo_id || null};\npagina.opciones.push(nueva);\nglobal.set('paginas', paginas);\nmsg.payload = '✅ Opción \"' + nueva.nombre + '\" agregada a la página \"' + pagina.nombre + '\"';\nreturn msg;",
+        "outputs": 1,
+        "x": 440,
+        "y": 480,
+        "wires": [
+            [
+                "notif-modulos",
+                "fn-refrescar-paginas"
             ]
         ]
     },
@@ -998,8 +1687,621 @@
         "raw": false,
         "topic": "",
         "name": "Notificación",
-        "x": 700,
-        "y": 320,
+        "x": 900,
+        "y": 60,
         "wires": []
+    },
+    {
+        "id": "inject-maestro-init",
+        "type": "inject",
+        "z": "tab-maestro",
+        "name": "Cargar al iniciar",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 1.5,
+        "topic": "",
+        "x": 180,
+        "y": 60,
+        "wires": [
+            [
+                "fn-refrescar-tipos-usuario",
+                "fn-refrescar-tipos-participante",
+                "fn-refrescar-tipos-proyeccion",
+                "fn-refrescar-tipos-reporte"
+            ]
+        ]
+    },
+    {
+        "id": "ui-group-tipos-usuario",
+        "type": "ui_group",
+        "name": "Tipos de Usuario",
+        "tab": "ui-tab-maestro",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "form-tipo-usuario",
+        "type": "ui_form",
+        "z": "tab-maestro",
+        "name": "Nuevo Tipo Usuario",
+        "label": "Registrar Tipo de Usuario",
+        "group": "ui-group-tipos-usuario",
+        "order": 1,
+        "width": "6",
+        "height": "2",
+        "options": [
+            {
+                "label": "Nombre",
+                "value": "nombre",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "Registrar",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 160,
+        "wires": [
+            [
+                "fn-guardar-tipo-usuario"
+            ]
+        ]
+    },
+    {
+        "id": "fn-guardar-tipo-usuario",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Guardar Tipo Usuario",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('tiposUsuario') || [];\nvar existe = lista.find(function(t){ var n = typeof t === 'object' ? t.nombre : t; return n.toLowerCase() === msg.payload.nombre.toLowerCase(); });\nif (existe) { msg.payload = '❌ El tipo \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre};\nlista.push(nuevo);\nglobal.set('tiposUsuario', lista);\nmsg.payload = '✅ Tipo de usuario \"' + nuevo.nombre + '\" registrado';\nreturn msg;",
+        "outputs": 1,
+        "x": 440,
+        "y": 160,
+        "wires": [
+            [
+                "notif-maestro",
+                "fn-refrescar-tipos-usuario"
+            ]
+        ]
+    },
+    {
+        "id": "btn-refrescar-tipos-usuario",
+        "type": "ui_button",
+        "z": "tab-maestro",
+        "name": "Refrescar tipos usuario",
+        "group": "ui-group-tipos-usuario",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "🔄 Refrescar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 240,
+        "wires": [
+            [
+                "fn-refrescar-tipos-usuario"
+            ]
+        ]
+    },
+    {
+        "id": "fn-refrescar-tipos-usuario",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Preparar tabla tipos usuario",
+        "func": "var lista = global.get('tiposUsuario') || [];\nmsg.payload = lista.map(function(t){ return typeof t === 'object' ? {ID:t.id, Nombre:t.nombre} : {ID:'-', Nombre:t}; });\nreturn msg;",
+        "outputs": 1,
+        "x": 680,
+        "y": 200,
+        "wires": [
+            [
+                "tabla-tipos-usuario"
+            ]
+        ]
+    },
+    {
+        "id": "tabla-tipos-usuario",
+        "type": "ui_table",
+        "z": "tab-maestro",
+        "group": "ui-group-tipos-usuario",
+        "name": "Lista Tipos Usuario",
+        "order": 3,
+        "width": "6",
+        "height": "4",
+        "columns": [
+            {
+                "field": "ID",
+                "title": "ID",
+                "width": "30%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Nombre",
+                "title": "Nombre",
+                "width": "70%",
+                "align": "left",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 1,
+        "x": 920,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ui-group-tipos-participante",
+        "type": "ui_group",
+        "name": "Tipos de Participante",
+        "tab": "ui-tab-maestro",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "form-tipo-participante",
+        "type": "ui_form",
+        "z": "tab-maestro",
+        "name": "Nuevo Tipo Participante",
+        "label": "Registrar Tipo de Participante",
+        "group": "ui-group-tipos-participante",
+        "order": 1,
+        "width": "12",
+        "height": "7",
+        "options": [
+            {
+                "label": "Nombre",
+                "value": "nombre",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Dirección",
+                "value": "direccion",
+                "type": "text",
+                "required": false
+            },
+            {
+                "label": "Teléfono",
+                "value": "telefono",
+                "type": "text",
+                "required": false
+            },
+            {
+                "label": "Tipo de Documento (CC / NIT / CE)",
+                "value": "tipo_documento",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Identificación",
+                "value": "identificacion",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Tipo Participante (Primario / Secundario / Final)",
+                "value": "tipo_participante",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Estado (Activo / Inactivo)",
+                "value": "estado",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "Registrar",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 380,
+        "wires": [
+            [
+                "fn-guardar-tipo-participante"
+            ]
+        ]
+    },
+    {
+        "id": "fn-guardar-tipo-participante",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Guardar Tipo Participante",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre || !msg.payload.identificacion) { return null; }\nvar lista = global.get('tiposParticipante') || [];\nvar existe = lista.find(function(t){ return typeof t === 'object' && t.identificacion === msg.payload.identificacion; });\nif (existe) { msg.payload = '❌ Ya existe un participante con identificación \"' + msg.payload.identificacion + '\"'; return msg; }\nvar estadosValidos = ['Activo','Inactivo'];\nif (estadosValidos.indexOf(msg.payload.estado) === -1) { msg.payload = '❌ Estado no válido. Use: Activo o Inactivo'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre, direccion: msg.payload.direccion || '', telefono: msg.payload.telefono || '', tipo_documento: msg.payload.tipo_documento, identificacion: msg.payload.identificacion, tipo_participante: msg.payload.tipo_participante, estado: msg.payload.estado};\nlista.push(nuevo);\nglobal.set('tiposParticipante', lista);\nmsg.payload = '✅ Participante \"' + nuevo.nombre + '\" registrado con ID ' + nuevo.id;\nreturn msg;",
+        "outputs": 1,
+        "x": 460,
+        "y": 380,
+        "wires": [
+            [
+                "notif-maestro",
+                "fn-refrescar-tipos-participante"
+            ]
+        ]
+    },
+    {
+        "id": "btn-refrescar-tipos-participante",
+        "type": "ui_button",
+        "z": "tab-maestro",
+        "name": "Refrescar tipos participante",
+        "group": "ui-group-tipos-participante",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "🔄 Refrescar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 500,
+        "wires": [
+            [
+                "fn-refrescar-tipos-participante"
+            ]
+        ]
+    },
+    {
+        "id": "fn-refrescar-tipos-participante",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Preparar tabla tipos participante",
+        "func": "var lista = global.get('tiposParticipante') || [];\nmsg.payload = lista.map(function(t){\n  if (typeof t === 'object') return {ID:t.id, Nombre:t.nombre, 'Tipo Doc':t.tipo_documento, Identificación:t.identificacion, 'Tipo Part.':t.tipo_participante, Teléfono:t.telefono||'-', Estado:t.estado};\n  return {ID:'-', Nombre:t, 'Tipo Doc':'-', Identificación:'-', 'Tipo Part.':'-', Teléfono:'-', Estado:'-'};\n});\nreturn msg;",
+        "outputs": 1,
+        "x": 700,
+        "y": 440,
+        "wires": [
+            [
+                "tabla-tipos-participante"
+            ]
+        ]
+    },
+    {
+        "id": "tabla-tipos-participante",
+        "type": "ui_table",
+        "z": "tab-maestro",
+        "group": "ui-group-tipos-participante",
+        "name": "Lista Tipos Participante",
+        "order": 3,
+        "width": "12",
+        "height": "5",
+        "columns": [
+            {
+                "field": "ID",
+                "title": "ID",
+                "width": "10%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Nombre",
+                "title": "Nombre",
+                "width": "18%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Tipo Doc",
+                "title": "Tipo Doc.",
+                "width": "10%",
+                "align": "center",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Identificación",
+                "title": "Identificación",
+                "width": "14%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Tipo Part.",
+                "title": "Tipo Participante",
+                "width": "14%",
+                "align": "center",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Teléfono",
+                "title": "Teléfono",
+                "width": "14%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Estado",
+                "title": "Estado",
+                "width": "10%",
+                "align": "center",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 1,
+        "x": 940,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ui-group-tipos-proyeccion",
+        "type": "ui_group",
+        "name": "Tipos de Proyección",
+        "tab": "ui-tab-maestro",
+        "order": 3,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "form-tipo-proyeccion",
+        "type": "ui_form",
+        "z": "tab-maestro",
+        "name": "Nuevo Tipo Proyección",
+        "label": "Registrar Tipo de Proyección",
+        "group": "ui-group-tipos-proyeccion",
+        "order": 1,
+        "width": "6",
+        "height": "2",
+        "options": [
+            {
+                "label": "Nombre",
+                "value": "nombre",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "Registrar",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 620,
+        "wires": [
+            [
+                "fn-guardar-tipo-proyeccion"
+            ]
+        ]
+    },
+    {
+        "id": "fn-guardar-tipo-proyeccion",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Guardar Tipo Proyección",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('tiposProyeccion') || [];\nvar existe = lista.find(function(t){ var n = typeof t === 'object' ? t.nombre : t; return n.toLowerCase() === msg.payload.nombre.toLowerCase(); });\nif (existe) { msg.payload = '❌ El tipo \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre};\nlista.push(nuevo);\nglobal.set('tiposProyeccion', lista);\nmsg.payload = '✅ Tipo de proyección \"' + nuevo.nombre + '\" registrado';\nreturn msg;",
+        "outputs": 1,
+        "x": 450,
+        "y": 620,
+        "wires": [
+            [
+                "notif-maestro",
+                "fn-refrescar-tipos-proyeccion"
+            ]
+        ]
+    },
+    {
+        "id": "btn-refrescar-tipos-proyeccion",
+        "type": "ui_button",
+        "z": "tab-maestro",
+        "name": "Refrescar tipos proyección",
+        "group": "ui-group-tipos-proyeccion",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "🔄 Refrescar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 700,
+        "wires": [
+            [
+                "fn-refrescar-tipos-proyeccion"
+            ]
+        ]
+    },
+    {
+        "id": "fn-refrescar-tipos-proyeccion",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Preparar tabla tipos proyección",
+        "func": "var lista = global.get('tiposProyeccion') || [];\nmsg.payload = lista.map(function(t){ return typeof t === 'object' ? {ID:t.id, Nombre:t.nombre} : {ID:'-', Nombre:t}; });\nreturn msg;",
+        "outputs": 1,
+        "x": 680,
+        "y": 660,
+        "wires": [
+            [
+                "tabla-tipos-proyeccion"
+            ]
+        ]
+    },
+    {
+        "id": "tabla-tipos-proyeccion",
+        "type": "ui_table",
+        "z": "tab-maestro",
+        "group": "ui-group-tipos-proyeccion",
+        "name": "Lista Tipos Proyección",
+        "order": 3,
+        "width": "6",
+        "height": "4",
+        "columns": [
+            {
+                "field": "ID",
+                "title": "ID",
+                "width": "30%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Nombre",
+                "title": "Nombre",
+                "width": "70%",
+                "align": "left",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 1,
+        "x": 920,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ui-group-tipos-reporte",
+        "type": "ui_group",
+        "name": "Tipos de Reporte",
+        "tab": "ui-tab-maestro",
+        "order": 4,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "form-tipo-reporte",
+        "type": "ui_form",
+        "z": "tab-maestro",
+        "name": "Nuevo Tipo Reporte",
+        "label": "Registrar Tipo de Reporte",
+        "group": "ui-group-tipos-reporte",
+        "order": 1,
+        "width": "6",
+        "height": "2",
+        "options": [
+            {
+                "label": "Nombre",
+                "value": "nombre",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "Registrar",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 820,
+        "wires": [
+            [
+                "fn-guardar-tipo-reporte"
+            ]
+        ]
+    },
+    {
+        "id": "fn-guardar-tipo-reporte",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Guardar Tipo Reporte",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('tiposReporte') || [];\nvar existe = lista.find(function(t){ var n = typeof t === 'object' ? t.nombre : t; return n.toLowerCase() === msg.payload.nombre.toLowerCase(); });\nif (existe) { msg.payload = '❌ El tipo \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre};\nlista.push(nuevo);\nglobal.set('tiposReporte', lista);\nmsg.payload = '✅ Tipo de reporte \"' + nuevo.nombre + '\" registrado';\nreturn msg;",
+        "outputs": 1,
+        "x": 440,
+        "y": 820,
+        "wires": [
+            [
+                "notif-maestro",
+                "fn-refrescar-tipos-reporte"
+            ]
+        ]
+    },
+    {
+        "id": "btn-refrescar-tipos-reporte",
+        "type": "ui_button",
+        "z": "tab-maestro",
+        "name": "Refrescar tipos reporte",
+        "group": "ui-group-tipos-reporte",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "🔄 Refrescar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 900,
+        "wires": [
+            [
+                "fn-refrescar-tipos-reporte"
+            ]
+        ]
+    },
+    {
+        "id": "fn-refrescar-tipos-reporte",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Preparar tabla tipos reporte",
+        "func": "var lista = global.get('tiposReporte') || [];\nmsg.payload = lista.map(function(t){ return typeof t === 'object' ? {ID:t.id, Nombre:t.nombre} : {ID:'-', Nombre:t}; });\nreturn msg;",
+        "outputs": 1,
+        "x": 660,
+        "y": 860,
+        "wires": [
+            [
+                "tabla-tipos-reporte"
+            ]
+        ]
+    },
+    {
+        "id": "tabla-tipos-reporte",
+        "type": "ui_table",
+        "z": "tab-maestro",
+        "group": "ui-group-tipos-reporte",
+        "name": "Lista Tipos Reporte",
+        "order": 3,
+        "width": "6",
+        "height": "4",
+        "columns": [
+            {
+                "field": "ID",
+                "title": "ID",
+                "width": "30%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Nombre",
+                "title": "Nombre",
+                "width": "70%",
+                "align": "left",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 1,
+        "x": 900,
+        "y": 860,
+        "wires": [
+            []
+        ]
     }
 ]

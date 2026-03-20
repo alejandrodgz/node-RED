@@ -222,26 +222,191 @@ El nodo `fn-cargar-maestro` en `tab-maestro` fue actualizado para manejar ambos 
 
 ---
 
+---
+
+## P5 — Corrección bug formValue en ui_form
+
+**Archivos afectados:** `data/flows.json` (todos los nodos `ui_form`)
+
+### Problema
+
+`node-red-dashboard v2` requiere que `formValue` sea un **objeto** `{}`. Todos los formularios tenían `"formValue": []` (array vacío), lo que causaba que al hacer submit el payload se emitiera como array vacío en lugar del objeto con los campos del formulario.
+
+### Síntoma
+
+Al registrar un usuario, la tabla mostraba `undefined undefined` en Nombre Completo, y el sistema lanzaba `❌ El usuario "undefined" ya existe`.
+
+### Solución
+
+Reemplazar `"formValue": []` → `"formValue": {}` en los 12 formularios del flujo.
+
+---
+
+## P6 — Guardas null-check en function handlers
+
+**Archivos afectados:** todos los nodos `function` conectados a `ui_form`
+
+### Problema
+
+En `node-red-dashboard v2`, el botón **"Limpiar"** (cancel) y las reconexiones del dashboard emiten mensajes al flow con `msg.payload = null`. Sin validación, los handlers corrían igual y guardaban registros con todos los campos `undefined`.
+
+### Solución
+
+Se agregó la siguiente guarda al inicio de cada handler, verificando los campos requeridos específicos de cada formulario:
+
+```javascript
+if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.<campo_requerido>) { return null; }
+```
+
+| Handler | Campo(s) verificados |
+|---|---|
+| `fn-guardar-usuario` | `usuario` |
+| `fn-guardar-agrocadena` | `nombre` |
+| `fn-guardar-etapa` | `nombre`, `agrocadena_id` |
+| `fn-guardar-rol` | `nombre` |
+| `fn-guardar-permiso` | `nombre` |
+| `fn-asignar-rol` | `usuario_id`, `rol_id` |
+| `fn-cambiar-estado-usuario` | `usuario_id`, `estado` |
+| `fn-asignar-permiso-rol` | `rol_id`, `permiso_id` |
+| `fn-guardar-modulo` | `nombre` |
+| `fn-guardar-pagina` | `nombre`, `ruta` |
+| `fn-guardar-opcion` | `pagina_id`, `nombre` |
+| `fn-add-catalogo` (reemplazado en P8) | `catalogo`, `valor` |
+
+---
+
+## P7 — Validación de duplicados en Rol y validación dinámica de TipoUsuario
+
+### P7a — Duplicados en fn-guardar-rol
+
+`fn-guardar-rol` no tenía validación de duplicados. Se agregó búsqueda case-insensitive antes de insertar. Además se corrigió que los roles creados manualmente no incluían `permisos: []`.
+
+```javascript
+var existe = lista.find(function(r){ return r.nombre.toLowerCase() === msg.payload.nombre.toLowerCase(); });
+if (existe) { msg.payload = '❌ El rol "' + msg.payload.nombre + '" ya existe'; return msg; }
+var nuevo = {id: ..., nombre: ..., fecha_creacion: ..., permisos: []};
+```
+
+### P7b — Validación dinámica de TipoUsuario en fn-guardar-usuario
+
+El campo "Tipo de Usuario" del formulario de registro es texto libre (limitación de `ui_form` v2 — no soporta dropdowns dinámicos). Se agregó validación en `fn-guardar-usuario` contra el catálogo `tiposUsuario` en el storage global:
+
+```javascript
+var tiposUsuario = global.get('tiposUsuario') || [];
+var tipoValido = tiposUsuario.find(function(t){
+    var nombre = typeof t === 'object' ? t.nombre : t;
+    return nombre.toLowerCase() === msg.payload.tipo_usuario.toLowerCase();
+});
+if (!tipoValido) { msg.payload = '❌ Tipo de usuario "' + msg.payload.tipo_usuario + '" no válido. Use: ...'; return msg; }
+```
+
+Esto conecta funcionalmente el catálogo `tiposUsuario` con el registro de usuarios: cualquier tipo agregado en Tablas Maestro queda disponible automáticamente para el registro.
+
+---
+
+## P8 — Refactor completo del Tab Tablas Maestro
+
+**Motivación:** el modelo de dominio define entidades independientes (`TipoUsuario`, `TipoParticipante`, `TipoProyección`, `TipoReporte`, `TablaMaestro`). La implementación anterior los agrupaba en una sola vista genérica con un formulario de texto libre que requería escribir el nombre del catálogo manualmente.
+
+### Estructura anterior
+
+Un único `ui-group-maestro` con:
+- 4 `ui_text` para mostrar listas separadas por coma
+- 1 botón "Cargar Catálogos"
+- 1 formulario genérico con campos `catalogo` + `valor`
+- `tiposParticipante`, `tiposProyeccion`, `tiposReporte` almacenados como arrays de strings
+
+### Estructura nueva
+
+4 secciones independientes, cada una con su propio `ui_group`, formulario, tabla y botón de refresco:
+
+#### Tipos de Usuario (`ui-group-tipos-usuario`)
+
+| Nodo | Tipo | Descripción |
+|---|---|---|
+| `form-tipo-usuario` | `ui_form` | Campo: Nombre |
+| `fn-guardar-tipo-usuario` | `function` | Valida duplicados, guarda `{id, nombre}` en `tiposUsuario` |
+| `fn-refrescar-tipos-usuario` | `function` | Prepara array para tabla |
+| `tabla-tipos-usuario` | `ui_table` | Columnas: ID, Nombre |
+| `btn-refrescar-tipos-usuario` | `ui_button` | Refresco manual |
+
+#### Tipos de Participante (`ui-group-tipos-participante`)
+
+Implementa **todos los atributos** del modelo de dominio:
+
+| Nodo | Tipo | Descripción |
+|---|---|---|
+| `form-tipo-participante` | `ui_form` | Campos: Nombre, Dirección, Teléfono, Tipo Documento, Identificación, Tipo Participante, Estado |
+| `fn-guardar-tipo-participante` | `function` | Valida duplicado por `identificacion`, valida estado `Activo/Inactivo` |
+| `fn-refrescar-tipos-participante` | `function` | Prepara array para tabla |
+| `tabla-tipos-participante` | `ui_table` | Columnas: ID, Nombre, Tipo Doc, Identificación, Tipo Part., Teléfono, Estado |
+| `btn-refrescar-tipos-participante` | `ui_button` | Refresco manual |
+
+Estructura en storage:
+```json
+{
+  "id": "1234567890",
+  "nombre": "Productor",
+  "direccion": "Calle 10 #5-20",
+  "telefono": "3001234567",
+  "tipo_documento": "NIT",
+  "identificacion": "900123456",
+  "tipo_participante": "Primario",
+  "estado": "Activo"
+}
+```
+
+#### Tipos de Proyección (`ui-group-tipos-proyeccion`)
+
+| Nodo | Tipo | Descripción |
+|---|---|---|
+| `form-tipo-proyeccion` | `ui_form` | Campo: Nombre |
+| `fn-guardar-tipo-proyeccion` | `function` | Valida duplicados, guarda `{id, nombre}` |
+| `fn-refrescar-tipos-proyeccion` | `function` | Prepara array para tabla |
+| `tabla-tipos-proyeccion` | `ui_table` | Columnas: ID, Nombre |
+
+#### Tipos de Reporte (`ui-group-tipos-reporte`)
+
+| Nodo | Tipo | Descripción |
+|---|---|---|
+| `form-tipo-reporte` | `ui_form` | Campo: Nombre |
+| `fn-guardar-tipo-reporte` | `function` | Valida duplicados, guarda `{id, nombre}` |
+| `fn-refrescar-tipos-reporte` | `function` | Prepara array para tabla |
+| `tabla-tipos-reporte` | `ui_table` | Columnas: ID, Nombre |
+
+### Migración del init-storage
+
+Los catálogos `tiposParticipante`, `tiposProyeccion` y `tiposReporte` en `fn-init-storage` se migraron de arrays de strings a arrays de objetos `{id, nombre}` (o con atributos completos para TipoParticipante), alineándose al mismo patrón de `TipoUsuario`.
+
+### Auto-carga
+
+Se agregó un nodo `inject-maestro-init` con `once: true` y delay de 1.5s que dispara automáticamente la carga de las 4 tablas al iniciar el contenedor.
+
+---
+
 ## Estado del módulo ADM tras la implementación
 
 | Entidad | Estado |
 |---|---|
-| `TipoUsuario` | ✅ Entidad con id/nombre en `tiposUsuario` |
-| `Usuario` | ✅ CRUD completo + asignación de rol + cambio de estado |
-| `Rol → Admin / Invitado` | ✅ CRUD + permisos asignados visibles en tabla |
+| `TipoUsuario` | ✅ Entidad `{id, nombre}` — CRUD completo con tabla |
+| `TipoParticipante` | ✅ Entidad completa con todos los atributos del modelo — CRUD con tabla |
+| `TipoProyección` | ✅ Entidad `{id, nombre}` — CRUD completo con tabla |
+| `TipoReporte` | ✅ Entidad `{id, nombre}` — CRUD completo con tabla |
+| `TablaMaestro` | ✅ Implementada como 4 secciones independientes en tab Maestro |
+| `Usuario` | ✅ CRUD completo + asignación de rol + cambio de estado + validación dinámica de tipo |
+| `Rol → Admin / Invitado` | ✅ CRUD + permisos asignados visibles en tabla + validación duplicados |
 | `Permiso` | ✅ CRUD completo con UI |
 | Asignación Rol → Permiso | ✅ Formulario + lógica de asignación |
 | Asignación Usuario → Rol | ✅ Formulario + lógica de asignación |
 | `Modulo` | ✅ CRUD completo |
 | `Pagina` | ✅ CRUD completo |
 | `Opcion` (composición con Pagina) | ✅ Agregar opciones a páginas por ID |
-| `TablaMaestro` | ✅ Catálogos con soporte para nuevo formato TipoUsuario |
 
 ---
 
 ## Notas técnicas
 
-- **Almacenamiento**: todo usa `global.set/get` de Node-RED (memoria en RAM del contenedor). Los datos se pierden si el contenedor se reinicia. Para producción se recomienda migrar a MongoDB o PostgreSQL.
+- **Almacenamiento**: todo usa `global.set/get` de Node-RED (memoria en RAM del contenedor). Los datos se pierden si el contenedor se reinicia. Para producción se recomienda migrar a MySQL/PostgreSQL.
 - **IDs**: se generan con `Date.now().toString()` — suficiente para desarrollo; en producción usar UUID.
-- **Retrocompatibilidad**: si el contenedor ya tiene datos en el storage con el formato antiguo de `tiposUsuario` (array de strings), `fn-cargar-maestro` los maneja correctamente sin romper la UI.
+- **Limitación de ui_form v2**: no soporta campos dropdown dinámicos. Los campos de selección (tipo_usuario, tipo_participante, estado) son texto libre validado en el backend del flow.
 - **Para resetear el storage**: reiniciar el contenedor con `docker compose restart` limpia la memoria y vuelve a inicializar los valores por defecto.
