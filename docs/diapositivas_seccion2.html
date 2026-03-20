@@ -222,6 +222,44 @@
   }
   .cat-card .cat-title { color: #e74c3c; font-weight: 700; font-size: 13px; margin-bottom: 6px; }
   .cat-card .cat-nodes { color: #aaa; font-size: 12px; line-height: 1.6; }
+
+  /* Zoom para imágenes (sin afectar el resto del diseño) */
+  .zoomable-diagram { cursor: zoom-in; transition: transform 0.15s ease; }
+  .zoomable-diagram:hover { transform: scale(1.01); }
+
+  .img-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.72);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 24px;
+  }
+  .img-modal.active { display: flex; }
+  .img-modal img {
+    max-width: 100%;
+    max-height: 86vh;
+    border-radius: 14px;
+    box-shadow: 0 18px 60px rgba(0,0,0,0.6);
+  }
+  .img-modal-close {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: #e74c3c;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    cursor: pointer;
+    user-select: none;
+  }
 </style>
 </head>
 <body>
@@ -400,7 +438,7 @@
   <div class="columns">
     <div class="col" style="flex: 0.95;">
       <div class="highlight-box" style="background:#0f346022; margin-top:0;">
-        <img src="Diagrama Node Red.png" alt="Diagrama arquitectura Node-RED" style="width:100%; border-radius:10px; display:block; object-fit:contain;"/>
+        <img src="Diagrama Node Red.png" alt="Diagrama arquitectura Node-RED" class="zoomable-diagram" style="width:100%; border-radius:10px; display:block; object-fit:contain;"/>
       </div>
     </div>
     <div class="col">
@@ -561,6 +599,12 @@
   </div>
 </div>
 
+<!-- Modal de zoom para imágenes -->
+<div id="imgModal" class="img-modal" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
+  <div class="img-modal-close" id="imgModalClose" aria-label="Cerrar">×</div>
+  <img id="imgModalImg" src="" alt="Imagen ampliada" />
+</div>
+
 <!-- Controles -->
 <div class="controls">
   <button onclick="cambiar(-1)">← Anterior</button>
@@ -582,6 +626,40 @@
     document.getElementById('slide-' + actual).classList.add('active');
     document.getElementById('counter').textContent = actual + ' / ' + total;
   }
+
+  // Zoom del diagrama: al hacer click se abre una vista ampliada.
+  const imgModal = document.getElementById('imgModal');
+  const imgModalClose = document.getElementById('imgModalClose');
+  const imgModalImg = document.getElementById('imgModalImg');
+
+  function abrirModalImagen(imgEl) {
+    if (!imgModal || !imgModalImg) return;
+    imgModalImg.src = imgEl.src;
+    imgModalImg.alt = imgEl.alt || 'Imagen ampliada';
+    imgModal.classList.add('active');
+  }
+
+  function cerrarModalImagen() {
+    if (!imgModal) return;
+    imgModal.classList.remove('active');
+    imgModalImg.src = '';
+  }
+
+  document.querySelectorAll('.zoomable-diagram').forEach((imgEl) => {
+    imgEl.addEventListener('click', () => abrirModalImagen(imgEl));
+  });
+
+  if (imgModalClose) {
+    imgModalClose.addEventListener('click', cerrarModalImagen);
+  }
+  if (imgModal) {
+    imgModal.addEventListener('click', (e) => {
+      if (e.target === imgModal) cerrarModalImagen();
+    });
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') cerrarModalImagen();
+  });
 </script>
 </body>
 </html>
