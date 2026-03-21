@@ -363,6 +363,13 @@
   <div class="highlight-box" style="margin-top:20px;">
     Los flows se guardan en <code>flows.json</code> — versionable con <strong>git</strong> y compartible entre el equipo.
   </div>
+  <div style="margin-top:16px; text-align:center;">
+    <button onclick="abrirModalRuta('canva.png','Vista del editor de Node-RED')"
+      style="background:#e74c3c; color:white; border:none; padding:9px 24px; border-radius:8px; font-size:14px; cursor:pointer; transition:background 0.2s;"
+      onmouseover="this.style.background='#c0392b'" onmouseout="this.style.background='#e74c3c'">
+      🔍 Ver editor en pantalla completa
+    </button>
+  </div>
 </div>
 
 <!-- SLIDE 8 — 2.3 Orígenes de Datos -->
@@ -824,6 +831,13 @@
   const imgModal = document.getElementById('imgModal');
   const imgModalClose = document.getElementById('imgModalClose');
   const imgModalImg = document.getElementById('imgModalImg');
+
+  function abrirModalRuta(src, alt) {
+    if (!imgModal || !imgModalImg) return;
+    imgModalImg.src = src;
+    imgModalImg.alt = alt || 'Imagen ampliada';
+    imgModal.classList.add('active');
+  }
 
   function abrirModalImagen(imgEl) {
     if (!imgModal || !imgModalImg) return;
