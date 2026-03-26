@@ -260,6 +260,26 @@
     cursor: pointer;
     user-select: none;
   }
+
+  @media print {
+    @page { size: landscape; margin: 0; }
+    body { background: #1a1a2e !important; display: block; }
+    .controls, .slide-counter { display: none !important; }
+    .slide.active {
+      display: flex !important;
+      flex-direction: column;
+      justify-content: center;
+      width: 100vw;
+      height: 100vh;
+      min-height: unset;
+      border-radius: 0;
+      box-shadow: none;
+      animation: none !important;
+      page-break-after: always;
+      break-after: page;
+    }
+    .slide:last-child { page-break-after: auto !important; break-after: auto !important; }
+  }
 </style>
 </head>
 <body>
@@ -866,6 +886,24 @@
   }
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') cerrarModalImagen();
+  });
+
+  // Imprimir / exportar a PDF: reordena los slides numéricamente y los activa todos
+  window.addEventListener('beforeprint', () => {
+    const parent = document.getElementById('slide-1').parentNode;
+    for (let i = 1; i <= total; i++) {
+      const s = document.getElementById('slide-' + i);
+      if (s) {
+        s.classList.add('active');
+        parent.appendChild(s); // mueve al final del padre en orden numérico
+      }
+    }
+  });
+  window.addEventListener('afterprint', () => {
+    for (let i = 1; i <= total; i++) {
+      const s = document.getElementById('slide-' + i);
+      if (s && i !== actual) s.classList.remove('active');
+    }
   });
 </script>
 </body>

@@ -397,7 +397,7 @@
         "submit": "Registrar",
         "cancel": "Limpiar",
         "topic": "",
-        "x": 180,
+        "x": 170,
         "y": 160,
         "wires": [
             [
@@ -824,8 +824,8 @@
         "submit": "Asignar",
         "cancel": "Limpiar",
         "topic": "",
-        "x": 180,
-        "y": 340,
+        "x": 170,
+        "y": 320,
         "wires": [
             [
                 "fn-asignar-rol"
@@ -1322,8 +1322,8 @@
         "raw": false,
         "topic": "",
         "name": "Notificación",
-        "x": 900,
-        "y": 60,
+        "x": 930,
+        "y": 80,
         "wires": []
     },
     {
@@ -1337,8 +1337,8 @@
         "once": true,
         "onceDelay": 1.5,
         "topic": "",
-        "x": 180,
-        "y": 60,
+        "x": 80,
+        "y": 380,
         "wires": [
             [
                 "fn-refrescar-tipos-usuario",
@@ -1371,8 +1371,8 @@
         "submit": "Registrar",
         "cancel": "Limpiar",
         "topic": "",
-        "x": 180,
-        "y": 160,
+        "x": 150,
+        "y": 80,
         "wires": [
             [
                 "fn-guardar-tipo-usuario"
@@ -1386,8 +1386,8 @@
         "name": "Guardar Tipo Usuario",
         "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('tiposUsuario') || [];\nvar existe = lista.find(function(t){ var n = typeof t === 'object' ? t.nombre : t; return n.toLowerCase() === msg.payload.nombre.toLowerCase(); });\nif (existe) { msg.payload = '❌ El tipo \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre};\nlista.push(nuevo);\nglobal.set('tiposUsuario', lista);\nmsg.payload = '✅ Tipo de usuario \"' + nuevo.nombre + '\" registrado';\nreturn msg;",
         "outputs": 1,
-        "x": 440,
-        "y": 160,
+        "x": 500,
+        "y": 80,
         "wires": [
             [
                 "notif-maestro",
@@ -1428,8 +1428,8 @@
         "name": "Preparar tabla tipos usuario",
         "func": "var lista = global.get('tiposUsuario') || [];\nmsg.payload = lista.map(function(t){ return typeof t === 'object' ? {ID:t.id, Nombre:t.nombre} : {ID:'-', Nombre:t}; });\nreturn msg;",
         "outputs": 1,
-        "x": 680,
-        "y": 200,
+        "x": 1160,
+        "y": 280,
         "wires": [
             [
                 "tabla-tipos-usuario"
@@ -1462,8 +1462,8 @@
             }
         ],
         "outputs": 1,
-        "x": 920,
-        "y": 200,
+        "x": 1490,
+        "y": 280,
         "wires": [
             []
         ]
@@ -1527,8 +1527,8 @@
         "submit": "Registrar",
         "cancel": "Limpiar",
         "topic": "",
-        "x": 180,
-        "y": 380,
+        "x": 250,
+        "y": 300,
         "wires": [
             [
                 "fn-guardar-tipo-participante"
@@ -1653,7 +1653,7 @@
             }
         ],
         "outputs": 1,
-        "x": 940,
+        "x": 1010,
         "y": 440,
         "wires": [
             []
@@ -1859,8 +1859,8 @@
         "name": "Preparar tabla tipos reporte",
         "func": "var lista = global.get('tiposReporte') || [];\nmsg.payload = lista.map(function(t){ return typeof t === 'object' ? {ID:t.id, Nombre:t.nombre} : {ID:'-', Nombre:t}; });\nreturn msg;",
         "outputs": 1,
-        "x": 660,
-        "y": 860,
+        "x": 680,
+        "y": 900,
         "wires": [
             [
                 "tabla-tipos-reporte"
@@ -1893,7 +1893,7 @@
             }
         ],
         "outputs": 1,
-        "x": 900,
+        "x": 970,
         "y": 860,
         "wires": [
             []

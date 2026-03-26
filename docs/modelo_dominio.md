@@ -1,105 +1,108 @@
-# Modelo de Dominio — Evergreen
+# Modelo de Dominio — Evergreen · Módulo ADM
 
 ```mermaid
 classDiagram
     direction TB
 
+    %% ── GESTIÓN DE USUARIOS ──────────────────────────────
     class TipoUsuario {
+        +id : int
+        +nombre : string
     }
 
     class Usuario {
-        +id
-        +usuario
-        +nombre
-        +apellido
-        +tipo_usuario
-        +clave
-        +hora_registro
-        +fecha_registro
-        +estado
+        +id : int
+        +usuario : string
+        +nombre : string
+        +apellido : string
+        +clave : string
+        +estado : boolean
+        +fecha_registro : date
     }
 
+    %% ── CONTROL DE ACCESO ────────────────────────────────
     class Rol {
         <<abstract>>
+        +id : int
+        +nombre : string
+        +fecha_creacion : date
     }
 
     class Admin {
-        +id
-        +nombre
-        +fecha_de_creacion
     }
 
     class Invitado {
-        +id
-        +nombre
-        +fecha_de_creacion
     }
 
     class Permiso {
-        +id
-        +nombre
-        +fecha_creacion
+        +id : int
+        +nombre : string
+        +fecha_creacion : date
     }
 
+    %% ── NAVEGACIÓN ───────────────────────────────────────
     class Pagina {
-        +id
-        +nombre
-        +ruta
+        +id : int
+        +nombre : string
+        +ruta : string
     }
 
     class Opcion {
-        +id
-        +nombre
-        +URL
+        +id : int
+        +nombre : string
+        +URL : string
     }
 
     class Modulo {
+        +id : int
+        +nombre : string
     }
 
-    class TablaMaestro {
-    }
-
+    %% ── AGROCADENA ───────────────────────────────────────
     class AgroCadena {
-        +method()
+        +id : int
+        +nombre : string
+        +descripcion : string
     }
 
-    class Etapas {
-        +method()
+    class Etapa {
+        +id : int
+        +nombre : string
+        +descripcion : string
     }
 
     class TipoParticipante {
-        +id
-        +nombre
-        +direccion
-        +telefono
-        +tipo_documento
-        +identificacion
-        +tipo_participante
-        +estado
+        +id : int
+        +nombre : string
+        +tipo_documento : string
+        +identificacion : string
+        +estado : boolean
     }
 
-    class TipoProyeccion {
+    %% ── TABLAS MAESTRO ───────────────────────────────────
+    class TablaMaestro {
+        +id : int
+        +nombre : string
     }
 
-    class TipoReporte {
-    }
+    %% ── RELACIONES ───────────────────────────────────────
 
     %% Herencia
     Rol <|-- Admin
     Rol <|-- Invitado
 
+    %% Composición (el hijo no existe sin el padre)
+    AgroCadena *-- Etapa : contiene
+    Pagina *-- Opcion : contiene
+
     %% Asociaciones
     TipoUsuario --> Usuario : clasifica
-    Usuario --> Rol : tiene
-    Rol --> Permiso : tiene
-    Invitado --> Opcion : accede a
+    Usuario --> Rol : tiene asignado
+    Rol --> Permiso : otorga
+    Invitado --> Opcion : puede acceder a
     Opcion --> Modulo : pertenece a
     Modulo --> TablaMaestro : referencia
-    Etapas --> TipoParticipante : involucra
-
-    %% Composición
-    AgroCadena *-- Etapas : contiene
-    Pagina *-- Opcion : contiene
+    Etapa --> TipoParticipante : involucra
 ```
 
 ## Leyenda
@@ -108,4 +111,14 @@ classDiagram
 |---|---|---|
 | `*--` | Composición | El hijo no existe sin el padre |
 | `<\|--` | Herencia | El hijo es un tipo del padre |
-| `-->` | Asociación | Una entidad conoce/referencia a otra |
+| `-->` | Asociación | Una entidad conoce / referencia a otra |
+
+## Módulos del sistema
+
+| Módulo | Entidades principales |
+|---|---|
+| **Gestión de Usuarios** | TipoUsuario, Usuario |
+| **Control de Acceso** | Rol, Admin, Invitado, Permiso |
+| **Navegación** | Pagina, Opcion, Modulo |
+| **AgroCadena** | AgroCadena, Etapa, TipoParticipante |
+| **Tablas Maestro** | TablaMaestro, TipoProyeccion, TipoReporte |

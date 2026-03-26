@@ -291,6 +291,46 @@
         }
     },
     {
+        "id": "ui-group-tipos-usuario",
+        "type": "ui_group",
+        "name": "Tipos de Usuario",
+        "tab": "ui-tab-maestro",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui-group-tipos-participante",
+        "type": "ui_group",
+        "name": "Tipos de Participante",
+        "tab": "ui-tab-maestro",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui-group-tipos-proyeccion",
+        "type": "ui_group",
+        "name": "Tipos de Proyección",
+        "tab": "ui-tab-maestro",
+        "order": 3,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "ui-group-tipos-reporte",
+        "type": "ui_group",
+        "name": "Tipos de Reporte",
+        "tab": "ui-tab-maestro",
+        "order": 4,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
         "id": "init-storage",
         "type": "inject",
         "z": "tab-agrocadenas",
@@ -357,7 +397,7 @@
         "submit": "Registrar",
         "cancel": "Limpiar",
         "topic": "",
-        "x": 180,
+        "x": 170,
         "y": 160,
         "wires": [
             [
@@ -559,6 +599,58 @@
         ]
     },
     {
+        "id": "05a641fdfefc869e",
+        "type": "ui_form",
+        "z": "tab-agrocadenas",
+        "name": "",
+        "label": "",
+        "group": "ui-group-agrocadenas",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "nombre2",
+                "value": "nombre2",
+                "type": "text",
+                "required": false,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "nombre2": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "x": 190,
+        "y": 420,
+        "wires": [
+            [
+                "512570e1a1b924de"
+            ]
+        ]
+    },
+    {
+        "id": "512570e1a1b924de",
+        "type": "debug",
+        "z": "tab-agrocadenas",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 420,
+        "y": 420,
+        "wires": []
+    },
+    {
         "id": "form-usuario",
         "type": "ui_form",
         "z": "tab-usuarios",
@@ -609,8 +701,7 @@
         "y": 160,
         "wires": [
             [
-                "fn-guardar-usuario",
-                "88b98a3f7e77a561"
+                "fn-guardar-usuario"
             ]
         ]
     },
@@ -748,8 +839,8 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 180,
-        "y": 260,
+        "x": 460,
+        "y": 240,
         "wires": [
             [
                 "fn-refrescar-tabla-usuarios"
@@ -785,8 +876,8 @@
         "submit": "Asignar",
         "cancel": "Limpiar",
         "topic": "",
-        "x": 180,
-        "y": 340,
+        "x": 170,
+        "y": 320,
         "wires": [
             [
                 "fn-asignar-rol"
@@ -800,8 +891,8 @@
         "name": "Asignar rol a usuario",
         "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.usuario_id || !msg.payload.rol_id) { return null; }\nvar usuarios = global.get('usuarios') || [];\nvar roles = global.get('roles') || [];\nvar usuario = usuarios.find(function(u){return u.id === msg.payload.usuario_id;});\nif (!usuario) { msg.payload = '❌ No se encontró usuario con ID ' + msg.payload.usuario_id; return msg; }\nvar rol = roles.find(function(r){return r.id === msg.payload.rol_id;});\nif (!rol) { msg.payload = '❌ No se encontró rol con ID ' + msg.payload.rol_id; return msg; }\nusuario.rol_id = rol.id;\nglobal.set('usuarios', usuarios);\nmsg.payload = '✅ Rol \"' + rol.nombre + '\" asignado a \"' + usuario.usuario + '\"';\nreturn msg;",
         "outputs": 1,
-        "x": 460,
-        "y": 340,
+        "x": 420,
+        "y": 320,
         "wires": [
             [
                 "notif-usuario",
@@ -935,67 +1026,6 @@
         "wires": [
             [
                 "fn-ref-tipos-usuario"
-            ]
-        ]
-    },
-    {
-        "id": "88b98a3f7e77a561",
-        "type": "debug",
-        "z": "tab-usuarios",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": true,
-        "tostatus": true,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "payload",
-        "statusType": "auto",
-        "x": 410,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "fc543003aa8de8a5",
-        "type": "ui_form",
-        "z": "tab-usuarios",
-        "name": "",
-        "label": "Usuarios Dan",
-        "group": "ui-group-usuarios",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "options": [
-            {
-                "label": "nombre",
-                "value": "nombre",
-                "type": "text",
-                "required": true,
-                "rows": null
-            },
-            {
-                "label": "carro",
-                "value": "carro",
-                "type": "text",
-                "required": true,
-                "rows": null
-            }
-        ],
-        "formValue": {
-            "nombre": "",
-            "carro": ""
-        },
-        "payload": "",
-        "submit": "submit",
-        "cancel": "cancel",
-        "topic": "topic",
-        "topicType": "msg",
-        "splitLayout": "",
-        "x": 200,
-        "y": 80,
-        "wires": [
-            [
-                "88b98a3f7e77a561"
             ]
         ]
     },
@@ -1328,6 +1358,597 @@
             [
                 "notif-acceso"
             ]
+        ]
+    },
+    {
+        "id": "notif-maestro",
+        "type": "ui_toast",
+        "z": "tab-maestro",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "Notificación",
+        "x": 930,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "inject-maestro-init",
+        "type": "inject",
+        "z": "tab-maestro",
+        "name": "Cargar al iniciar",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 1.5,
+        "topic": "",
+        "x": 80,
+        "y": 380,
+        "wires": [
+            [
+                "fn-refrescar-tipos-usuario",
+                "fn-refrescar-tipos-participante",
+                "fn-refrescar-tipos-proyeccion",
+                "fn-refrescar-tipos-reporte"
+            ]
+        ]
+    },
+    {
+        "id": "form-tipo-usuario",
+        "type": "ui_form",
+        "z": "tab-maestro",
+        "name": "Nuevo Tipo Usuario",
+        "label": "Registrar Tipo de Usuario",
+        "group": "ui-group-tipos-usuario",
+        "order": 1,
+        "width": "6",
+        "height": "2",
+        "options": [
+            {
+                "label": "Nombre",
+                "value": "nombre",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "Registrar",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 150,
+        "y": 80,
+        "wires": [
+            [
+                "fn-guardar-tipo-usuario"
+            ]
+        ]
+    },
+    {
+        "id": "fn-guardar-tipo-usuario",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Guardar Tipo Usuario",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('tiposUsuario') || [];\nvar existe = lista.find(function(t){ var n = typeof t === 'object' ? t.nombre : t; return n.toLowerCase() === msg.payload.nombre.toLowerCase(); });\nif (existe) { msg.payload = '❌ El tipo \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre};\nlista.push(nuevo);\nglobal.set('tiposUsuario', lista);\nmsg.payload = '✅ Tipo de usuario \"' + nuevo.nombre + '\" registrado';\nreturn msg;",
+        "outputs": 1,
+        "x": 500,
+        "y": 80,
+        "wires": [
+            [
+                "notif-maestro",
+                "fn-refrescar-tipos-usuario"
+            ]
+        ]
+    },
+    {
+        "id": "btn-refrescar-tipos-usuario",
+        "type": "ui_button",
+        "z": "tab-maestro",
+        "name": "Refrescar tipos usuario",
+        "group": "ui-group-tipos-usuario",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "🔄 Refrescar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 240,
+        "wires": [
+            [
+                "fn-refrescar-tipos-usuario"
+            ]
+        ]
+    },
+    {
+        "id": "fn-refrescar-tipos-usuario",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Preparar tabla tipos usuario",
+        "func": "var lista = global.get('tiposUsuario') || [];\nmsg.payload = lista.map(function(t){ return typeof t === 'object' ? {ID:t.id, Nombre:t.nombre} : {ID:'-', Nombre:t}; });\nreturn msg;",
+        "outputs": 1,
+        "x": 1160,
+        "y": 280,
+        "wires": [
+            [
+                "tabla-tipos-usuario"
+            ]
+        ]
+    },
+    {
+        "id": "tabla-tipos-usuario",
+        "type": "ui_table",
+        "z": "tab-maestro",
+        "group": "ui-group-tipos-usuario",
+        "name": "Lista Tipos Usuario",
+        "order": 3,
+        "width": "6",
+        "height": "4",
+        "columns": [
+            {
+                "field": "ID",
+                "title": "ID",
+                "width": "30%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Nombre",
+                "title": "Nombre",
+                "width": "70%",
+                "align": "left",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 1,
+        "x": 1490,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "form-tipo-participante",
+        "type": "ui_form",
+        "z": "tab-maestro",
+        "name": "Nuevo Tipo Participante",
+        "label": "Registrar Tipo de Participante",
+        "group": "ui-group-tipos-participante",
+        "order": 1,
+        "width": "12",
+        "height": "7",
+        "options": [
+            {
+                "label": "Nombre",
+                "value": "nombre",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Dirección",
+                "value": "direccion",
+                "type": "text",
+                "required": false
+            },
+            {
+                "label": "Teléfono",
+                "value": "telefono",
+                "type": "text",
+                "required": false
+            },
+            {
+                "label": "Tipo de Documento (CC / NIT / CE)",
+                "value": "tipo_documento",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Identificación",
+                "value": "identificacion",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Tipo Participante (Primario / Secundario / Final)",
+                "value": "tipo_participante",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "Estado (Activo / Inactivo)",
+                "value": "estado",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "Registrar",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 250,
+        "y": 300,
+        "wires": [
+            [
+                "fn-guardar-tipo-participante"
+            ]
+        ]
+    },
+    {
+        "id": "fn-guardar-tipo-participante",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Guardar Tipo Participante",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre || !msg.payload.identificacion) { return null; }\nvar lista = global.get('tiposParticipante') || [];\nvar existe = lista.find(function(t){ return typeof t === 'object' && t.identificacion === msg.payload.identificacion; });\nif (existe) { msg.payload = '❌ Ya existe un participante con identificación \"' + msg.payload.identificacion + '\"'; return msg; }\nvar estadosValidos = ['Activo','Inactivo'];\nif (estadosValidos.indexOf(msg.payload.estado) === -1) { msg.payload = '❌ Estado no válido. Use: Activo o Inactivo'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre, direccion: msg.payload.direccion || '', telefono: msg.payload.telefono || '', tipo_documento: msg.payload.tipo_documento, identificacion: msg.payload.identificacion, tipo_participante: msg.payload.tipo_participante, estado: msg.payload.estado};\nlista.push(nuevo);\nglobal.set('tiposParticipante', lista);\nmsg.payload = '✅ Participante \"' + nuevo.nombre + '\" registrado con ID ' + nuevo.id;\nreturn msg;",
+        "outputs": 1,
+        "x": 460,
+        "y": 380,
+        "wires": [
+            [
+                "notif-maestro",
+                "fn-refrescar-tipos-participante"
+            ]
+        ]
+    },
+    {
+        "id": "btn-refrescar-tipos-participante",
+        "type": "ui_button",
+        "z": "tab-maestro",
+        "name": "Refrescar tipos participante",
+        "group": "ui-group-tipos-participante",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "🔄 Refrescar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 500,
+        "wires": [
+            [
+                "fn-refrescar-tipos-participante"
+            ]
+        ]
+    },
+    {
+        "id": "fn-refrescar-tipos-participante",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Preparar tabla tipos participante",
+        "func": "var lista = global.get('tiposParticipante') || [];\nmsg.payload = lista.map(function(t){\n  if (typeof t === 'object') return {ID:t.id, Nombre:t.nombre, 'Tipo Doc':t.tipo_documento, Identificación:t.identificacion, 'Tipo Part.':t.tipo_participante, Teléfono:t.telefono||'-', Estado:t.estado};\n  return {ID:'-', Nombre:t, 'Tipo Doc':'-', Identificación:'-', 'Tipo Part.':'-', Teléfono:'-', Estado:'-'};\n});\nreturn msg;",
+        "outputs": 1,
+        "x": 700,
+        "y": 440,
+        "wires": [
+            [
+                "tabla-tipos-participante"
+            ]
+        ]
+    },
+    {
+        "id": "tabla-tipos-participante",
+        "type": "ui_table",
+        "z": "tab-maestro",
+        "group": "ui-group-tipos-participante",
+        "name": "Lista Tipos Participante",
+        "order": 3,
+        "width": "12",
+        "height": "5",
+        "columns": [
+            {
+                "field": "ID",
+                "title": "ID",
+                "width": "10%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Nombre",
+                "title": "Nombre",
+                "width": "18%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Tipo Doc",
+                "title": "Tipo Doc.",
+                "width": "10%",
+                "align": "center",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Identificación",
+                "title": "Identificación",
+                "width": "14%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Tipo Part.",
+                "title": "Tipo Participante",
+                "width": "14%",
+                "align": "center",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Teléfono",
+                "title": "Teléfono",
+                "width": "14%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Estado",
+                "title": "Estado",
+                "width": "10%",
+                "align": "center",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 1,
+        "x": 1010,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "form-tipo-proyeccion",
+        "type": "ui_form",
+        "z": "tab-maestro",
+        "name": "Nuevo Tipo Proyección",
+        "label": "Registrar Tipo de Proyección",
+        "group": "ui-group-tipos-proyeccion",
+        "order": 1,
+        "width": "6",
+        "height": "2",
+        "options": [
+            {
+                "label": "Nombre",
+                "value": "nombre",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "Registrar",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 620,
+        "wires": [
+            [
+                "fn-guardar-tipo-proyeccion"
+            ]
+        ]
+    },
+    {
+        "id": "fn-guardar-tipo-proyeccion",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Guardar Tipo Proyección",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('tiposProyeccion') || [];\nvar existe = lista.find(function(t){ var n = typeof t === 'object' ? t.nombre : t; return n.toLowerCase() === msg.payload.nombre.toLowerCase(); });\nif (existe) { msg.payload = '❌ El tipo \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre};\nlista.push(nuevo);\nglobal.set('tiposProyeccion', lista);\nmsg.payload = '✅ Tipo de proyección \"' + nuevo.nombre + '\" registrado';\nreturn msg;",
+        "outputs": 1,
+        "x": 450,
+        "y": 620,
+        "wires": [
+            [
+                "notif-maestro",
+                "fn-refrescar-tipos-proyeccion"
+            ]
+        ]
+    },
+    {
+        "id": "btn-refrescar-tipos-proyeccion",
+        "type": "ui_button",
+        "z": "tab-maestro",
+        "name": "Refrescar tipos proyección",
+        "group": "ui-group-tipos-proyeccion",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "🔄 Refrescar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 700,
+        "wires": [
+            [
+                "fn-refrescar-tipos-proyeccion"
+            ]
+        ]
+    },
+    {
+        "id": "fn-refrescar-tipos-proyeccion",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Preparar tabla tipos proyección",
+        "func": "var lista = global.get('tiposProyeccion') || [];\nmsg.payload = lista.map(function(t){ return typeof t === 'object' ? {ID:t.id, Nombre:t.nombre} : {ID:'-', Nombre:t}; });\nreturn msg;",
+        "outputs": 1,
+        "x": 680,
+        "y": 660,
+        "wires": [
+            [
+                "tabla-tipos-proyeccion"
+            ]
+        ]
+    },
+    {
+        "id": "tabla-tipos-proyeccion",
+        "type": "ui_table",
+        "z": "tab-maestro",
+        "group": "ui-group-tipos-proyeccion",
+        "name": "Lista Tipos Proyección",
+        "order": 3,
+        "width": "6",
+        "height": "4",
+        "columns": [
+            {
+                "field": "ID",
+                "title": "ID",
+                "width": "30%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Nombre",
+                "title": "Nombre",
+                "width": "70%",
+                "align": "left",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 1,
+        "x": 920,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "form-tipo-reporte",
+        "type": "ui_form",
+        "z": "tab-maestro",
+        "name": "Nuevo Tipo Reporte",
+        "label": "Registrar Tipo de Reporte",
+        "group": "ui-group-tipos-reporte",
+        "order": 1,
+        "width": "6",
+        "height": "2",
+        "options": [
+            {
+                "label": "Nombre",
+                "value": "nombre",
+                "type": "text",
+                "required": true
+            }
+        ],
+        "formValue": {},
+        "payload": "",
+        "submit": "Registrar",
+        "cancel": "Limpiar",
+        "topic": "",
+        "x": 180,
+        "y": 820,
+        "wires": [
+            [
+                "fn-guardar-tipo-reporte"
+            ]
+        ]
+    },
+    {
+        "id": "fn-guardar-tipo-reporte",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Guardar Tipo Reporte",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('tiposReporte') || [];\nvar existe = lista.find(function(t){ var n = typeof t === 'object' ? t.nombre : t; return n.toLowerCase() === msg.payload.nombre.toLowerCase(); });\nif (existe) { msg.payload = '❌ El tipo \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre};\nlista.push(nuevo);\nglobal.set('tiposReporte', lista);\nmsg.payload = '✅ Tipo de reporte \"' + nuevo.nombre + '\" registrado';\nreturn msg;",
+        "outputs": 1,
+        "x": 440,
+        "y": 820,
+        "wires": [
+            [
+                "notif-maestro",
+                "fn-refrescar-tipos-reporte"
+            ]
+        ]
+    },
+    {
+        "id": "btn-refrescar-tipos-reporte",
+        "type": "ui_button",
+        "z": "tab-maestro",
+        "name": "Refrescar tipos reporte",
+        "group": "ui-group-tipos-reporte",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "passthru": false,
+        "label": "🔄 Refrescar",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 180,
+        "y": 900,
+        "wires": [
+            [
+                "fn-refrescar-tipos-reporte"
+            ]
+        ]
+    },
+    {
+        "id": "fn-refrescar-tipos-reporte",
+        "type": "function",
+        "z": "tab-maestro",
+        "name": "Preparar tabla tipos reporte",
+        "func": "var lista = global.get('tiposReporte') || [];\nmsg.payload = lista.map(function(t){ return typeof t === 'object' ? {ID:t.id, Nombre:t.nombre} : {ID:'-', Nombre:t}; });\nreturn msg;",
+        "outputs": 1,
+        "x": 680,
+        "y": 900,
+        "wires": [
+            [
+                "tabla-tipos-reporte"
+            ]
+        ]
+    },
+    {
+        "id": "tabla-tipos-reporte",
+        "type": "ui_table",
+        "z": "tab-maestro",
+        "group": "ui-group-tipos-reporte",
+        "name": "Lista Tipos Reporte",
+        "order": 3,
+        "width": "6",
+        "height": "4",
+        "columns": [
+            {
+                "field": "ID",
+                "title": "ID",
+                "width": "30%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Nombre",
+                "title": "Nombre",
+                "width": "70%",
+                "align": "left",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 1,
+        "x": 970,
+        "y": 860,
+        "wires": [
+            []
         ]
     },
     {
@@ -1671,637 +2292,6 @@
                 "notif-modulos",
                 "fn-refrescar-paginas"
             ]
-        ]
-    },
-    {
-        "id": "notif-maestro",
-        "type": "ui_toast",
-        "z": "tab-maestro",
-        "position": "top right",
-        "displayTime": "3",
-        "highlight": "",
-        "sendall": true,
-        "outputs": 0,
-        "ok": "OK",
-        "cancel": "",
-        "raw": false,
-        "topic": "",
-        "name": "Notificación",
-        "x": 900,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "inject-maestro-init",
-        "type": "inject",
-        "z": "tab-maestro",
-        "name": "Cargar al iniciar",
-        "props": [],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 1.5,
-        "topic": "",
-        "x": 180,
-        "y": 60,
-        "wires": [
-            [
-                "fn-refrescar-tipos-usuario",
-                "fn-refrescar-tipos-participante",
-                "fn-refrescar-tipos-proyeccion",
-                "fn-refrescar-tipos-reporte"
-            ]
-        ]
-    },
-    {
-        "id": "ui-group-tipos-usuario",
-        "type": "ui_group",
-        "name": "Tipos de Usuario",
-        "tab": "ui-tab-maestro",
-        "order": 1,
-        "disp": true,
-        "width": "12",
-        "collapse": false
-    },
-    {
-        "id": "form-tipo-usuario",
-        "type": "ui_form",
-        "z": "tab-maestro",
-        "name": "Nuevo Tipo Usuario",
-        "label": "Registrar Tipo de Usuario",
-        "group": "ui-group-tipos-usuario",
-        "order": 1,
-        "width": "6",
-        "height": "2",
-        "options": [
-            {
-                "label": "Nombre",
-                "value": "nombre",
-                "type": "text",
-                "required": true
-            }
-        ],
-        "formValue": {},
-        "payload": "",
-        "submit": "Registrar",
-        "cancel": "Limpiar",
-        "topic": "",
-        "x": 180,
-        "y": 160,
-        "wires": [
-            [
-                "fn-guardar-tipo-usuario"
-            ]
-        ]
-    },
-    {
-        "id": "fn-guardar-tipo-usuario",
-        "type": "function",
-        "z": "tab-maestro",
-        "name": "Guardar Tipo Usuario",
-        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('tiposUsuario') || [];\nvar existe = lista.find(function(t){ var n = typeof t === 'object' ? t.nombre : t; return n.toLowerCase() === msg.payload.nombre.toLowerCase(); });\nif (existe) { msg.payload = '❌ El tipo \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre};\nlista.push(nuevo);\nglobal.set('tiposUsuario', lista);\nmsg.payload = '✅ Tipo de usuario \"' + nuevo.nombre + '\" registrado';\nreturn msg;",
-        "outputs": 1,
-        "x": 440,
-        "y": 160,
-        "wires": [
-            [
-                "notif-maestro",
-                "fn-refrescar-tipos-usuario"
-            ]
-        ]
-    },
-    {
-        "id": "btn-refrescar-tipos-usuario",
-        "type": "ui_button",
-        "z": "tab-maestro",
-        "name": "Refrescar tipos usuario",
-        "group": "ui-group-tipos-usuario",
-        "order": 2,
-        "width": "3",
-        "height": "1",
-        "passthru": false,
-        "label": "🔄 Refrescar",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "icon": "",
-        "payload": "",
-        "payloadType": "str",
-        "topic": "",
-        "x": 180,
-        "y": 240,
-        "wires": [
-            [
-                "fn-refrescar-tipos-usuario"
-            ]
-        ]
-    },
-    {
-        "id": "fn-refrescar-tipos-usuario",
-        "type": "function",
-        "z": "tab-maestro",
-        "name": "Preparar tabla tipos usuario",
-        "func": "var lista = global.get('tiposUsuario') || [];\nmsg.payload = lista.map(function(t){ return typeof t === 'object' ? {ID:t.id, Nombre:t.nombre} : {ID:'-', Nombre:t}; });\nreturn msg;",
-        "outputs": 1,
-        "x": 680,
-        "y": 200,
-        "wires": [
-            [
-                "tabla-tipos-usuario"
-            ]
-        ]
-    },
-    {
-        "id": "tabla-tipos-usuario",
-        "type": "ui_table",
-        "z": "tab-maestro",
-        "group": "ui-group-tipos-usuario",
-        "name": "Lista Tipos Usuario",
-        "order": 3,
-        "width": "6",
-        "height": "4",
-        "columns": [
-            {
-                "field": "ID",
-                "title": "ID",
-                "width": "30%",
-                "align": "left",
-                "formatter": "plaintext"
-            },
-            {
-                "field": "Nombre",
-                "title": "Nombre",
-                "width": "70%",
-                "align": "left",
-                "formatter": "plaintext"
-            }
-        ],
-        "outputs": 1,
-        "x": 920,
-        "y": 200,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "ui-group-tipos-participante",
-        "type": "ui_group",
-        "name": "Tipos de Participante",
-        "tab": "ui-tab-maestro",
-        "order": 2,
-        "disp": true,
-        "width": "12",
-        "collapse": false
-    },
-    {
-        "id": "form-tipo-participante",
-        "type": "ui_form",
-        "z": "tab-maestro",
-        "name": "Nuevo Tipo Participante",
-        "label": "Registrar Tipo de Participante",
-        "group": "ui-group-tipos-participante",
-        "order": 1,
-        "width": "12",
-        "height": "7",
-        "options": [
-            {
-                "label": "Nombre",
-                "value": "nombre",
-                "type": "text",
-                "required": true
-            },
-            {
-                "label": "Dirección",
-                "value": "direccion",
-                "type": "text",
-                "required": false
-            },
-            {
-                "label": "Teléfono",
-                "value": "telefono",
-                "type": "text",
-                "required": false
-            },
-            {
-                "label": "Tipo de Documento (CC / NIT / CE)",
-                "value": "tipo_documento",
-                "type": "text",
-                "required": true
-            },
-            {
-                "label": "Identificación",
-                "value": "identificacion",
-                "type": "text",
-                "required": true
-            },
-            {
-                "label": "Tipo Participante (Primario / Secundario / Final)",
-                "value": "tipo_participante",
-                "type": "text",
-                "required": true
-            },
-            {
-                "label": "Estado (Activo / Inactivo)",
-                "value": "estado",
-                "type": "text",
-                "required": true
-            }
-        ],
-        "formValue": {},
-        "payload": "",
-        "submit": "Registrar",
-        "cancel": "Limpiar",
-        "topic": "",
-        "x": 180,
-        "y": 380,
-        "wires": [
-            [
-                "fn-guardar-tipo-participante"
-            ]
-        ]
-    },
-    {
-        "id": "fn-guardar-tipo-participante",
-        "type": "function",
-        "z": "tab-maestro",
-        "name": "Guardar Tipo Participante",
-        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre || !msg.payload.identificacion) { return null; }\nvar lista = global.get('tiposParticipante') || [];\nvar existe = lista.find(function(t){ return typeof t === 'object' && t.identificacion === msg.payload.identificacion; });\nif (existe) { msg.payload = '❌ Ya existe un participante con identificación \"' + msg.payload.identificacion + '\"'; return msg; }\nvar estadosValidos = ['Activo','Inactivo'];\nif (estadosValidos.indexOf(msg.payload.estado) === -1) { msg.payload = '❌ Estado no válido. Use: Activo o Inactivo'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre, direccion: msg.payload.direccion || '', telefono: msg.payload.telefono || '', tipo_documento: msg.payload.tipo_documento, identificacion: msg.payload.identificacion, tipo_participante: msg.payload.tipo_participante, estado: msg.payload.estado};\nlista.push(nuevo);\nglobal.set('tiposParticipante', lista);\nmsg.payload = '✅ Participante \"' + nuevo.nombre + '\" registrado con ID ' + nuevo.id;\nreturn msg;",
-        "outputs": 1,
-        "x": 460,
-        "y": 380,
-        "wires": [
-            [
-                "notif-maestro",
-                "fn-refrescar-tipos-participante"
-            ]
-        ]
-    },
-    {
-        "id": "btn-refrescar-tipos-participante",
-        "type": "ui_button",
-        "z": "tab-maestro",
-        "name": "Refrescar tipos participante",
-        "group": "ui-group-tipos-participante",
-        "order": 2,
-        "width": "3",
-        "height": "1",
-        "passthru": false,
-        "label": "🔄 Refrescar",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "icon": "",
-        "payload": "",
-        "payloadType": "str",
-        "topic": "",
-        "x": 180,
-        "y": 500,
-        "wires": [
-            [
-                "fn-refrescar-tipos-participante"
-            ]
-        ]
-    },
-    {
-        "id": "fn-refrescar-tipos-participante",
-        "type": "function",
-        "z": "tab-maestro",
-        "name": "Preparar tabla tipos participante",
-        "func": "var lista = global.get('tiposParticipante') || [];\nmsg.payload = lista.map(function(t){\n  if (typeof t === 'object') return {ID:t.id, Nombre:t.nombre, 'Tipo Doc':t.tipo_documento, Identificación:t.identificacion, 'Tipo Part.':t.tipo_participante, Teléfono:t.telefono||'-', Estado:t.estado};\n  return {ID:'-', Nombre:t, 'Tipo Doc':'-', Identificación:'-', 'Tipo Part.':'-', Teléfono:'-', Estado:'-'};\n});\nreturn msg;",
-        "outputs": 1,
-        "x": 700,
-        "y": 440,
-        "wires": [
-            [
-                "tabla-tipos-participante"
-            ]
-        ]
-    },
-    {
-        "id": "tabla-tipos-participante",
-        "type": "ui_table",
-        "z": "tab-maestro",
-        "group": "ui-group-tipos-participante",
-        "name": "Lista Tipos Participante",
-        "order": 3,
-        "width": "12",
-        "height": "5",
-        "columns": [
-            {
-                "field": "ID",
-                "title": "ID",
-                "width": "10%",
-                "align": "left",
-                "formatter": "plaintext"
-            },
-            {
-                "field": "Nombre",
-                "title": "Nombre",
-                "width": "18%",
-                "align": "left",
-                "formatter": "plaintext"
-            },
-            {
-                "field": "Tipo Doc",
-                "title": "Tipo Doc.",
-                "width": "10%",
-                "align": "center",
-                "formatter": "plaintext"
-            },
-            {
-                "field": "Identificación",
-                "title": "Identificación",
-                "width": "14%",
-                "align": "left",
-                "formatter": "plaintext"
-            },
-            {
-                "field": "Tipo Part.",
-                "title": "Tipo Participante",
-                "width": "14%",
-                "align": "center",
-                "formatter": "plaintext"
-            },
-            {
-                "field": "Teléfono",
-                "title": "Teléfono",
-                "width": "14%",
-                "align": "left",
-                "formatter": "plaintext"
-            },
-            {
-                "field": "Estado",
-                "title": "Estado",
-                "width": "10%",
-                "align": "center",
-                "formatter": "plaintext"
-            }
-        ],
-        "outputs": 1,
-        "x": 940,
-        "y": 440,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "ui-group-tipos-proyeccion",
-        "type": "ui_group",
-        "name": "Tipos de Proyección",
-        "tab": "ui-tab-maestro",
-        "order": 3,
-        "disp": true,
-        "width": "12",
-        "collapse": false
-    },
-    {
-        "id": "form-tipo-proyeccion",
-        "type": "ui_form",
-        "z": "tab-maestro",
-        "name": "Nuevo Tipo Proyección",
-        "label": "Registrar Tipo de Proyección",
-        "group": "ui-group-tipos-proyeccion",
-        "order": 1,
-        "width": "6",
-        "height": "2",
-        "options": [
-            {
-                "label": "Nombre",
-                "value": "nombre",
-                "type": "text",
-                "required": true
-            }
-        ],
-        "formValue": {},
-        "payload": "",
-        "submit": "Registrar",
-        "cancel": "Limpiar",
-        "topic": "",
-        "x": 180,
-        "y": 620,
-        "wires": [
-            [
-                "fn-guardar-tipo-proyeccion"
-            ]
-        ]
-    },
-    {
-        "id": "fn-guardar-tipo-proyeccion",
-        "type": "function",
-        "z": "tab-maestro",
-        "name": "Guardar Tipo Proyección",
-        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('tiposProyeccion') || [];\nvar existe = lista.find(function(t){ var n = typeof t === 'object' ? t.nombre : t; return n.toLowerCase() === msg.payload.nombre.toLowerCase(); });\nif (existe) { msg.payload = '❌ El tipo \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre};\nlista.push(nuevo);\nglobal.set('tiposProyeccion', lista);\nmsg.payload = '✅ Tipo de proyección \"' + nuevo.nombre + '\" registrado';\nreturn msg;",
-        "outputs": 1,
-        "x": 450,
-        "y": 620,
-        "wires": [
-            [
-                "notif-maestro",
-                "fn-refrescar-tipos-proyeccion"
-            ]
-        ]
-    },
-    {
-        "id": "btn-refrescar-tipos-proyeccion",
-        "type": "ui_button",
-        "z": "tab-maestro",
-        "name": "Refrescar tipos proyección",
-        "group": "ui-group-tipos-proyeccion",
-        "order": 2,
-        "width": "3",
-        "height": "1",
-        "passthru": false,
-        "label": "🔄 Refrescar",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "icon": "",
-        "payload": "",
-        "payloadType": "str",
-        "topic": "",
-        "x": 180,
-        "y": 700,
-        "wires": [
-            [
-                "fn-refrescar-tipos-proyeccion"
-            ]
-        ]
-    },
-    {
-        "id": "fn-refrescar-tipos-proyeccion",
-        "type": "function",
-        "z": "tab-maestro",
-        "name": "Preparar tabla tipos proyección",
-        "func": "var lista = global.get('tiposProyeccion') || [];\nmsg.payload = lista.map(function(t){ return typeof t === 'object' ? {ID:t.id, Nombre:t.nombre} : {ID:'-', Nombre:t}; });\nreturn msg;",
-        "outputs": 1,
-        "x": 680,
-        "y": 660,
-        "wires": [
-            [
-                "tabla-tipos-proyeccion"
-            ]
-        ]
-    },
-    {
-        "id": "tabla-tipos-proyeccion",
-        "type": "ui_table",
-        "z": "tab-maestro",
-        "group": "ui-group-tipos-proyeccion",
-        "name": "Lista Tipos Proyección",
-        "order": 3,
-        "width": "6",
-        "height": "4",
-        "columns": [
-            {
-                "field": "ID",
-                "title": "ID",
-                "width": "30%",
-                "align": "left",
-                "formatter": "plaintext"
-            },
-            {
-                "field": "Nombre",
-                "title": "Nombre",
-                "width": "70%",
-                "align": "left",
-                "formatter": "plaintext"
-            }
-        ],
-        "outputs": 1,
-        "x": 920,
-        "y": 660,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "ui-group-tipos-reporte",
-        "type": "ui_group",
-        "name": "Tipos de Reporte",
-        "tab": "ui-tab-maestro",
-        "order": 4,
-        "disp": true,
-        "width": "12",
-        "collapse": false
-    },
-    {
-        "id": "form-tipo-reporte",
-        "type": "ui_form",
-        "z": "tab-maestro",
-        "name": "Nuevo Tipo Reporte",
-        "label": "Registrar Tipo de Reporte",
-        "group": "ui-group-tipos-reporte",
-        "order": 1,
-        "width": "6",
-        "height": "2",
-        "options": [
-            {
-                "label": "Nombre",
-                "value": "nombre",
-                "type": "text",
-                "required": true
-            }
-        ],
-        "formValue": {},
-        "payload": "",
-        "submit": "Registrar",
-        "cancel": "Limpiar",
-        "topic": "",
-        "x": 180,
-        "y": 820,
-        "wires": [
-            [
-                "fn-guardar-tipo-reporte"
-            ]
-        ]
-    },
-    {
-        "id": "fn-guardar-tipo-reporte",
-        "type": "function",
-        "z": "tab-maestro",
-        "name": "Guardar Tipo Reporte",
-        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('tiposReporte') || [];\nvar existe = lista.find(function(t){ var n = typeof t === 'object' ? t.nombre : t; return n.toLowerCase() === msg.payload.nombre.toLowerCase(); });\nif (existe) { msg.payload = '❌ El tipo \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre};\nlista.push(nuevo);\nglobal.set('tiposReporte', lista);\nmsg.payload = '✅ Tipo de reporte \"' + nuevo.nombre + '\" registrado';\nreturn msg;",
-        "outputs": 1,
-        "x": 440,
-        "y": 820,
-        "wires": [
-            [
-                "notif-maestro",
-                "fn-refrescar-tipos-reporte"
-            ]
-        ]
-    },
-    {
-        "id": "btn-refrescar-tipos-reporte",
-        "type": "ui_button",
-        "z": "tab-maestro",
-        "name": "Refrescar tipos reporte",
-        "group": "ui-group-tipos-reporte",
-        "order": 2,
-        "width": "3",
-        "height": "1",
-        "passthru": false,
-        "label": "🔄 Refrescar",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "icon": "",
-        "payload": "",
-        "payloadType": "str",
-        "topic": "",
-        "x": 180,
-        "y": 900,
-        "wires": [
-            [
-                "fn-refrescar-tipos-reporte"
-            ]
-        ]
-    },
-    {
-        "id": "fn-refrescar-tipos-reporte",
-        "type": "function",
-        "z": "tab-maestro",
-        "name": "Preparar tabla tipos reporte",
-        "func": "var lista = global.get('tiposReporte') || [];\nmsg.payload = lista.map(function(t){ return typeof t === 'object' ? {ID:t.id, Nombre:t.nombre} : {ID:'-', Nombre:t}; });\nreturn msg;",
-        "outputs": 1,
-        "x": 660,
-        "y": 860,
-        "wires": [
-            [
-                "tabla-tipos-reporte"
-            ]
-        ]
-    },
-    {
-        "id": "tabla-tipos-reporte",
-        "type": "ui_table",
-        "z": "tab-maestro",
-        "group": "ui-group-tipos-reporte",
-        "name": "Lista Tipos Reporte",
-        "order": 3,
-        "width": "6",
-        "height": "4",
-        "columns": [
-            {
-                "field": "ID",
-                "title": "ID",
-                "width": "30%",
-                "align": "left",
-                "formatter": "plaintext"
-            },
-            {
-                "field": "Nombre",
-                "title": "Nombre",
-                "width": "70%",
-                "align": "left",
-                "formatter": "plaintext"
-            }
-        ],
-        "outputs": 1,
-        "x": 900,
-        "y": 860,
-        "wires": [
-            []
         ]
     }
 ]
