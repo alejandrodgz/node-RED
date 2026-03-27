@@ -257,7 +257,7 @@ En el diagrama se integran las entidades de gestión de usuarios, control de acc
 
 Durante la implementación se ajustó la relación de acceso para reflejar la lógica real del sistema: el acceso a las opciones no ocurre directamente desde el rol Invitado, sino que está mediado por los permisos asignados al rol correspondiente. Por ello, la cadena de acceso implementada y representada en el modelo es: **Usuario → Rol → Permiso → Opción**.
 
-![Figura 3. Diagrama de clases del dominio del módulo ADM de Evergreen.](img/diagrama_clases_adm_cuadrado.png)
+![Figura 3. Diagrama de clases del dominio del módulo ADM de Evergreen.](img/diagrama_clases_adm_lr_compacto.png)
 
 **Figura 3.** Diagrama de clases del dominio del módulo ADM de Evergreen.
 
