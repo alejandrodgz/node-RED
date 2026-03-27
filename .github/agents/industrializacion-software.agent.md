@@ -113,6 +113,16 @@ var valor = flow.get('clave');
 
 ### 3.4 Stack técnico del proyecto
 
+#### Herramientas del entorno de desarrollo
+
+| Herramienta | Versión | Uso |
+|---|---|---|
+| Node-RED | 4.1.7 | Motor de flows |
+| node-red-dashboard | 3.x | UI en `localhost:1880/ui` |
+| Docker / Docker Compose | latest | Contenedor del entorno |
+| pandoc | 3.1.3 | Conversión `.md` → `.docx` |
+| Node.js | 20.x | Runtime base |
+
 #### `Dockerfile`
 ```dockerfile
 FROM nodered/node-red:latest
@@ -198,47 +208,76 @@ classDiagram
     }
 
     class Invitado {
-        +id
-        +nombre
-        +fecha_de_creacion
+        +id : int
+        +nombre : string
+        +fecha_de_creacion : date
     }
 
     class Permiso {
-        +id
-        +nombre
-        +fecha_creacion
+        +id : int
+        +nombre : string
+        +fecha_creacion : date
     }
 
     class Pagina {
-        +id
-        +nombre
-        +ruta
+        +id : int
+        +nombre : string
+        +ruta : string
     }
 
     class Opcion {
-        +id
-        +nombre
-        +URL
+        +id : int
+        +nombre : string
+        +URL : string
     }
 
     class Modulo {
+        +id : int
+        +nombre : string
     }
 
     class TablaMaestro {
+        +id : int
+        +nombre : string
+    }
+
+    class AgroCadena {
+        +id : int
+        +nombre : string
+        +descripcion : string
+        +estado : string
+    }
+
+    class Etapa {
+        +id : int
+        +nombre : string
+        +descripcion : string
+    }
+
+    class TipoParticipante {
+        +id : int
+        +nombre : string
+        +tipo_documento : string
+        +identificacion : string
+        +estado : boolean
     }
 
     %% Herencia
     Rol <|-- Admin
     Rol <|-- Invitado
 
+    %% Composición
+    AgroCadena *-- Etapa : contiene
+    Pagina *-- Opcion : contiene
+
     %% Asociaciones
     TipoUsuario --> Usuario : clasifica
-    Usuario --> Rol : tiene
-    Rol --> Permiso : tiene
-    Invitado --> Opcion : accede a
+    Usuario --> Rol : tiene asignado
+    Rol --> Permiso : otorga
+    Invitado --> Opcion : puede acceder a
     Opcion --> Modulo : pertenece a
     Modulo --> TablaMaestro : referencia
-    Pagina *-- Opcion : contiene
+    Etapa --> TipoParticipante : involucra
 ```
 
 #### Descripción de entidades
@@ -255,6 +294,9 @@ classDiagram
 | `Opcion` | Elemento de menú/acceso dentro de una Página, con URL |
 | `Modulo` | Agrupación de funcionalidades del sistema |
 | `TablaMaestro` | Catálogos del sistema (datos de referencia) |
+| `AgroCadena` | Cadena productiva agroalimentaria registrada en el sistema |
+| `Etapa` | Fase de una AgroCadena (no existe sin su cadena padre) |
+| `TipoParticipante` | Actor que participa en una etapa (productor, distribuidor, etc.) |
 
 ### 4.3 Tabs de flows implementados
 
@@ -266,6 +308,14 @@ El archivo `data/flows.json` contiene los siguientes tabs del flujo principal:
 | `tab-acceso` | Control de Acceso | Roles y permisos (módulo ADM) |
 | `tab-maestro` | Tablas Maestro | Catálogos del sistema (módulo ADM) |
 | `tab-agrocadenas` | AgroCadenas | Cadenas agroalimentarias (otro módulo) |
+
+### 4.4 Historias de Usuario implementadas (Entrega 2)
+
+| HU | Descripción | Flow | Responsable |
+|---|---|---|---|
+| HU1 | Como usuario del sistema Evergreen, quiero registrar una nueva AgroCadena junto con sus etapas productivas para tener un registro centralizado de las cadenas agroalimentarias activas | Tab AgroCadenas | Simon Ortiz |
+| HU2 | Como usuario del sistema Evergreen, quiero registrar nuevos usuarios con su información básica y tipo para mantener un directorio actualizado de las personas que tienen acceso al sistema | Tab Usuarios | Juan Esteban Quintero |
+| HU3 | Como usuario del sistema Evergreen, quiero crear roles, definirles permisos y asignarlos a los usuarios registrados para controlar qué acciones puede realizar cada persona dentro del sistema | Tab Control de Acceso | Daniel Garcia |
 
 ---
 
@@ -299,11 +349,24 @@ Secciones del documento:
 
 Incorpora todo lo de la Entrega 1 más:
 
-- Subsección **2.5 Aplicación en el Caso de Estudio** — cómo se implementó el módulo ADM en Node-RED (capturas de pantalla de cada fase)
-- Subsección **2.6 Uso de DSLs en la Herramienta** — cómo Node-RED usa DSLs (flujo visual, nodo `function` con JS, nodo `template` con Mustache)
-- Subsección **2.7 Resultados Obtenidos** — análisis y capturas del sistema ejecutado
+- Subsección **2.5 Aplicación en el Caso de Estudio** — descripción de los 4 flows implementados (AgroCadenas, Usuarios, Control de Acceso, Tablas Maestro), relación con el diagrama de clases del módulo ADM, captura del canvas de Node-RED
+- Subsección **2.6 Uso de DSLs en la Herramienta** — Node-RED como DSL visual (grafos de nodos), nodo `function` como DSL imperativo embebido en JavaScript, ejemplo concreto de un nodo function del proyecto (ej: `fn-guardar-usuario` o `fn-init-storage`)
+- Subsección **2.7 Resultados Obtenidos** — tabla de pruebas por HU (entrada → resultado esperado → resultado obtenido), capturas del Dashboard en `localhost:1880/ui`
 
-> Cada estudiante debe montar **una Historia de Usuario** completa del módulo ADM en Node-RED.
+> Cada estudiante monta **una Historia de Usuario** del módulo ADM (ver sección 4.4).
+
+### 5.3 Flujo de trabajo para el informe (.md → .docx)
+
+Se usa **pandoc** (instalado en WSL, `/usr/bin/pandoc`) para convertir el markdown a Word manteniendo estilos:
+
+```bash
+# Generar .docx desde el markdown usando el .docx original como plantilla de estilos
+pandoc docs/entrega_2_socializacion_y_caso_de_aplicacion.md \
+  --reference-doc=docs/plantilla.docx \
+  -o "Entrega 2 - Node-RED.docx"
+```
+
+Para que funcione el `--reference-doc`, el archivo `plantilla.docx` debe ser una copia del documento Word original entregado por el profesor, guardado desde Word como `.docx`.
 
 ---
 

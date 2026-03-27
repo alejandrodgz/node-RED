@@ -341,8 +341,8 @@
         "once": true,
         "onceDelay": 0.5,
         "topic": "",
-        "x": 180,
-        "y": 60,
+        "x": 120,
+        "y": 40,
         "wires": [
             [
                 "fn-init-storage"
@@ -354,12 +354,14 @@
         "type": "function",
         "z": "tab-agrocadenas",
         "name": "Init global storage",
-        "func": "if (!global.get('agrocadenas')) global.set('agrocadenas', []);\nif (!global.get('usuarios')) global.set('usuarios', []);\nif (!global.get('roles')) global.set('roles', [{id:'1',nombre:'Admin',fecha_creacion:new Date().toISOString(),permisos:[]},{id:'2',nombre:'Invitado',fecha_creacion:new Date().toISOString(),permisos:[]}]);\nif (!global.get('permisos')) global.set('permisos', [{id:'1',nombre:'Ver',fecha_creacion:new Date().toISOString()},{id:'2',nombre:'Editar',fecha_creacion:new Date().toISOString()},{id:'3',nombre:'Eliminar',fecha_creacion:new Date().toISOString()}]);\nif (!global.get('tiposUsuario')) global.set('tiposUsuario', [{id:'1',nombre:'Administrador'},{id:'2',nombre:'Operador'},{id:'3',nombre:'Invitado'}]);\nif (!global.get('tiposParticipante')) global.set('tiposParticipante', [{id:'1',nombre:'Productor',direccion:'',telefono:'',tipo_documento:'NIT',identificacion:'100001',tipo_participante:'Primario',estado:'Activo'},{id:'2',nombre:'Distribuidor',direccion:'',telefono:'',tipo_documento:'NIT',identificacion:'100002',tipo_participante:'Secundario',estado:'Activo'},{id:'3',nombre:'Comercializador',direccion:'',telefono:'',tipo_documento:'NIT',identificacion:'100003',tipo_participante:'Secundario',estado:'Activo'},{id:'4',nombre:'Consumidor',direccion:'',telefono:'',tipo_documento:'CC',identificacion:'100004',tipo_participante:'Final',estado:'Activo'}]);\nif (!global.get('tiposProyeccion')) global.set('tiposProyeccion', [{id:'1',nombre:'Anual'},{id:'2',nombre:'Semestral'},{id:'3',nombre:'Trimestral'}]);\nif (!global.get('tiposReporte')) global.set('tiposReporte', [{id:'1',nombre:'Operativo'},{id:'2',nombre:'Financiero'},{id:'3',nombre:'Estadístico'}]);\nif (!global.get('modulos')) global.set('modulos', []);\nif (!global.get('paginas')) global.set('paginas', []);\nnode.status({fill:'green',shape:'dot',text:'Storage inicializado'});\nreturn null;",
+        "func": "// ── Inicializar colecciones vacías si no existen ──────────────────────────\nif (!global.get('agrocadenas')) global.set('agrocadenas', []);\nif (!global.get('usuarios'))    global.set('usuarios',    []);\nif (!global.get('tiposUsuario')) global.set('tiposUsuario', [\n  {id:'1', nombre:'Administrador'},\n  {id:'2', nombre:'Operador'},\n  {id:'3', nombre:'Invitado'}\n]);\nif (!global.get('tiposParticipante')) global.set('tiposParticipante', [\n  {id:'1', nombre:'Productor',         tipo_documento:'NIT', identificacion:'100001', tipo_participante:'Primario',   estado:'Activo'},\n  {id:'2', nombre:'Distribuidor',      tipo_documento:'NIT', identificacion:'100002', tipo_participante:'Secundario', estado:'Activo'},\n  {id:'3', nombre:'Comercializador',   tipo_documento:'NIT', identificacion:'100003', tipo_participante:'Secundario', estado:'Activo'},\n  {id:'4', nombre:'Consumidor',        tipo_documento:'CC',  identificacion:'100004', tipo_participante:'Final',      estado:'Activo'}\n]);\nif (!global.get('tiposProyeccion')) global.set('tiposProyeccion', [\n  {id:'1', nombre:'Anual'},\n  {id:'2', nombre:'Semestral'},\n  {id:'3', nombre:'Trimestral'}\n]);\nif (!global.get('tiposReporte')) global.set('tiposReporte', [\n  {id:'1', nombre:'Operativo'},\n  {id:'2', nombre:'Financiero'},\n  {id:'3', nombre:'Estadístico'}\n]);\n\n// ── Roles y permisos por defecto ──────────────────────────────────────────\nif (!global.get('roles')) global.set('roles', [\n  {id:'1', nombre:'Admin',    fecha_creacion: new Date().toISOString(), permisos:[]},\n  {id:'2', nombre:'Invitado', fecha_creacion: new Date().toISOString(), permisos:[]}\n]);\nif (!global.get('permisos')) global.set('permisos', [\n  {id:'1', nombre:'Ver',      fecha_creacion: new Date().toISOString(), opcion_ids:[]},\n  {id:'2', nombre:'Editar',   fecha_creacion: new Date().toISOString(), opcion_ids:[]},\n  {id:'3', nombre:'Eliminar', fecha_creacion: new Date().toISOString(), opcion_ids:[]}\n]);\n\n// ── Módulos del sistema ───────────────────────────────────────────────────\nif (!global.get('modulos')) global.set('modulos', [\n  {id:'1', nombre:'ADM'},\n  {id:'2', nombre:'AgroCadenas'},\n  {id:'3', nombre:'Reportes'},\n  {id:'4', nombre:'Proyecciones'}\n]);\n\n// ── Páginas por defecto (vinculadas a los módulos) ────────────────────────\nif (!global.get('paginas')) global.set('paginas', [\n  {\n    id:'1', nombre:'Usuarios', ruta:'/adm/usuarios', modulo_id:'1',\n    opciones:[\n      {id:'1', nombre:'Crear Usuario',   url:'/adm/usuarios/crear',   pagina_id:'1', modulo_id:'1', estado:'Activo'},\n      {id:'2', nombre:'Listar Usuarios', url:'/adm/usuarios/listar',  pagina_id:'1', modulo_id:'1', estado:'Activo'},\n      {id:'3', nombre:'Editar Usuario',  url:'/adm/usuarios/editar',  pagina_id:'1', modulo_id:'1', estado:'Activo'}\n    ]\n  },\n  {\n    id:'2', nombre:'Roles y Permisos', ruta:'/adm/acceso', modulo_id:'1',\n    opciones:[\n      {id:'4', nombre:'Crear Rol',          url:'/adm/acceso/roles/crear',      pagina_id:'2', modulo_id:'1', estado:'Activo'},\n      {id:'5', nombre:'Asignar Permiso',    url:'/adm/acceso/roles/asignar',    pagina_id:'2', modulo_id:'1', estado:'Activo'},\n      {id:'6', nombre:'Crear Permiso',      url:'/adm/acceso/permisos/crear',   pagina_id:'2', modulo_id:'1', estado:'Activo'}\n    ]\n  },\n  {\n    id:'3', nombre:'Módulos y Páginas', ruta:'/adm/modulos', modulo_id:'1',\n    opciones:[\n      {id:'7', nombre:'Crear Módulo',  url:'/adm/modulos/crear',  pagina_id:'3', modulo_id:'1', estado:'Activo'},\n      {id:'8', nombre:'Crear Página',  url:'/adm/modulos/paginas/crear', pagina_id:'3', modulo_id:'1', estado:'Activo'},\n      {id:'9', nombre:'Crear Opción',  url:'/adm/modulos/opciones/crear', pagina_id:'3', modulo_id:'1', estado:'Activo'}\n    ]\n  },\n  {\n    id:'4', nombre:'AgroCadenas', ruta:'/agro/cadenas', modulo_id:'2',\n    opciones:[\n      {id:'10', nombre:'Registrar AgroCadena', url:'/agro/cadenas/crear',  pagina_id:'4', modulo_id:'2', estado:'Activo'},\n      {id:'11', nombre:'Listar AgroCadenas',   url:'/agro/cadenas/listar', pagina_id:'4', modulo_id:'2', estado:'Activo'}\n    ]\n  },\n  {\n    id:'5', nombre:'Reportes Operativos', ruta:'/reportes/operativos', modulo_id:'3',\n    opciones:[\n      {id:'12', nombre:'Ver Reporte', url:'/reportes/operativos/ver', pagina_id:'5', modulo_id:'3', estado:'Activo'}\n    ]\n  }\n]);\n\n// ── Migración: campos faltantes en datos pre-existentes ──────────────────\nvar paginasExist = global.get('paginas') || [];\npaginasExist.forEach(function(p) {\n  if (typeof p.modulo_id === 'undefined') p.modulo_id = null;\n  if (!p.opciones) p.opciones = [];\n  p.opciones.forEach(function(o) {\n    if (typeof o.pagina_id  === 'undefined') o.pagina_id  = p.id;\n    if (typeof o.modulo_id  === 'undefined') o.modulo_id  = p.modulo_id || null;\n    if (typeof o.estado     === 'undefined') o.estado     = 'Activo';\n  });\n});\nglobal.set('paginas', paginasExist);\n\nvar permisosExist = global.get('permisos') || [];\npermisosExist.forEach(function(pe) {\n  if (!pe.opcion_ids) pe.opcion_ids = [];\n});\nglobal.set('permisos', permisosExist);\n\nnode.status({fill:'green', shape:'dot', text:'Storage inicializado'});\nreturn msg;\n",
         "outputs": 1,
-        "x": 440,
-        "y": 60,
+        "x": 410,
+        "y": 40,
         "wires": [
-            []
+            [
+                "fn-refrescar-tabla-agrocadenas"
+            ]
         ]
     },
     {
@@ -397,7 +399,7 @@
         "submit": "Registrar",
         "cancel": "Limpiar",
         "topic": "",
-        "x": 170,
+        "x": 130,
         "y": 160,
         "wires": [
             [
@@ -412,7 +414,7 @@
         "name": "Guardar AgroCadena",
         "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('agrocadenas') || [];\nvar nueva = {id: Date.now().toString(), nombre: msg.payload.nombre, descripcion: msg.payload.descripcion || '', estado: msg.payload.estado || 'Activo', etapas: [], fecha_creacion: new Date().toISOString()};\nlista.push(nueva);\nglobal.set('agrocadenas', lista);\nmsg.payload = '✅ AgroCadena \"' + nueva.nombre + '\" registrada con ID ' + nueva.id;\nreturn msg;",
         "outputs": 1,
-        "x": 440,
+        "x": 340,
         "y": 160,
         "wires": [
             [
@@ -435,8 +437,8 @@
         "raw": false,
         "topic": "",
         "name": "Notificación",
-        "x": 700,
-        "y": 120,
+        "x": 550,
+        "y": 220,
         "wires": []
     },
     {
@@ -446,8 +448,8 @@
         "name": "Preparar tabla",
         "func": "var lista = global.get('agrocadenas') || [];\nmsg.payload = lista.map(function(a){return {ID:a.id, Nombre:a.nombre, Descripción:a.descripcion, Estado:a.estado, Etapas:a.etapas.length, Creado:a.fecha_creacion};});\nreturn msg;",
         "outputs": 1,
-        "x": 700,
-        "y": 200,
+        "x": 740,
+        "y": 80,
         "wires": [
             [
                 "tabla-agrocadenas"
@@ -508,8 +510,8 @@
             }
         ],
         "outputs": 1,
-        "x": 960,
-        "y": 200,
+        "x": 1030,
+        "y": 80,
         "wires": [
             []
         ]
@@ -549,8 +551,8 @@
         "submit": "Agregar Etapa",
         "cancel": "Limpiar",
         "topic": "",
-        "x": 180,
-        "y": 320,
+        "x": 170,
+        "y": 280,
         "wires": [
             [
                 "fn-guardar-etapa"
@@ -564,8 +566,8 @@
         "name": "Guardar Etapa",
         "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre || !msg.payload.agrocadena_id) { return null; }\nvar lista = global.get('agrocadenas') || [];\nvar cadena = lista.find(function(a){return a.id === msg.payload.agrocadena_id;});\nif (!cadena) { msg.payload = '❌ No se encontró AgroCadena con ID ' + msg.payload.agrocadena_id; return msg; }\nvar etapa = {id: Date.now().toString(), nombre: msg.payload.nombre, descripcion: msg.payload.descripcion || ''};\ncadena.etapas.push(etapa);\nglobal.set('agrocadenas', lista);\nmsg.payload = '✅ Etapa \"' + etapa.nombre + '\" agregada a \"' + cadena.nombre + '\"';\nreturn msg;",
         "outputs": 1,
-        "x": 440,
-        "y": 320,
+        "x": 360,
+        "y": 280,
         "wires": [
             [
                 "notif-agrocadena"
@@ -590,8 +592,8 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 180,
-        "y": 240,
+        "x": 540,
+        "y": 360,
         "wires": [
             [
                 "fn-refrescar-tabla-agrocadenas"
@@ -1000,8 +1002,8 @@
         "submit": "Crear Rol",
         "cancel": "Limpiar",
         "topic": "",
-        "x": 180,
-        "y": 160,
+        "x": 190,
+        "y": 140,
         "wires": [
             [
                 "fn-guardar-rol"
@@ -1015,8 +1017,8 @@
         "name": "Guardar Rol",
         "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('roles') || [];\nvar existe = lista.find(function(r){return r.nombre.toLowerCase() === msg.payload.nombre.toLowerCase();});\nif (existe) { msg.payload = '❌ El rol \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre, fecha_creacion: new Date().toISOString(), permisos:[]};\nlista.push(nuevo);\nglobal.set('roles', lista);\nmsg.payload = '✅ Rol \"' + nuevo.nombre + '\" creado';\nreturn msg;",
         "outputs": 1,
-        "x": 420,
-        "y": 160,
+        "x": 430,
+        "y": 140,
         "wires": [
             [
                 "notif-acceso",
@@ -1038,8 +1040,8 @@
         "raw": false,
         "topic": "",
         "name": "Notificación",
-        "x": 660,
-        "y": 120,
+        "x": 690,
+        "y": 200,
         "wires": []
     },
     {
@@ -1049,8 +1051,8 @@
         "name": "Preparar tabla roles",
         "func": "var roles = global.get('roles') || [];\nvar permisos = global.get('permisos') || [];\nmsg.payload = roles.map(function(r){var permisosNombres = (r.permisos||[]).map(function(pid){var p=permisos.find(function(x){return x.id===pid;});return p?p.nombre:pid;}).join(', ');return {ID:r.id, Nombre:r.nombre, Permisos:permisosNombres||'-', Creado:r.fecha_creacion};});\nreturn msg;",
         "outputs": 1,
-        "x": 660,
-        "y": 200,
+        "x": 650,
+        "y": 80,
         "wires": [
             [
                 "tabla-roles"
@@ -1097,8 +1099,8 @@
             }
         ],
         "outputs": 1,
-        "x": 900,
-        "y": 200,
+        "x": 890,
+        "y": 80,
         "wires": [
             []
         ]
@@ -1122,7 +1124,7 @@
         "payloadType": "str",
         "topic": "",
         "x": 180,
-        "y": 240,
+        "y": 80,
         "wires": [
             [
                 "fn-refrescar-roles"
@@ -1138,13 +1140,19 @@
         "group": "ui-group-permisos",
         "order": 1,
         "width": "6",
-        "height": "3",
+        "height": 4,
         "options": [
             {
                 "label": "Nombre del Permiso",
                 "value": "nombre",
                 "type": "text",
                 "required": true
+            },
+            {
+                "label": "ID de Opción (opcional)",
+                "value": "opcion_id",
+                "type": "text",
+                "required": false
             }
         ],
         "formValue": {},
@@ -1152,7 +1160,7 @@
         "submit": "Crear Permiso",
         "cancel": "Limpiar",
         "topic": "",
-        "x": 180,
+        "x": 160,
         "y": 320,
         "wires": [
             [
@@ -1165,9 +1173,9 @@
         "type": "function",
         "z": "tab-acceso",
         "name": "Guardar Permiso",
-        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('permisos') || [];\nvar existe = lista.find(function(p){return p.nombre.toLowerCase() === msg.payload.nombre.toLowerCase();});\nif (existe) { msg.payload = '❌ El permiso \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre, fecha_creacion: new Date().toISOString()};\nlista.push(nuevo);\nglobal.set('permisos', lista);\nmsg.payload = '✅ Permiso \"' + nuevo.nombre + '\" creado con ID ' + nuevo.id;\nreturn msg;",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre) { return null; }\nvar lista = global.get('permisos') || [];\nvar existe = lista.find(function(p){return p.nombre.toLowerCase() === msg.payload.nombre.toLowerCase();});\nif (existe) { msg.payload = '❌ El permiso \"' + msg.payload.nombre + '\" ya existe'; return msg; }\nvar opcionIds = [];\nif (msg.payload.opcion_id) {\n  var paginas = global.get('paginas') || [];\n  var encontrada = null;\n  paginas.forEach(function(p){\n    (p.opciones || []).forEach(function(o){ if (o.id === msg.payload.opcion_id) encontrada = o; });\n  });\n  if (!encontrada) { msg.payload = '❌ No se encontró opción con ID ' + msg.payload.opcion_id; return msg; }\n  opcionIds.push(msg.payload.opcion_id);\n}\nvar nuevo = {id: Date.now().toString(), nombre: msg.payload.nombre, fecha_creacion: new Date().toISOString(), opcion_ids: opcionIds};\nlista.push(nuevo);\nglobal.set('permisos', lista);\nmsg.payload = '✅ Permiso \"' + nuevo.nombre + '\" creado con ID ' + nuevo.id + (opcionIds.length ? ' y vinculado a opción ' + opcionIds[0] : '');\nreturn msg;",
         "outputs": 1,
-        "x": 440,
+        "x": 430,
         "y": 320,
         "wires": [
             [
@@ -1181,10 +1189,10 @@
         "type": "function",
         "z": "tab-acceso",
         "name": "Preparar tabla permisos",
-        "func": "var permisos = global.get('permisos') || [];\nmsg.payload = permisos.map(function(p){return {ID:p.id, Nombre:p.nombre, Creado:p.fecha_creacion};});\nreturn msg;",
+        "func": "var permisos = global.get('permisos') || [];\nmsg.payload = permisos.map(function(p){return {ID:p.id, Nombre:p.nombre, Opciones:(p.opcion_ids||[]).length, Creado:p.fecha_creacion};});\nreturn msg;",
         "outputs": 1,
-        "x": 680,
-        "y": 360,
+        "x": 690,
+        "y": 400,
         "wires": [
             [
                 "tabla-permisos"
@@ -1211,21 +1219,28 @@
             {
                 "field": "Nombre",
                 "title": "Nombre",
-                "width": "40%",
+                "width": "35%",
                 "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Opciones",
+                "title": "Opciones",
+                "width": "15%",
+                "align": "center",
                 "formatter": "plaintext"
             },
             {
                 "field": "Creado",
                 "title": "Fecha Creación",
-                "width": "40%",
+                "width": "30%",
                 "align": "left",
                 "formatter": "plaintext"
             }
         ],
         "outputs": 1,
-        "x": 920,
-        "y": 360,
+        "x": 940,
+        "y": 400,
         "wires": [
             []
         ]
@@ -1248,8 +1263,8 @@
         "payload": "",
         "payloadType": "str",
         "topic": "",
-        "x": 180,
-        "y": 400,
+        "x": 430,
+        "y": 440,
         "wires": [
             [
                 "fn-refrescar-permisos"
@@ -1285,8 +1300,8 @@
         "submit": "Asignar",
         "cancel": "Limpiar",
         "topic": "",
-        "x": 180,
-        "y": 480,
+        "x": 160,
+        "y": 240,
         "wires": [
             [
                 "fn-asignar-permiso-rol"
@@ -1300,8 +1315,8 @@
         "name": "Asignar permiso a rol",
         "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.rol_id || !msg.payload.permiso_id) { return null; }\nvar roles = global.get('roles') || [];\nvar permisos = global.get('permisos') || [];\nvar rol = roles.find(function(r){return r.id === msg.payload.rol_id;});\nif (!rol) { msg.payload = '❌ No se encontró rol con ID ' + msg.payload.rol_id; return msg; }\nvar permiso = permisos.find(function(p){return p.id === msg.payload.permiso_id;});\nif (!permiso) { msg.payload = '❌ No se encontró permiso con ID ' + msg.payload.permiso_id; return msg; }\nif (!rol.permisos) rol.permisos = [];\nvar yaAsignado = rol.permisos.find(function(p){return p === msg.payload.permiso_id;});\nif (yaAsignado) { msg.payload = '❌ El permiso \"' + permiso.nombre + '\" ya está asignado al rol \"' + rol.nombre + '\"'; return msg; }\nrol.permisos.push(permiso.id);\nglobal.set('roles', roles);\nmsg.payload = '✅ Permiso \"' + permiso.nombre + '\" asignado al rol \"' + rol.nombre + '\"';\nreturn msg;",
         "outputs": 1,
-        "x": 460,
-        "y": 480,
+        "x": 420,
+        "y": 240,
         "wires": [
             [
                 "notif-acceso"
@@ -2046,7 +2061,7 @@
         "group": "ui-group-paginas",
         "order": 1,
         "width": "6",
-        "height": "4",
+        "height": 5,
         "options": [
             {
                 "label": "Nombre de la Página",
@@ -2057,6 +2072,12 @@
             {
                 "label": "Ruta (ej: /usuarios)",
                 "value": "ruta",
+                "type": "text",
+                "required": true
+            },
+            {
+                "label": "ID del Módulo",
+                "value": "modulo_id",
                 "type": "text",
                 "required": true
             }
@@ -2079,7 +2100,7 @@
         "type": "function",
         "z": "tab-modulos",
         "name": "Guardar Página",
-        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre || !msg.payload.ruta) { return null; }\nvar lista = global.get('paginas') || [];\nvar existe = lista.find(function(p){return p.ruta.toLowerCase() === msg.payload.ruta.toLowerCase();});\nif (existe) { msg.payload = '❌ Ya existe una página con ruta \"' + msg.payload.ruta + '\"'; return msg; }\nvar nueva = {id: Date.now().toString(), nombre: msg.payload.nombre, ruta: msg.payload.ruta, opciones: []};\nlista.push(nueva);\nglobal.set('paginas', lista);\nmsg.payload = '✅ Página \"' + nueva.nombre + '\" creada con ID ' + nueva.id;\nreturn msg;",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.nombre || !msg.payload.ruta || !msg.payload.modulo_id) { return null; }\nvar modulos = global.get('modulos') || [];\nvar modulo = modulos.find(function(m){return m.id === msg.payload.modulo_id;});\nif (!modulo) { msg.payload = '❌ No se encontró módulo con ID ' + msg.payload.modulo_id; return msg; }\nvar lista = global.get('paginas') || [];\nvar existeRuta = lista.find(function(p){return (p.ruta||'').toLowerCase() === msg.payload.ruta.toLowerCase();});\nif (existeRuta) { msg.payload = '❌ Ya existe una página con ruta \"' + msg.payload.ruta + '\"'; return msg; }\nvar nueva = {id: Date.now().toString(), nombre: msg.payload.nombre, ruta: msg.payload.ruta, modulo_id: msg.payload.modulo_id, opciones: []};\nlista.push(nueva);\nglobal.set('paginas', lista);\nmsg.payload = '✅ Página \"' + nueva.nombre + '\" creada con ID ' + nueva.id + ' en módulo \"' + modulo.nombre + '\"';\nreturn msg;",
         "outputs": 1,
         "x": 430,
         "y": 300,
@@ -2095,7 +2116,7 @@
         "type": "function",
         "z": "tab-modulos",
         "name": "Preparar tabla páginas",
-        "func": "var lista = global.get('paginas') || [];\nmsg.payload = lista.map(function(p){return {ID:p.id, Nombre:p.nombre, Ruta:p.ruta, Opciones:p.opciones.length};});\nreturn msg;",
+        "func": "var lista = global.get('paginas') || [];\nvar modulos = global.get('modulos') || [];\nmsg.payload = lista.map(function(p){\n  var m = modulos.find(function(x){ return x.id === p.modulo_id; });\n  return {ID:p.id, Nombre:p.nombre, Ruta:p.ruta, Modulo:(m?m.nombre:(p.modulo_id||'-')), Opciones:(p.opciones||[]).length};\n});\nreturn msg;",
         "outputs": 1,
         "x": 680,
         "y": 340,
@@ -2118,28 +2139,35 @@
             {
                 "field": "ID",
                 "title": "ID",
-                "width": "20%",
+                "width": "16%",
                 "align": "left",
                 "formatter": "plaintext"
             },
             {
                 "field": "Nombre",
                 "title": "Nombre",
-                "width": "30%",
+                "width": "24%",
                 "align": "left",
                 "formatter": "plaintext"
             },
             {
                 "field": "Ruta",
                 "title": "Ruta",
-                "width": "30%",
+                "width": "24%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Modulo",
+                "title": "Módulo",
+                "width": "20%",
                 "align": "left",
                 "formatter": "plaintext"
             },
             {
                 "field": "Opciones",
                 "title": "Opciones",
-                "width": "20%",
+                "width": "16%",
                 "align": "center",
                 "formatter": "plaintext"
             }
@@ -2205,12 +2233,6 @@
                 "value": "url",
                 "type": "text",
                 "required": true
-            },
-            {
-                "label": "ID del Módulo (opcional)",
-                "value": "modulo_id",
-                "type": "text",
-                "required": false
             }
         ],
         "formValue": {},
@@ -2231,14 +2253,120 @@
         "type": "function",
         "z": "tab-modulos",
         "name": "Guardar Opción",
-        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.pagina_id || !msg.payload.nombre) { return null; }\nvar paginas = global.get('paginas') || [];\nvar pagina = paginas.find(function(p){return p.id === msg.payload.pagina_id;});\nif (!pagina) { msg.payload = '❌ No se encontró página con ID ' + msg.payload.pagina_id; return msg; }\nvar nueva = {id: Date.now().toString(), nombre: msg.payload.nombre, url: msg.payload.url, modulo_id: msg.payload.modulo_id || null};\npagina.opciones.push(nueva);\nglobal.set('paginas', paginas);\nmsg.payload = '✅ Opción \"' + nueva.nombre + '\" agregada a la página \"' + pagina.nombre + '\"';\nreturn msg;",
+        "func": "if (!msg.payload || typeof msg.payload !== 'object' || !msg.payload.pagina_id || !msg.payload.nombre || !msg.payload.url) { return null; }\nvar paginas = global.get('paginas') || [];\nvar pagina = paginas.find(function(p){return p.id === msg.payload.pagina_id;});\nif (!pagina) { msg.payload = '❌ No se encontró página con ID ' + msg.payload.pagina_id; return msg; }\nif (!pagina.opciones) pagina.opciones = [];\nvar nombreNorm = msg.payload.nombre.toLowerCase();\nvar urlNorm = msg.payload.url.toLowerCase();\nvar dupNombre = pagina.opciones.find(function(o){ return (o.nombre||'').toLowerCase() === nombreNorm; });\nif (dupNombre) { msg.payload = '❌ Ya existe una opción con nombre \"' + msg.payload.nombre + '\" en la página \"' + pagina.nombre + '\"'; return msg; }\nvar dupUrl = pagina.opciones.find(function(o){ return (o.url||'').toLowerCase() === urlNorm; });\nif (dupUrl) { msg.payload = '❌ Ya existe una opción con URL \"' + msg.payload.url + '\" en la página \"' + pagina.nombre + '\"'; return msg; }\nvar nueva = {id: Date.now().toString(), nombre: msg.payload.nombre, url: msg.payload.url, pagina_id: pagina.id, modulo_id: pagina.modulo_id || null, estado: 'Activo'};\npagina.opciones.push(nueva);\nglobal.set('paginas', paginas);\nmsg.payload = '✅ Opción \"' + nueva.nombre + '\" agregada a la página \"' + pagina.nombre + '\"';\nreturn msg;",
         "outputs": 1,
         "x": 440,
         "y": 480,
         "wires": [
             [
                 "notif-modulos",
-                "fn-refrescar-paginas"
+                "fn-refrescar-paginas",
+                "fn-refrescar-opciones"
+            ]
+        ]
+    },
+    {
+        "id": "fn-refrescar-opciones",
+        "type": "function",
+        "z": "tab-modulos",
+        "name": "Preparar tabla opciones",
+        "func": "var paginas = global.get('paginas') || [];\nvar modulos = global.get('modulos') || [];\nvar rows = [];\npaginas.forEach(function(p){\n  var modulo = modulos.find(function(m){ return m.id === p.modulo_id; });\n  (p.opciones || []).forEach(function(o){\n    rows.push({ID:o.id, Nombre:o.nombre, URL:o.url, Pagina:p.nombre, Modulo:(modulo?modulo.nombre:(o.modulo_id||'-')), Estado:(o.estado||'Activo')});\n  });\n});\nmsg.payload = rows;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 560,
+        "wires": [
+            [
+                "tabla-opciones"
+            ]
+        ]
+    },
+    {
+        "id": "tabla-opciones",
+        "type": "ui_table",
+        "z": "tab-modulos",
+        "group": "ui-group-opciones",
+        "name": "Lista Opciones",
+        "order": 2,
+        "width": 12,
+        "height": 5,
+        "columns": [
+            {
+                "field": "ID",
+                "title": "ID",
+                "width": "15%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Nombre",
+                "title": "Nombre",
+                "width": "20%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "URL",
+                "title": "URL",
+                "width": "20%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Pagina",
+                "title": "Página",
+                "width": "15%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Modulo",
+                "title": "Módulo",
+                "width": "15%",
+                "align": "left",
+                "formatter": "plaintext"
+            },
+            {
+                "field": "Estado",
+                "title": "Estado",
+                "width": "15%",
+                "align": "center",
+                "formatter": "plaintext"
+            }
+        ],
+        "outputs": 0,
+        "cts": false,
+        "x": 950,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "btn-refrescar-opciones",
+        "type": "ui_button",
+        "z": "tab-modulos",
+        "name": "Refrescar Opciones",
+        "group": "ui-group-opciones",
+        "order": 3,
+        "width": 12,
+        "height": 1,
+        "passthru": false,
+        "label": "🔄 Refrescar Opciones",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "refresh",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 460,
+        "y": 620,
+        "wires": [
+            [
+                "fn-refrescar-opciones"
             ]
         ]
     }
