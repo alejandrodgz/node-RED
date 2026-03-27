@@ -223,6 +223,30 @@
   .cat-card .cat-title { color: #e74c3c; font-weight: 700; font-size: 13px; margin-bottom: 6px; }
   .cat-card .cat-nodes { color: #aaa; font-size: 12px; line-height: 1.6; }
 
+  /* Bloque de evidencias con tamaño consistente */
+  .evidence-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .evidence-frame {
+    height: 120px;
+    border-radius: 9px;
+    border: 2px solid #e74c3c33;
+    background: #0f3460;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .evidence-frame img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
   /* Zoom para imágenes (sin afectar el resto del diseño) */
   .zoomable-diagram { cursor: zoom-in; transition: transform 0.15s ease; }
   .zoomable-diagram:hover { transform: scale(1.01); }
@@ -601,10 +625,16 @@
         <li><span class="icon">🧩</span><div><strong>Componentes usados:</strong> <code>ui_form</code>, <code>ui_table</code>, <code>ui_button</code>, <code>ui_toast</code>, <code>function</code>, <code>global context</code>.</div></li>
       </ul>
     </div>
-    <div class="col" style="display:flex; flex-direction:column; gap:10px;">
-      <img src="hu1_flow_agrocadenas.png" alt="Flujo completo de AgroCadenas en Node-RED" class="zoomable-diagram" style="width:100%; max-height:120px; border-radius:9px; border:2px solid #e74c3c33; object-fit:contain;">
-      <img src="hu1_ui_agrocadenas.png" alt="Interfaz dashboard de AgroCadenas" class="zoomable-diagram" style="width:100%; max-height:120px; border-radius:9px; border:2px solid #e74c3c33; object-fit:contain;">
-      <img src="hu1_function_guardar_etapa.png" alt="Nodo function con lógica para guardar etapa" class="zoomable-diagram" style="width:100%; max-height:120px; border-radius:9px; border:2px solid #e74c3c33; object-fit:contain;">
+    <div class="col evidence-stack">
+      <div class="evidence-frame">
+        <img src="hu1_flow_agrocadenas.png" alt="Flujo completo de AgroCadenas en Node-RED" class="zoomable-diagram">
+      </div>
+      <div class="evidence-frame">
+        <img src="hu1_ui_agrocadenas.png" alt="Interfaz dashboard de AgroCadenas" class="zoomable-diagram">
+      </div>
+      <div class="evidence-frame">
+        <img src="hu1_function_guardar_etapa.png" alt="Nodo function con lógica para guardar etapa" class="zoomable-diagram">
+      </div>
     </div>
   </div>
 </div>
