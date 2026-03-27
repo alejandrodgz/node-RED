@@ -284,7 +284,7 @@
 </head>
 <body>
 
-<div class="slide-counter" id="counter">1 / 18</div>
+<div class="slide-counter" id="counter">1 / 24</div>
 
 <!-- SLIDE 1 — Título -->
 <div class="slide active" id="slide-1">
@@ -299,6 +299,11 @@
     <span class="tag">2.2 Montaje de Modelos</span>
     <span class="tag">2.3 Orígenes de Datos</span>
     <span class="tag">2.4 Categorías de Nodos</span>
+    <span class="tag">2.5 Aplicación en el caso de estudio</span>
+    <span class="tag">2.5.1 HU1</span>
+    <span class="tag">2.5.2 HU2</span>
+    <span class="tag">2.5.3 HU3</span>
+    <span class="tag">2.6 Uso de DSLs</span>
     <span class="tag">3.1 Características Generales</span>
     <span class="tag">3.1.1 Documentación</span>
     <span class="tag">3.1.2 Usabilidad</span>
@@ -548,8 +553,158 @@
   </div>
 </div>
 
-<!-- SLIDE 10 — 3.1 Características Generales -->
+<!-- SLIDE 10 — 2.5 Aplicación en el Caso de Estudio -->
 <div class="slide" id="slide-10">
+  <div class="slide-number">2.5 — Aplicación en el Caso de Estudio</div>
+  <h2>Caso aplicado en el módulo ADM</h2>
+  <p style="font-size:15px; color:#ccc; line-height:1.6; margin-bottom:14px;">
+    El equipo implementó tres historias de usuario del módulo de Administración en Node-RED, alineadas con entidades del dominio como <strong style="color:#e74c3c;">AgroCadena</strong>, <strong style="color:#e74c3c;">Usuario</strong>, <strong style="color:#e74c3c;">Rol</strong> y <strong style="color:#e74c3c;">Permiso</strong>.
+  </p>
+  <div class="columns" style="align-items:stretch;">
+    <div class="col">
+      <div class="highlight-box" style="margin-top:0; height:100%;">
+        <strong>Objetivo de la sección</strong><br>
+        Evidenciar cómo el DSL visual y el scripting en Node-RED se aplicaron para resolver necesidades reales del módulo ADM, desde captura de datos hasta validación y visualización en dashboard.
+      </div>
+    </div>
+    <div class="col">
+      <div class="highlight-box" style="margin-top:0; height:100%;">
+        <strong>Historias implementadas por integrante</strong>
+        <ul style="margin-top:12px; gap:10px;">
+          <li><span class="icon">👤</span><div><strong>HU1:</strong> Registro de AgroCadena — Simón Ortiz</div></li>
+          <li><span class="icon">👤</span><div><strong>HU2:</strong> Registro y consulta de usuarios — Juan Esteban Quintero</div></li>
+          <li><span class="icon">👤</span><div><strong>HU3:</strong> Gestión de roles y permisos — Daniel Garcia</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:14px;">
+    <img src="adm_dominio_diagrama.png" alt="Diagrama de dominio del módulo ADM" class="zoomable-diagram" style="max-width:100%; max-height:175px; border-radius:10px; border:2px solid #e74c3c44; object-fit:contain;">
+    <p style="font-size:12px; color:#666; margin-top:8px;">Módulo ADM del caso Evergreen</p>
+  </div>
+</div>
+
+<!-- SLIDE 11 — 2.5.1 HU1 -->
+<div class="slide" id="slide-11">
+  <div class="slide-number">2.5.1 — HU1 · Registro de AgroCadena</div>
+  <h2>HU1 — Registro de AgroCadena</h2>
+  <div class="highlight-box" style="margin-top:0;">
+    <strong>Responsable:</strong> Simón Ortiz<br>
+    <strong>Historia de usuario:</strong> Como usuario del sistema Evergreen, quiero registrar una nueva AgroCadena junto con sus etapas productivas, para tener un registro centralizado de las cadenas agroalimentarias activas y poder consultarlas en cualquier momento.
+  </div>
+  <div class="columns" style="margin-top:12px;">
+    <div class="col">
+      <ul style="gap:10px;">
+        <li><span class="icon">✅</span><div><strong>Qué hace:</strong> registrar AgroCadenas, asociar etapas productivas y visualizar la información en tiempo real.</div></li>
+        <li><span class="icon">⚙️</span><div><strong>Cómo funciona:</strong> formulario de AgroCadena, nodo <code>function</code> para guardar, notificación de confirmación, tabla dinámica y formulario para agregar etapas.</div></li>
+        <li><span class="icon">🧱</span><div><strong>Modelado del dominio:</strong> AgroCadena (principal), Etapa (relacionada), relación uno a muchos (1:N).</div></li>
+        <li><span class="icon">🧩</span><div><strong>Componentes usados:</strong> <code>ui_form</code>, <code>ui_table</code>, <code>ui_button</code>, <code>ui_toast</code>, <code>function</code>, <code>global context</code>.</div></li>
+      </ul>
+    </div>
+    <div class="col" style="display:flex; flex-direction:column; gap:10px;">
+      <img src="hu1_flow_agrocadenas.png" alt="Flujo completo de AgroCadenas en Node-RED" class="zoomable-diagram" style="width:100%; max-height:120px; border-radius:9px; border:2px solid #e74c3c33; object-fit:contain;">
+      <img src="hu1_ui_agrocadenas.png" alt="Interfaz dashboard de AgroCadenas" class="zoomable-diagram" style="width:100%; max-height:120px; border-radius:9px; border:2px solid #e74c3c33; object-fit:contain;">
+      <img src="hu1_function_guardar_etapa.png" alt="Nodo function con lógica para guardar etapa" class="zoomable-diagram" style="width:100%; max-height:120px; border-radius:9px; border:2px solid #e74c3c33; object-fit:contain;">
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 12 — 2.5.1 Resultado HU1 -->
+<div class="slide" id="slide-12">
+  <div class="slide-number">2.5.1 — Resultado obtenido (HU1)</div>
+  <h2>Resultado obtenido — HU1</h2>
+  <div class="columns">
+    <div class="col">
+      <ul style="gap:10px;">
+        <li><span class="icon">✅</span><div>Se logró registrar AgroCadenas correctamente.</div></li>
+        <li><span class="icon">✅</span><div>Se logró asociar etapas productivas a una AgroCadena existente.</div></li>
+        <li><span class="icon">✅</span><div>La información se actualiza dinámicamente en la interfaz.</div></li>
+        <li><span class="icon">✅</span><div>Se respeta la relación uno a muchos entre AgroCadena y Etapa.</div></li>
+      </ul>
+      <div class="highlight-box">
+        <strong>Evidencia:</strong> ejecución funcional del flujo de registro y asociación de etapas en el dashboard del módulo ADM.
+      </div>
+    </div>
+    <div class="col" style="display:flex; align-items:center; justify-content:center;">
+      <img src="hu1_resultado_etapa_asociada.png" alt="Resultado de etapa productiva asociada a AgroCadena" class="zoomable-diagram" style="max-width:100%; max-height:320px; border-radius:10px; border:2px solid #e74c3c44; object-fit:contain;">
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 13 — 2.5.2 HU2 -->
+<div class="slide" id="slide-13">
+  <div class="slide-number">2.5.2 — HU2 · Registro y consulta de usuarios</div>
+  <h2>HU2 — Registro y consulta de usuarios</h2>
+  <div class="highlight-box" style="margin-top:0;">
+    <strong>Responsable:</strong> Juan Esteban Quintero<br>
+    <strong>Historia de usuario:</strong> [Pegar historia de usuario de Juan]
+  </div>
+  <div class="columns" style="margin-top:12px;">
+    <div class="col">
+      <ul style="gap:10px;">
+        <li><span class="icon">🧭</span><div><strong>Qué hace:</strong> [Resumen funcional de la HU2]</div></li>
+        <li><span class="icon">⚙️</span><div><strong>Cómo funciona:</strong> [Resumen funcional de la HU2]</div></li>
+        <li><span class="icon">🧩</span><div><strong>Componentes usados:</strong> [Componentes usados en Node-RED]</div></li>
+        <li><span class="icon">📌</span><div><strong>Resultado obtenido:</strong> [Resultado obtenido de HU2]</div></li>
+      </ul>
+    </div>
+    <div class="col" style="display:flex; flex-direction:column; gap:10px;">
+      <img src="hu2_flow.png" alt="Placeholder flujo HU2" class="zoomable-diagram" style="width:100%; max-height:115px; border-radius:9px; border:2px dashed #e74c3c66; object-fit:contain;">
+      <img src="hu2_ui_1.png" alt="Placeholder interfaz 1 HU2" class="zoomable-diagram" style="width:100%; max-height:115px; border-radius:9px; border:2px dashed #e74c3c66; object-fit:contain;">
+      <img src="hu2_ui_2.png" alt="Placeholder interfaz 2 HU2" class="zoomable-diagram" style="width:100%; max-height:115px; border-radius:9px; border:2px dashed #e74c3c66; object-fit:contain;">
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 14 — 2.5.3 HU3 -->
+<div class="slide" id="slide-14">
+  <div class="slide-number">2.5.3 — HU3 · Gestión de roles y permisos</div>
+  <h2>HU3 — Gestión de roles y permisos</h2>
+  <div class="highlight-box" style="margin-top:0;">
+    <strong>Responsable:</strong> Daniel Garcia<br>
+    <strong>Historia de usuario:</strong> [Pegar historia de usuario de Daniel]
+  </div>
+  <div class="columns" style="margin-top:12px;">
+    <div class="col">
+      <ul style="gap:10px;">
+        <li><span class="icon">🧭</span><div><strong>Qué hace:</strong> [Resumen funcional de la HU3]</div></li>
+        <li><span class="icon">⚙️</span><div><strong>Cómo funciona:</strong> [Resumen funcional de la HU3]</div></li>
+        <li><span class="icon">🧩</span><div><strong>Componentes usados:</strong> [Componentes usados en Node-RED]</div></li>
+        <li><span class="icon">📌</span><div><strong>Resultado obtenido:</strong> [Resultado obtenido de HU3]</div></li>
+      </ul>
+    </div>
+    <div class="col" style="display:flex; flex-direction:column; gap:10px;">
+      <img src="hu3_flow.png" alt="Placeholder flujo HU3" class="zoomable-diagram" style="width:100%; max-height:115px; border-radius:9px; border:2px dashed #e74c3c66; object-fit:contain;">
+      <img src="hu3_ui_1.png" alt="Placeholder interfaz 1 HU3" class="zoomable-diagram" style="width:100%; max-height:115px; border-radius:9px; border:2px dashed #e74c3c66; object-fit:contain;">
+      <img src="hu3_ui_2.png" alt="Placeholder interfaz 2 HU3" class="zoomable-diagram" style="width:100%; max-height:115px; border-radius:9px; border:2px dashed #e74c3c66; object-fit:contain;">
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 15 — 2.6 Uso de DSLs en la herramienta -->
+<div class="slide" id="slide-15">
+  <div class="slide-number">2.6 — Uso de DSLs en la herramienta</div>
+  <h2>2.6 — Uso de DSLs en la herramienta</h2>
+  <div class="columns">
+    <div class="col">
+      <ul style="gap:10px;">
+        <li><span class="icon">🧩</span><div><strong>DSL visual:</strong> flujos de nodos, modelado gráfico de procesos y conexión entre captura, validación, almacenamiento y visualización.</div></li>
+        <li><span class="icon">⌨️</span><div><strong>DSL de scripting:</strong> nodos <code>function</code> con JavaScript para validaciones, generación de IDs, almacenamiento en memoria y asociación entre entidades.</div></li>
+        <li><span class="icon">🔗</span><div><strong>Integración:</strong> el flujo visual define la estructura y el scripting implementa la lógica de negocio del dominio ADM.</div></li>
+      </ul>
+      <div class="highlight-box">
+        La combinación de ambos DSLs permitió resolver el caso ADM de forma modular, trazable y alineada con el enfoque low-code de Node-RED.
+      </div>
+    </div>
+    <div class="col" style="display:flex; flex-direction:column; gap:10px;">
+      <img src="dsl_visual_adm.png" alt="Ejemplo de DSL visual en el módulo ADM" class="zoomable-diagram" style="width:100%; max-height:155px; border-radius:9px; border:2px solid #e74c3c33; object-fit:contain;">
+      <img src="dsl_function_adm.png" alt="Ejemplo de DSL de scripting con nodo function en ADM" class="zoomable-diagram" style="width:100%; max-height:155px; border-radius:9px; border:2px solid #e74c3c33; object-fit:contain;">
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 16 — 3.1 Características Generales -->
+<div class="slide" id="slide-16">
   <div class="slide-number">3.1 — Características Generales</div>
   <h2>Low-code visual para eventos e integración</h2>
   <div class="columns">
@@ -583,8 +738,8 @@
   </div>
 </div>
 
-<!-- SLIDE 11 — 3.1.1 Documentación -->
-<div class="slide" id="slide-11">
+<!-- SLIDE 17 — 3.1.1 Documentación -->
+<div class="slide" id="slide-17">
   <div class="slide-number">3.1.1 — Documentación</div>
   <h2>Guías y recursos oficiales</h2>
   <div class="columns">
@@ -614,8 +769,8 @@
   </div>
 </div>
 
-<!-- SLIDE 12 — 3.1.2 Usabilidad -->
-<div class="slide" id="slide-12">
+<!-- SLIDE 18 — 3.1.2 Usabilidad -->
+<div class="slide" id="slide-18">
   <div class="slide-number">3.1.2 — Usabilidad</div>
   <h2>Editor intuitivo y despliegue rápido</h2>
   <div class="columns">
@@ -645,8 +800,8 @@
   </div>
 </div>
 
- <!-- SLIDE 13 — 3.1.3 Despliegue e Internacionalización -->
-<div class="slide" id="slide-13">
+ <!-- SLIDE 19 — 3.1.3 Despliegue e Internacionalización -->
+<div class="slide" id="slide-19">
   <div class="slide-number">3.1.3 — Despliegue e Internacionalización</div>
   <h2>Plataformas de despliegue y alcance global</h2>
   <div class="columns">
@@ -676,8 +831,8 @@
   </div>
 </div>
 
- <!-- SLIDE 14 — 3.2 Características Comerciales -->
-<div class="slide" id="slide-14">
+ <!-- SLIDE 20 — 3.2 Características Comerciales -->
+<div class="slide" id="slide-20">
   <div class="slide-number">3.2 — Características Comerciales</div>
   <h2>Visión comercial de la herramienta</h2>
   <div class="columns">
@@ -707,8 +862,8 @@
   </div>
 </div>
 
- <!-- SLIDE 15 — 3.2.1 Reconocimiento y Madurez -->
-<div class="slide" id="slide-15">
+ <!-- SLIDE 21 — 3.2.1 Reconocimiento y Madurez -->
+<div class="slide" id="slide-21">
   <div class="slide-number">3.2.1 — Reconocimiento y Madurez</div>
   <h2>Proyecto consolidado y con comunidad activa</h2>
   <div class="columns">
@@ -738,8 +893,8 @@
   </div>
 </div>
 
- <!-- SLIDE 16 — 3.2.2 Licencias -->
-<div class="slide" id="slide-16">
+ <!-- SLIDE 22 — 3.2.2 Licencias -->
+<div class="slide" id="slide-22">
   <div class="slide-number">3.2.2 — Licencias</div>
   <h2>Licencia abierta y opciones comerciales</h2>
   <div class="columns">
@@ -757,8 +912,8 @@
   </div>
 </div>
 
- <!-- SLIDE 17 — 3.2.3 Soporte -->
-<div class="slide" id="slide-17">
+ <!-- SLIDE 23 — 3.2.3 Soporte -->
+<div class="slide" id="slide-23">
   <div class="slide-number">3.2.3 — Soporte</div>
   <h2>Soporte comunitario y soporte empresarial</h2>
   <div class="columns">
@@ -788,8 +943,8 @@
   </div>
 </div>
 
- <!-- SLIDE 18 — 4 Conclusiones -->
-<div class="slide" id="slide-18">
+ <!-- SLIDE 24 — 4 Conclusiones -->
+<div class="slide" id="slide-24">
   <div class="slide-number">4 — Conclusiones de Node-RED</div>
   <h2>Cierre de la evaluación</h2>
   <ul>
@@ -833,7 +988,7 @@
 
 <script>
   let actual = 1;
-  const total = 18;
+  const total = 24;
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') cambiar(1);
