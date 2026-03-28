@@ -689,21 +689,27 @@
   <h2>HU2 — Registro y consulta de usuarios</h2>
   <div class="highlight-box" style="margin-top:0;">
     <strong>Responsable:</strong> Juan Esteban Quintero<br>
-    <strong>Historia de usuario:</strong> [Pegar historia de usuario de Juan]
+    <strong>Historia de usuario:</strong> Como usuario del sistema Evergreen, quiero registrar nuevos usuarios con su información básica y tipo para mantener un directorio actualizado de las personas que tienen acceso al sistema y poder consultarlo en cualquier momento.
   </div>
   <div class="columns" style="margin-top:12px;">
     <div class="col">
       <ul style="gap:10px;">
-        <li><span class="icon">🧭</span><div><strong>Qué hace:</strong> [Resumen funcional de la HU2]</div></li>
-        <li><span class="icon">⚙️</span><div><strong>Cómo funciona:</strong> [Resumen funcional de la HU2]</div></li>
-        <li><span class="icon">🧩</span><div><strong>Componentes usados:</strong> [Componentes usados en Node-RED]</div></li>
-        <li><span class="icon">📌</span><div><strong>Resultado obtenido:</strong> [Resultado obtenido de HU2]</div></li>
+        <li><span class="icon">🧭</span><div><strong>Qué hace:</strong> permite registrar usuarios en el módulo ADM, consultar el listado actualizado, validar duplicados por nombre de usuario, eliminar usuarios, asignar roles y cambiar el estado.</div></li>
+        <li><span class="icon">⚙️</span><div><strong>Cómo funciona:</strong> a través de formularios en el dashboard se capturan los datos, se valida que el usuario no exista, se genera un ID automático y se almacena la información en memoria global, actualizando la tabla en tiempo real.</div></li>
+        <li><span class="icon">🧩</span><div><strong>Componentes usados:</strong> <code>ui_form</code>, <code>ui_table</code>, <code>ui_toast</code>, <code>ui_button</code>, <code>function</code> (guardar usuario, eliminar usuario, asignar rol, cambiar estado, preparar tabla) y <code>global.set/get</code>.</div></li>
+        <li><span class="icon">📌</span><div><strong>Resultado obtenido:</strong> se logró un sistema funcional de gestión de usuarios con validación de duplicados, eliminación de usuarios, asignación de roles y cambio de estado, reflejando todos los cambios en tiempo real dentro del dashboard.</div></li>
       </ul>
     </div>
-    <div class="col" style="display:flex; flex-direction:column; gap:10px;">
-      <img src="hu2_flow.png" alt="Placeholder flujo HU2" class="zoomable-diagram" style="width:100%; max-height:115px; border-radius:9px; border:2px dashed #e74c3c66; object-fit:contain;">
-      <img src="hu2_ui_1.png" alt="Placeholder interfaz 1 HU2" class="zoomable-diagram" style="width:100%; max-height:115px; border-radius:9px; border:2px dashed #e74c3c66; object-fit:contain;">
-      <img src="hu2_ui_2.png" alt="Placeholder interfaz 2 HU2" class="zoomable-diagram" style="width:100%; max-height:115px; border-radius:9px; border:2px dashed #e74c3c66; object-fit:contain;">
+    <div class="col evidence-stack">
+      <div class="evidence-frame">
+        <img src="hu2_flow.png" alt="Flujo de usuarios en Node-RED" class="zoomable-diagram">
+      </div>
+      <div class="evidence-frame">
+        <img src="hu2_ui_1.png" alt="Interfaz de registro y consulta de usuarios" class="zoomable-diagram">
+      </div>
+      <div class="evidence-frame">
+        <img src="hu2_ui_2.png" alt="Evidencia funcional del módulo de usuarios" class="zoomable-diagram">
+      </div>
     </div>
   </div>
 </div>
