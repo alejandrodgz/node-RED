@@ -308,7 +308,7 @@
 </head>
 <body>
 
-<div class="slide-counter" id="counter">1 / 25</div>
+<div class="slide-counter" id="counter">1 / 27</div>
 
 <!-- SLIDE 1 — Título -->
 <div class="slide active" id="slide-1">
@@ -578,7 +578,7 @@
 </div>
 
 <!-- SLIDE 10 — 2.5 Construcción del Diagrama de Clases -->
-<div class="slide" id="slide-10">
+<div class="slide" id="slide-11">
   <div class="slide-number">2.5 — Construcción del Diagrama de Clases</div>
   <h2>Modelado del dominio ADM</h2>
   <div class="columns">
@@ -599,8 +599,8 @@
   </div>
 </div>
 
-<!-- SLIDE 11 — 2.5 Aplicación en el Caso de Estudio -->
-<div class="slide" id="slide-11">
+<!-- SLIDE 10 — 2.5 Aplicación en el Caso de Estudio -->
+<div class="slide" id="slide-10">
   <div class="slide-number">2.5 — Aplicación en el Caso de Estudio</div>
   <h2>Caso aplicado en el módulo ADM</h2>
   <p style="font-size:15px; color:#ccc; line-height:1.6; margin-bottom:14px;">
@@ -725,17 +725,51 @@
         <li><span class="icon">📌</span><div><strong>Resultado obtenido:</strong> control de acceso funcional con relaciones rol↔permiso validadas, cadena Usuario→Rol→Permiso→Opción implementada, contador de opciones por permiso.</div></li>
       </ul>
     </div>
-    <div class="col" style="display:flex; flex-direction:column; gap:10px;">
-      <img src="roles_y_permisos.png" alt="Flujo completo de Control de Acceso en Node-RED" class="zoomable-diagram" style="width:100%; max-height:115px; border-radius:9px; border:2px solid #e74c3c33; object-fit:contain;">
-      <img src="ui_roles.png" alt="Interfaz de creación y asignación de roles" class="zoomable-diagram" style="width:100%; max-height:115px; border-radius:9px; border:2px solid #e74c3c33; object-fit:contain;">
-      <img src="funcion_rol.png" alt="Interfaz de gestión de permisos y opciones" class="zoomable-diagram" style="width:100%; max-height:115px; border-radius:9px; border:2px solid #e74c3c33; object-fit:contain;">
-
+    <div class="col evidence-stack">
+      <div class="evidence-frame">
+        <img src="roles_y_permisos.png" alt="Flujo completo de Control de Acceso en Node-RED" class="zoomable-diagram">
+      </div>
+      <div class="evidence-frame">
+        <img src="ui_roles.png" alt="Interfaz de creación y asignación de roles" class="zoomable-diagram">
+      </div>
+      <div class="evidence-frame">
+        <img src="funcion_rol.png" alt="Interfaz de gestión de permisos y opciones" class="zoomable-diagram">
+      </div>
     </div>
   </div>
 </div>
 
-<!-- SLIDE 16 — 2.6 Uso de DSLs en la herramienta -->
+<!-- SLIDE 16 — 2.5.3 Resultado HU3 -->
 <div class="slide" id="slide-16">
+  <div class="slide-number">2.5.3 — Resultado obtenido (HU3)</div>
+  <h2>Resultado obtenido — HU3</h2>
+  <div class="columns">
+    <div class="col">
+      <ul style="gap:10px;">
+        <li><span class="icon">✅</span><div>Se logró crear roles con nombre único y fecha de creación, con validación de duplicados.</div></li>
+        <li><span class="icon">✅</span><div>Se logró crear permisos y asociarlos a opciones de páginas del sistema.</div></li>
+        <li><span class="icon">✅</span><div>Se logró asignar múltiples permisos a un rol sin permitir asignaciones repetidas.</div></li>
+        <li><span class="icon">✅</span><div>Se logró asignar roles a usuarios registrados en el sistema.</div></li>
+        <li><span class="icon">✅</span><div>Las tablas de roles y permisos se actualizan en tiempo real dentro del dashboard.</div></li>
+        <li><span class="icon">✅</span><div>Se implementó la cadena completa: <strong>Usuario → Rol → Permiso → Opción</strong>.</div></li>
+      </ul>
+      <div class="highlight-box">
+        <strong>Evidencia:</strong> ejecución funcional del flujo de control de acceso en el dashboard del módulo ADM — creación de roles, permisos y asignaciones con validación en tiempo real.
+      </div>
+    </div>
+    <div class="col evidence-stack">
+      <div class="evidence-frame">
+        <img src="caso_de_prueba.png" alt="Caso de prueba 1 — Control de Acceso" class="zoomable-diagram">
+      </div>
+      <div class="evidence-frame">
+        <img src="caso_de_prueba2.png" alt="Caso de prueba 2 — Control de Acceso" class="zoomable-diagram">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 17 — 2.6 Uso de DSLs en la herramienta -->
+<div class="slide" id="slide-17">
   <div class="slide-number">2.6 — Uso de DSLs en la herramienta</div>
   <h2>2.6 — Uso de DSLs en la herramienta</h2>
   <div class="columns">
@@ -757,7 +791,7 @@
 </div>
 
 <!-- SLIDE 17 — 3.1 Características Generales -->
-<div class="slide" id="slide-17">
+<div class="slide" id="slide-18">
   <div class="slide-number">3.1 — Características Generales</div>
   <h2>Low-code visual para eventos e integración</h2>
   <div class="columns">
@@ -792,7 +826,7 @@
 </div>
 
 <!-- SLIDE 18 — 3.1.1 Documentación -->
-<div class="slide" id="slide-18">
+<div class="slide" id="slide-19">
   <div class="slide-number">3.1.1 — Documentación</div>
   <h2>Guías y recursos oficiales</h2>
   <div class="columns">
@@ -823,7 +857,7 @@
 </div>
 
 <!-- SLIDE 19 — 3.1.2 Usabilidad -->
-<div class="slide" id="slide-19">
+<div class="slide" id="slide-20">
   <div class="slide-number">3.1.2 — Usabilidad</div>
   <h2>Editor intuitivo y despliegue rápido</h2>
   <div class="columns">
@@ -854,7 +888,7 @@
 </div>
 
  <!-- SLIDE 20 — 3.1.3 Despliegue e Internacionalización -->
-<div class="slide" id="slide-20">
+<div class="slide" id="slide-21">
   <div class="slide-number">3.1.3 — Despliegue e Internacionalización</div>
   <h2>Plataformas de despliegue y alcance global</h2>
   <div class="columns">
@@ -885,7 +919,7 @@
 </div>
 
  <!-- SLIDE 21 — 3.2 Características Comerciales -->
-<div class="slide" id="slide-21">
+<div class="slide" id="slide-22">
   <div class="slide-number">3.2 — Características Comerciales</div>
   <h2>Visión comercial de la herramienta</h2>
   <div class="columns">
@@ -916,7 +950,7 @@
 </div>
 
  <!-- SLIDE 22 — 3.2.1 Reconocimiento y Madurez -->
-<div class="slide" id="slide-22">
+<div class="slide" id="slide-23">
   <div class="slide-number">3.2.1 — Reconocimiento y Madurez</div>
   <h2>Proyecto consolidado y con comunidad activa</h2>
   <div class="columns">
@@ -947,7 +981,7 @@
 </div>
 
  <!-- SLIDE 23 — 3.2.2 Licencias -->
-<div class="slide" id="slide-23">
+<div class="slide" id="slide-24">
   <div class="slide-number">3.2.2 — Licencias</div>
   <h2>Licencia abierta y opciones comerciales</h2>
   <div class="columns">
@@ -966,7 +1000,7 @@
 </div>
 
  <!-- SLIDE 24 — 3.2.3 Soporte -->
-<div class="slide" id="slide-24">
+<div class="slide" id="slide-25">
   <div class="slide-number">3.2.3 — Soporte</div>
   <h2>Soporte comunitario y soporte empresarial</h2>
   <div class="columns">
@@ -997,7 +1031,7 @@
 </div>
 
  <!-- SLIDE 25 — 4 Conclusiones -->
-<div class="slide" id="slide-25">
+<div class="slide" id="slide-26">
   <div class="slide-number">4 — Conclusiones de Node-RED</div>
   <h2>Cierre de la evaluación</h2>
   <ul>
@@ -1027,6 +1061,39 @@
   </div>
 </div>
 
+<!-- SLIDE 27 — Reflexión final: para qué sirve y para qué no -->
+<div class="slide" id="slide-27">
+  <div class="slide-number">Reflexión final — ¿Para qué sirve Node-RED y para qué no?</div>
+  <h2>Lo que aprendimos usándolo de verdad</h2>
+  <div class="columns" style="align-items:flex-start;">
+    <div class="col">
+      <p style="font-size:12px; color:#e74c3c; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">✅ Para qué sí sirve</p>
+      <ul style="gap:8px;">
+        <li><span class="icon" style="font-size:15px;">⚡</span><div style="font-size:13px;">Montar integraciones y prototipos rápido — en horas, no días. Ideal cuando necesitas demostrar algo que funciona.</div></li>
+        <li><span class="icon" style="font-size:15px;">🔌</span><div style="font-size:13px;">Conectar servicios que no hablan entre sí: APIs, bases de datos, MQTT, archivos — sin escribir código de infraestructura.</div></li>
+        <li><span class="icon" style="font-size:15px;">📊</span><div style="font-size:13px;">Construir dashboards funcionales con formularios, tablas y notificaciones para casos de uso académicos o internos.</div></li>
+        <li><span class="icon" style="font-size:15px;">🧪</span><div style="font-size:13px;">Validar una idea de negocio o flujo de proceso antes de invertir en una solución más robusta.</div></li>
+      </ul>
+    </div>
+    <div class="col">
+      <p style="font-size:12px; color:#e74c3c; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">❌ Para qué no sirve (o cuesta mucho)</p>
+      <ul style="gap:8px;">
+        <li><span class="icon" style="font-size:15px;">🏗️</span><div style="font-size:13px;">Aplicaciones con lógica de negocio muy compleja — los flows se vuelven difíciles de leer y mantener si no se organizan bien.</div></li>
+        <li><span class="icon" style="font-size:15px;">💾</span><div style="font-size:13px;">Persistencia real de datos — no tiene base de datos propia. El contexto global se pierde si el contenedor se reinicia.</div></li>
+        <li><span class="icon" style="font-size:15px;">👥</span><div style="font-size:13px;">Trabajo en equipo sin disciplina — el <code>flows.json</code> genera muchos conflictos en git cuando varios tocan el mismo flow.</div></li>
+      </ul>
+      <div class="highlight-box" style="margin-top:10px; padding:10px 14px;">
+        <strong style="font-size:12px;">🤖 Dificultades con IA (Copilot, ChatGPT)</strong>
+        <ul style="gap:6px; margin-top:8px;">
+          <li style="background:transparent; padding:4px 0; font-size:12px; color:#ccc;">• Las IA sugieren código de versiones antiguas del dashboard — el bug de <code>formValue: []</code> vs <code>{}</code> lo encontramos porque la IA no conocía el cambio en v2.</li>
+          <li style="background:transparent; padding:4px 0; font-size:12px; color:#ccc;">• Generar <code>flows.json</code> válido es difícil para la IA — los nodos tienen muchas propiedades implícitas que omite.</li>
+          <li style="background:transparent; padding:4px 0; font-size:12px; color:#ccc;">• Hay que verificar todo manualmente: la IA puede sugerir nodos que no existen o paquetes npm deprecados.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Modal de zoom para imágenes -->
 <div id="imgModal" class="img-modal" role="dialog" aria-modal="true" aria-label="Imagen ampliada">
   <div class="img-modal-close" id="imgModalClose" aria-label="Cerrar">×</div>
@@ -1041,7 +1108,7 @@
 
 <script>
   let actual = 1;
-  const total = 25;
+  const total = 27;
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') cambiar(1);
